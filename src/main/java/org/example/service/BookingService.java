@@ -20,17 +20,17 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final LoggingService loggingService;
     private final ValidationService validationService;
-    private final PriceCalculatorService priceCalculatorService;
+    private final PriceService priceService;
 
     // 🔹 Constructor med dependency injection
     public BookingService(BookingRepository bookingRepository,
                           LoggingService loggingService,
                           ValidationService validationService,
-                          PriceCalculatorService priceCalculatorService) {
+                          PriceService priceService) {
         this.bookingRepository = bookingRepository;
         this.loggingService = loggingService;
         this.validationService = validationService;
-        this.priceCalculatorService = priceCalculatorService;
+        this.priceService = priceService;
     }
 
     // --------------------------------------------------
@@ -38,15 +38,15 @@ public class BookingService {
     /**
      * Skapar en ny bokning om all data är giltig.
      */
-    public void createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType type) {
+    public void createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType bookingType) {
         if (!validationService.isValidDate(date)) {
             System.out.println("❌ Ogiltigt datum!");
             return;
         }
 
-        double price = priceCalculatorService.calculatePrice(type, vehicle);
+        double price = priceService.calculatePrice(bookingType, vehicle);
 
-        Booking booking = new Booking(vehicle, date, price, customer, type);
+        Booking booking = new Booking(vehicle, date, price, customer, bookingType);
         bookingRepository.addBooking(booking);
         loggingService.logInfo("✅ Ny bokning skapad: " + booking);
     }
