@@ -2,7 +2,7 @@ package org.example.systemIO;
 
 import java.util.Scanner;
 
-public class SystemIO  implements IIO {
+public class SystemIO implements IIO {
     private final Scanner sc = new Scanner(System.in);
 
     @Override
