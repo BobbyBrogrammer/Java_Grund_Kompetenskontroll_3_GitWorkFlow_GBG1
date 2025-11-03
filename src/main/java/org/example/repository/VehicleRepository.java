@@ -36,8 +36,5 @@ public class VehicleRepository implements Repository<Vehicle, String> {
                 .filter(v -> v.getYearModel() == year)
                 .toList();
     }
-
-
-
 }
 
