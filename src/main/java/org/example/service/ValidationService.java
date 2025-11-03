@@ -22,4 +22,8 @@ public class ValidationService {
         }
         return valid;
     }
+
+    public boolean isValidDate(String date) {
+        return date != null && !date.isBlank();
+    }
 }
