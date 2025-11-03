@@ -2,9 +2,7 @@ package org.example.repository;
 
 import org.example.models.Booking;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import java.util.*;
 
 
 public class BookingRepository implements Repository<Booking, Integer > {
@@ -19,7 +17,7 @@ public class BookingRepository implements Repository<Booking, Integer > {
         return Optional.ofNullable(bookings.get(id));
     }
     @Override
-    public List<Booking>findAll(){
+    public List<Booking> findAll(){
         return new ArrayList<>(bookings.values());
     }
 
