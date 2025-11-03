@@ -1,0 +1,11 @@
+package org.example.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface Repository<T, Id> {
+    void add(T item);
+    Optional<T> findById(String id);
+    List<T> findAll();
+    void remove(String id);
+}
