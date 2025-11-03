@@ -28,7 +28,7 @@ public class CompletionService {
         }
 
         // 3 Beräkna pris
-        double price = priceService.calculatePrice(vehicleType);
+        double price = priceService.calculatePrice(bookingType, vehicle);
         loggingService.log("Pris beräknat: " + price + " kr för " + vehicleType);
 
         // 4 Skicka mejl
