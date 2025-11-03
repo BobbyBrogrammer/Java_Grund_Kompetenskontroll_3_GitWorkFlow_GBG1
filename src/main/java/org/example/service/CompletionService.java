@@ -9,11 +9,11 @@ public class CompletionService {
     private final MailService mailService;
     private final LoggingService loggingService;
 
-    public CompletionService() {
-        this.priceService = new PriceService();
-        this.validationService = new ValidationService();
-        this.mailService = new MailService();
-        this.loggingService = new LoggingService();
+    public CompletionService(PriceService priceService, ValidationService validationService, MailService mailService, LoggingService loggingService) {
+        this.priceService = priceService;
+        this.validationService = validationService;
+        this.mailService = mailService;
+        this.loggingService = loggingService;
     }
 
     public void completeProcess(String email, String regNumber, BookingType bookingType, Vehicle vehicle) {
