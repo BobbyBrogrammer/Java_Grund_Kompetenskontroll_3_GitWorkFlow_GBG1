@@ -25,6 +25,4 @@ public class BookingRepository implements Repository<Booking, Integer > {
     public void remove(Integer id){
         bookings.remove(id);
     }
-
-
 }
