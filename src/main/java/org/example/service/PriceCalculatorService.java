@@ -2,6 +2,7 @@ package org.example.service;
 
 public class PriceCalculatorService {
     public double calculateService(String vehicleType) {
+        // Enkel prisberäkning baserat på typ (exempel-tabell)
         switch (vehicleType.toLowerCase()) {
             case "car":
                 return 500.0;
