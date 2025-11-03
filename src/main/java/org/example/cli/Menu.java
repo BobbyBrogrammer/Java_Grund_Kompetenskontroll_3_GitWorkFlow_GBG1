@@ -3,7 +3,7 @@ package org.example.cli;
 import java.util.Scanner;
 
 public class Menu {
-    private final Scanner scanner;
+    private final System IO;
     private final InputHandler inputHandler;
     private final MenuMethods menuMethods;
 
@@ -16,6 +16,7 @@ public class Menu {
     public void showMainMenu() {
         int choice;
         do {
+
             System.out.println("=== Bilmeckarna AB ===");
             System.out.println("1. Skapa ny bokning");
             System.out.println("2. Visa alla bokningar");
