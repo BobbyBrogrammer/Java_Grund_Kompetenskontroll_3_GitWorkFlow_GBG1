@@ -20,13 +20,13 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final LoggingService loggingService;
     private final ValidationService validationService;
-    private final PriceCalculatorService priceCalculatorService;
+    private final PriceService priceCalculatorService;
 
     // 🔹 Constructor med dependency injection
     public BookingService(BookingRepository bookingRepository,
                           LoggingService loggingService,
                           ValidationService validationService,
-                          PriceCalculatorService priceCalculatorService) {
+                          PriceService priceCalculatorService) {
         this.bookingRepository = bookingRepository;
         this.loggingService = loggingService;
         this.validationService = validationService;
