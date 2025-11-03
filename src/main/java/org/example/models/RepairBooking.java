@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class RepairBooking extends Booking {
     private String actionDescription; // Vad som ska repareras
 
-    public RepairBooking(Vehicle vehicle, LocalDate date, double price, String customerEmail, String actionDescription) {
-        super(vehicle, date, price, customerEmail, BookingType.REPAIR);
+    public RepairBooking(Vehicle vehicle, LocalDate date, double price, Customer customer, String actionDescription) {
+        super(vehicle, date, price, customer, BookingType.REPAIR);
         this.actionDescription = actionDescription;
     }
 
