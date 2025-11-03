@@ -6,9 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class BookingRepository implements Repository {
+public abstract class BookingRepository implements Repository {
     Map<UUID, Booking> vehicle = new LinkedHashMap<>();
-
 
     public BookingRepository(Map<UUID, Booking> vehicle) {
         this.vehicle = vehicle;
