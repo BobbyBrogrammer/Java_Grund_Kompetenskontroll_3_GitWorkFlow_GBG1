@@ -6,7 +6,7 @@ import org.example.systemIO.IIO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuMethods {
+public class ConsoleUI {
     private final IIO io;
     private final InputHandler input;
     private final OutputHandler output;
