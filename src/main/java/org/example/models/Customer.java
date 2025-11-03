@@ -2,7 +2,7 @@ package org.example.models;
 
 public class Customer {
 
-    private String name;          // Kundens namn
+    private String name;
     private String phoneNumber;   // Telefonnummer
     private String email;         // E-postadress (valideras i ValidationService)
 
