@@ -6,14 +6,13 @@ import org.example.systemIO.IIO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuMethods {
+public class ConsoleUI {
     private final IIO io;
     private final CompletionService completionService;
     private final List<String> bookings = new ArrayList<>();
-
-    public MenuMethods(IIO io) {
+    public ConsoleUI(IIO io, CompletionService completionService) {
         this.io = io;
-        this.completionService = new CompletionService();
+        this.completionService = completionService;
     }
 
     public void createBooking() {
