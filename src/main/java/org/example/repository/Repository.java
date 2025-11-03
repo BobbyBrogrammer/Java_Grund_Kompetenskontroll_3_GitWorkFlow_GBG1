@@ -3,9 +3,9 @@ package org.example.repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface Repository<T, Id> {
+public interface Repository<T, ID> {
     void add(T item);
-    Optional<T> findById(String id);
+    Optional<T> findById(ID id);
     List<T> findAll();
-    void remove(String id);
+    void remove(ID id);
 }
