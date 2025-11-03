@@ -6,12 +6,12 @@ import org.example.systemIO.IIO;
 public class Menu {
     private final IIO io;
     private final OutputHandler output;
-    private final MenuMethods menuMethods;
+    private final ConsoleUI consoleUI;
 
     public Menu(IIO io, InputHandler input, OutputHandler output, CompletionService completionService) {
         this.io = io;
         this.output = output;
-        this.menuMethods = new MenuMethods(io, input, output, completionService);
+        this.consoleUI = new ConsoleUI(io, input, output, completionService);
     }
 
     public void showMainMenu() {
@@ -20,11 +20,11 @@ public class Menu {
             String choice = io.readLine().trim();
 
             switch (choice) {
-                case "1" -> menuMethods.createBooking();
-                case "2" -> menuMethods.showAllBookings();
-                case "3" -> menuMethods.searchBooking();
-                case "4" -> menuMethods.deleteBooking();
-                case "5" -> menuMethods.updateBooking();
+                case "1" -> consoleUI.createBooking();
+                case "2" -> consoleUI.showAllBookings();
+                case "3" -> consoleUI.searchBooking();
+                case "4" -> consoleUI.deleteBooking();
+                case "5" -> consoleUI.updateBooking();
                 case "0" -> output.printExitProgram();
                 default -> output.printDefaultMenuChoice();
             }

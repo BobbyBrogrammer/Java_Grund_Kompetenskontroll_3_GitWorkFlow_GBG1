@@ -19,7 +19,7 @@ public class ConsoleUI {
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public MenuMethods(IIO io, InputHandler input, OutputHandler output, CompletionService completionService) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService) {
         this.io = io;
         this.input = input;
         this.output = output;
