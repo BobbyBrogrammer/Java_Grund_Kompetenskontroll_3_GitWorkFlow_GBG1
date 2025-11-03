@@ -1,31 +1,34 @@
 package org.example.cli;
 
+import org.example.systemIO.IIO;
+import org.example.systemIO.SystemIO;
+
 import java.util.Scanner;
 
 public class Menu {
-    private final Scanner scanner;
-    private final InputHandler inputHandler;
+    private final IIO io;
     private final MenuMethods menuMethods;
 
     public Menu() {
-        scanner = new Scanner(System.in);
-        inputHandler = new InputHandler(scanner);
-        menuMethods = new MenuMethods(inputHandler);
+        this.io = new SystemIO();
+        this.menuMethods = new MenuMethods(io);
     }
 
     public void showMainMenu() {
         int choice;
         do {
-            System.out.println("=== Bilmeckarna AB ===");
-            System.out.println("1. Skapa ny bokning");
-            System.out.println("2. Visa alla bokningar");
-            System.out.println("3. Sök bokning");
-            System.out.println("4. Ta bort bokning");
-            System.out.println("5. Uppdatera bokning");
-            System.out.println("0. Avsluta");
-            System.out.print("Välj ett alternativ: ");
+            io.printLine("=== Bilmeckarna AB ===");
+            io.printLine("1. Skapa ny bokning");
+            io.printLine("2. Visa alla bokningar");
+            io.printLine("3. Sök bokning");
+            io.printLine("4. Ta bort bokning");
+            io.printLine("5. Uppdatera bokning");
+            io.printLine("0. Avsluta");
+            io.printLine("Välj ett alternativ: ");
 
-            choice = inputHandler.getIntInput();
+            // Läs in val
+            String input = io.readLine();
+            choice = parseInt(input);
 
             switch (choice) {
                 case 1 -> menuMethods.createBooking();
@@ -33,12 +36,20 @@ public class Menu {
                 case 3 -> menuMethods.searchBooking();
                 case 4 -> menuMethods.deleteBooking();
                 case 5 -> menuMethods.updateBooking();
-                case 0 -> System.out.println("Avslutar programmet. Hej då!");
-                default -> System.out.println("Ogiltigt val, försök igen!");
+                case 0 -> io.printLine("Avslutar programmet. Hej då!");
+                default -> io.printLine("Ogiltigt val, försök igen!");
             }
 
-            System.out.println();
+            io.printLine("");
 
         } while (choice != 0);
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 }
