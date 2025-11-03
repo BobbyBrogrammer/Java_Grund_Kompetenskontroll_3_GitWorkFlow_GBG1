@@ -3,8 +3,6 @@ package org.example.cli;
 import org.example.systemIO.IIO;
 import org.example.systemIO.SystemIO;
 
-import java.util.Scanner;
-
 public class Menu {
     private final IIO io;
     private final MenuMethods menuMethods;
