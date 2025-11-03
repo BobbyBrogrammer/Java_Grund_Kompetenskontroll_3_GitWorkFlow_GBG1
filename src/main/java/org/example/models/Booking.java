@@ -3,9 +3,6 @@ package org.example.models;
 import java.io.ObjectInputFilter;
 import java.time.LocalDate;
 
-<<<<<<< HEAD
-import java.time.LocalDate;
-import java.util.UUID;
 
 public class Booking {
     private static int counter = 1;
@@ -28,24 +25,57 @@ public class Booking {
     }
 
     // Getters och setters
-    public int getId() { return id; }
-    public Vehicle getVehicle() { return vehicle; }
-    public void setVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
+    public int getId() {
+        return id;
+    }
 
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public LocalDate getDate() {
+        return date;
+    }
 
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-    public BookingType getBookingType() { return bookingType; }
-    public void setBookingType(BookingType bookingType) { this.bookingType = bookingType; }
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public BookingType getBookingType() {
+        return bookingType;
+    }
+
+    public void setBookingType(BookingType bookingType) {
+        this.bookingType = bookingType;
+    }
 
     @Override
     public String toString() {
@@ -57,28 +87,8 @@ public class Booking {
                 " | Status: " + status +
                 " | Customer: " + customer;
     }
-=======
-    public class Booking {
-
-        private static int counter = 1;
-        private int id;
-        private Vehicle vehicle;
-        private LocalDate date;
-        private double price;
-        private String customerEmail;
-        private Status status;
-        private BookingType bookingType;
 
 
-        public Booking(Vehicle vehicle, LocalDate date, double price, String customerEmail, BookingType bookingType) {
-            this.id = counter++;
-            this.vehicle = vehicle;
-            this.date = date;
-            this.price = price;
-            this.customerEmail = customerEmail;
-            this.bookingType = bookingType;
-            this.status = Status.NOT_DONE;
-        }
->>>>>>> 434a660 (Adnan Person 1 Domain)
-    }
+}
+
 
