@@ -1,7 +1,7 @@
 package org.example.service;
 
 public class PriceService {
-    public double calculateService(String vehicleType) {
+    public double calculatePrice(String vehicleType) {
         // Enkel prisberäkning baserat på typ (exempel-tabell)
         switch (vehicleType.toLowerCase()) {
             case "car":
