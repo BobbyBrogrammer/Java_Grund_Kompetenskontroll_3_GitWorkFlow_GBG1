@@ -1,0 +1,18 @@
+package org.example.service;
+
+public class PriceService {
+    public double calculatePrice(String vehicleType) {
+        // Enkel prisberäkning baserat på typ (exempel-tabell)
+        switch (vehicleType.toLowerCase()) {
+            case "car":
+                return 500.0;
+            case "truck":
+                return 800.0;
+            case "motorcycle":
+                return 300.0;
+            default:
+                System.out.println("Okänd fordonstyp, pris sätts till 0 kr.");
+                return 0.0;
+        }
+    }
+}
