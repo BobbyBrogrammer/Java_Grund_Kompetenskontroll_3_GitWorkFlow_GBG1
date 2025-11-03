@@ -8,5 +8,4 @@ public interface Repository<T, Id> {
     Optional<T> findById(String id);
     List<T> findAll();
     void remove(String id);
-
 }

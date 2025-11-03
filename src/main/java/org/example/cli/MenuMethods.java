@@ -1,38 +1,94 @@
 package org.example.cli;
 
 import org.example.service.CompletionService;
+import org.example.systemIO.IIO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuMethods {
-    private final InputHandler inputHandler;
+    private final IIO io;
     private final CompletionService completionService;
+    private final List<String> bookings = new ArrayList<>();
 
-    public MenuMethods(InputHandler inputHandler) {
-        this.inputHandler = inputHandler;
+    public MenuMethods(IIO io) {
+        this.io = io;
         this.completionService = new CompletionService();
     }
 
     public void createBooking() {
-        System.out.println("\n=== Skapa ny bokning ===");
-        String email = inputHandler.getStringInput("Ange kundens e-postadress: ");
-        String regNumber = inputHandler.getStringInput("Ange registreringsnummer (t.ex. ABC123): ");
-        String vehicleType = inputHandler.getStringInput("Ange fordonstyp (car/truck/motorcycle): ");
+        io.printLine("\n=== Skapa ny bokning ===");
+        io.printLine("Ange kundens e-postadress: ");
+        String email = io.readLine();
+
+        io.printLine("Ange registreringsnummer (t.ex. ABC123): ");
+        String regNumber = io.readLine();
+
+        io.printLine("Ange fordonstyp (car/truck/motorcycle): ");
+        String vehicleType = io.readLine();
 
         completionService.completeProcess(email, regNumber, vehicleType);
+        bookings.add(regNumber + " (" + vehicleType + ")");
+        io.printLine("Bokning skapad och tillagd i systemet!");
     }
 
     public void showAllBookings() {
-        System.out.println("Visar alla bokningar (funktionalitet kommer senare).");
+        io.printLine("\n=== Alla bokningar ===");
+        if (bookings.isEmpty()) {
+            io.printLine("Inga bokningar registrerade ännu.");
+        } else {
+            for (int i = 0; i < bookings.size(); i++) {
+                io.printLine((i + 1) + ". " + bookings.get(i));
+            }
+        }
     }
 
     public void searchBooking() {
-        System.out.println("Söker bokning (funktionalitet kommer senare).");
+        io.printLine("\n=== Sök bokning ===");
+        io.printLine("Ange registreringsnummer: ");
+        String search = io.readLine();
+        boolean found = false;
+
+        for (String booking : bookings) {
+            if (booking.contains(search.toUpperCase())) {
+                io.printLine("Bokning hittad: " + booking);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            io.printLine("Ingen bokning hittades med det registreringsnumret.");
+        }
     }
 
     public void deleteBooking() {
-        System.out.println("Tar bort bokning (funktionalitet kommer senare).");
+        io.printLine("\n=== Ta bort bokning ===");
+        io.printLine("Ange registreringsnummer: ");
+        String search = io.readLine();
+        boolean removed = bookings.removeIf(b -> b.contains(search.toUpperCase()));
+
+        if (removed) {
+            io.printLine("Bokningen togs bort.");
+        } else {
+            io.printLine("Ingen bokning hittades att ta bort.");
+        }
     }
 
     public void updateBooking() {
-        System.out.println("Uppdaterar bokning (funktionalitet kommer senare).");
+        io.printLine("\n=== Uppdatera bokning ===");
+        io.printLine("Ange registreringsnummer: ");
+        String search = io.readLine();
+
+        for (int i = 0; i < bookings.size(); i++) {
+            if (bookings.get(i).contains(search.toUpperCase())) {
+                io.printLine("Ange ny fordonstyp: ");
+                String newVehicle = io.readLine();
+                bookings.set(i, search.toUpperCase() + " (" + newVehicle + ")");
+                io.printLine("Bokningen har uppdaterats.");
+                return;
+            }
+        }
+
+        io.printLine("Ingen bokning hittades att uppdatera.");
     }
 }

@@ -9,12 +9,12 @@ public class VehicleRepository implements Repository<Vehicle, String> {
 
     @Override
     public void add(Vehicle v){
-        vehicles.put(v.getLicensePlate(), v);
+        vehicles.put(v.getRegistrationNumber(), v);
     }
 
     @Override
     public Optional<Vehicle> findById(String plate){
-        return Optional.ofNullable(byPlate.get(plate));
+        return Optional.ofNullable(vehicles.get(plate));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class VehicleRepository implements Repository<Vehicle, String> {
 
     public List<Vehicle> findByYear(int year){
         return vehicles.values().stream()
-                .filter(v -> v.getYear() == year)
+                .filter(v -> v.getYearModel() == year)
                 .toList();
     }
 }
