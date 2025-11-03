@@ -4,6 +4,7 @@ import java.io.ObjectInputFilter;
 import java.time.LocalDate;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Booking {
     private static int counter = 1;
