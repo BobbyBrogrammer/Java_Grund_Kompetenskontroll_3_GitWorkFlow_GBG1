@@ -50,8 +50,8 @@ public class Menu {
                 case "1" -> consoleUI.createBooking();
                 case "2" -> consoleUI.showAllBookings();
                 case "3" -> consoleUI.searchBooking();
-                case "4" -> consoleUI.deleteBooking();
-                case "5" -> consoleUI.updateBooking();
+                case "4" -> consoleUI.updateBooking();
+                case "5" -> consoleUI.deleteBooking();
                 case "6" -> showServiceMenu(); 
                 case "0" -> output.printExitProgram();
                 default -> output.printDefaultMenuChoice();
