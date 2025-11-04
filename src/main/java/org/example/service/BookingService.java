@@ -47,7 +47,7 @@ public class BookingService {
 
         double price = priceService.calculatePrice(bookingType, vehicle);
 
-        Booking booking = new Booking(vehicle, date, price, customer, bookingType);
+        Booking booking = new Booking(vehicle, date, price, customer);
         bookingRepository.add(booking);
         loggingService.logInfo("✅ Ny bokning skapad: " + booking);
     }
