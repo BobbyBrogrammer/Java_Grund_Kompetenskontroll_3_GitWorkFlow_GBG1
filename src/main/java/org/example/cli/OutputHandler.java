@@ -72,7 +72,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
     public void printUpdateBookTitle() {
-        io.printLine("\n=== Ta bort bokning ===");
+        io.printLine("\n=== Redigera bokning ===");
     }
     public void printStateNewVehicleInfoToUpdate() {
         io.printLine("Ange nytt fordon: ");
@@ -100,4 +100,14 @@ public class OutputHandler {
     public void printDefaultMenuChoice() {
         io.printLine("Ogiltigt val, försök igen!");
     }
+    //---------------------------InputHandler------------------------------
+    public void printEmptyNameNotAllowed() {io.printLine("Namn får inte vara tomt, försök igen!");}
+    public void printWrongEmail() {io.printLine("Ogiltig e-post, försök igen!");}
+    public void printWrongPhoneNumber() {io.printLine("Ogiltigt telefonnummer (endast siffror, 6-15 tecken!");}
+    public void printWrongRegNumber() {io.printLine("Ogiltigt registreringsnummer, försök igen!");}
+    public void printModelCantBeEmpty() {io.printLine("Modell får inte vara tom, försök igen!");}
+    public void printWrongYearModel() {io.printLine("Ogiltig årsmodell, försök igen!");}
+    public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
+    public void printWrongDate() {io.printLine("Ogiltigt datumformat.");}
+    public void printInputDate() {io.printLine("Ange datum (ÅÅÅÅ-MM-DD): ");}
 }
