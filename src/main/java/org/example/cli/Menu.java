@@ -34,7 +34,7 @@ public class Menu {
                 }
                 case "0" -> {
                     output.printExitProgram();
-                    return;
+                    System.exit(0);
                 }
                 default -> output.printDefaultMenuChoice();
             }
