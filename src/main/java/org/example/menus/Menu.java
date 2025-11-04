@@ -1,6 +1,7 @@
-package org.example.cli;
+package org.example.menus;
 
-import org.example.service.CompletionService;
+import org.example.cli.InputHandler;
+import org.example.cli.OutputHandler;
 import org.example.systemIO.IIO;
 
 public class Menu {

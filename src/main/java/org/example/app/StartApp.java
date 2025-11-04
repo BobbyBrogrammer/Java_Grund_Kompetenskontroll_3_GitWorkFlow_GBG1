@@ -1,6 +1,6 @@
 package org.example.app;
 
-import org.example.cli.Menu;
+import org.example.menus.Menu;
 
 public class StartApp {
     public static void main(String[] args) {
