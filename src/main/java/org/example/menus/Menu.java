@@ -1,5 +1,6 @@
 package org.example.menus;
 
+import org.example.cli.BookingUI;
 import org.example.cli.InputHandler;
 import org.example.cli.OutputHandler;
 import org.example.systemIO.IIO;
