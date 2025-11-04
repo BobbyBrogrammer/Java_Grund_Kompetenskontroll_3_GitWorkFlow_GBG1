@@ -14,6 +14,33 @@ public class Menu {
         this.consoleUI = new ConsoleUI(io, input, output, completionService);
     }
 
+    public void showServiceMenu() {
+        while (true) {
+            output.printServiceChoices();
+            String choice = io.readLine().trim();
+
+            switch (choice) {
+                case "1" -> {
+                    output.printBesiktningChoice();
+                    showMainMenu();
+                }
+                case "2" -> {
+                    output.printReparationChoice();
+                    showMainMenu();
+                }
+                case "3" -> {
+                    output.printServiceChoice();
+                    showMainMenu();
+                }
+                case "0" -> {
+                    output.printExitProgram();
+                    return;
+                }
+                default -> output.printDefaultMenuChoice();
+            }
+        }
+    }
+
     public void showMainMenu() {
         while (true) {
             output.printMenyChoices();
@@ -25,6 +52,7 @@ public class Menu {
                 case "3" -> consoleUI.searchBooking();
                 case "4" -> consoleUI.deleteBooking();
                 case "5" -> consoleUI.updateBooking();
+                case "6" -> showServiceMenu(); 
                 case "0" -> output.printExitProgram();
                 default -> output.printDefaultMenuChoice();
             }

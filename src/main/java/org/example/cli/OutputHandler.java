@@ -72,7 +72,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
     public void printUpdateBookTitle() {
-        io.printLine("\n=== Ta bort bokning ===");
+        io.printLine("\n=== Redigera bokning ===");
     }
     public void printStateNewVehicleInfoToUpdate() {
         io.printLine("Ange nytt fordon: ");
@@ -83,8 +83,20 @@ public class OutputHandler {
     public void printNoBookingFoundToUpdate() {
         io.printLine("Ingen bokning hittades att uppdatera.");
     }
-    //-----------------------------------------------------------------
+    //---------------------------InfoText------------------------------
+    public void printBesiktningChoice() {io.printLine("Du har valt: Besiktning");}
+    public void printReparationChoice() {io.printLine("Du har valt: Reparation");}
+    public void printServiceChoice() {io.printLine("Du har valt: Service");}
+
     //---------------------------MenyText------------------------------
+    public void printServiceChoices() {
+        io.printLine("\n--- Välj tjänst ---");
+        io.printLine("1. Besiktning");
+        io.printLine("2. Reparation");
+        io.printLine("3. Service");
+        io.printLine("0. Avsluta");
+    }
+
     public void printMenyChoices() {
         io.printLine("\n--- Bilmeckarna ---");
         io.printLine("1. Skapa bokning");
@@ -92,6 +104,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printExitProgram() {
@@ -100,4 +113,14 @@ public class OutputHandler {
     public void printDefaultMenuChoice() {
         io.printLine("Ogiltigt val, försök igen!");
     }
+    //---------------------------InputHandler------------------------------
+    public void printEmptyNameNotAllowed() {io.printLine("Namn får inte vara tomt, försök igen!");}
+    public void printWrongEmail() {io.printLine("Ogiltig e-post, försök igen!");}
+    public void printWrongPhoneNumber() {io.printLine("Ogiltigt telefonnummer (endast siffror, 6-15 tecken!");}
+    public void printWrongRegNumber() {io.printLine("Ogiltigt registreringsnummer, försök igen!");}
+    public void printModelCantBeEmpty() {io.printLine("Modell får inte vara tom, försök igen!");}
+    public void printWrongYearModel() {io.printLine("Ogiltig årsmodell, försök igen!");}
+    public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
+    public void printWrongDate() {io.printLine("Ogiltigt datumformat.");}
+    public void printInputDate() {io.printLine("Ange datum (ÅÅÅÅ-MM-DD): ");}
 }
