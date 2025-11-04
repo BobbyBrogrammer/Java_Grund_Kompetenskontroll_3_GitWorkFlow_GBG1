@@ -23,7 +23,7 @@ public class ConsoleUI {
         this.io = io;
         this.input = input;
         this.output = output;
-        this.completionService = new CompletionService();
+        this.completionService = completionService;
         this.searchAction = new SearchForBooking(input, output);
         this.deleteAction = new DeleteBooking(input, output);
         this.updateAction = new UpdateBooking(input, output);
