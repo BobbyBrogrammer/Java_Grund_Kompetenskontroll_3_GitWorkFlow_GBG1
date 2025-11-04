@@ -31,5 +31,4 @@ public class AppConfig {
     private final ConsoleUI ui = new ConsoleUI(IO, inputHandler, outputHandler, completionService);
     private final Menu menuRun = new Menu(IO, inputHandler, outputHandler, completionService);
     public final Menu menuRunner(){return menuRun;}
-
 }

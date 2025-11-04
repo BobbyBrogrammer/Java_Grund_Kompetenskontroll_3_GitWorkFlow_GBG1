@@ -52,8 +52,11 @@ public class Menu {
                 case "3" -> consoleUI.searchBooking();
                 case "4" -> consoleUI.deleteBooking();
                 case "5" -> consoleUI.updateBooking();
-                case "6" -> showServiceMenu(); 
-                case "0" -> output.printExitProgram();
+                case "6" -> showServiceMenu();
+                case "0" -> {
+                    output.printExitProgram(); // Skriver ut t.ex. "Programmet avslutas..."
+                    System.exit(0);            // Avslutar programmet
+                }
                 default -> output.printDefaultMenuChoice();
             }
         }
