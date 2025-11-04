@@ -83,8 +83,20 @@ public class OutputHandler {
     public void printNoBookingFoundToUpdate() {
         io.printLine("Ingen bokning hittades att uppdatera.");
     }
-    //-----------------------------------------------------------------
+    //---------------------------InfoText------------------------------
+    public void printBesiktningChoice() {io.printLine("Du har valt: Besiktning");}
+    public void printReparationChoice() {io.printLine("Du har valt: Reparation");}
+    public void printServiceChoice() {io.printLine("Du har valt: Service");}
+
     //---------------------------MenyText------------------------------
+    public void printServiceChoices() {
+        io.printLine("\n--- Välj tjänst ---");
+        io.printLine("1. Besiktning");
+        io.printLine("2. Reparation");
+        io.printLine("3. Service");
+        io.printLine("0. Avsluta");
+    }
+
     public void printMenyChoices() {
         io.printLine("\n--- Bilmeckarna ---");
         io.printLine("1. Skapa bokning");
@@ -92,6 +104,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printExitProgram() {
