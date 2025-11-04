@@ -4,13 +4,13 @@ import org.example.cli.ConsoleUI;
 import org.example.cli.OutputHandler;
 import org.example.systemIO.IIO;
 
-public class ChooseBookingMenu {
+public class BookingSelectionMenu {
    private final IIO io;
    private final OutputHandler output;
    private final ConsoleUI ui;
 
 
-    public ChooseBookingMenu(IIO io, OutputHandler output, ConsoleUI ui) {
+    public BookingSelectionMenu(IIO io, OutputHandler output, ConsoleUI ui) {
         this.io = io;
         this.output = output;
         this.ui = ui;
