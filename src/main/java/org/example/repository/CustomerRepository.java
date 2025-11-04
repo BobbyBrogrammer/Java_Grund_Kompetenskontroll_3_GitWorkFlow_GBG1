@@ -5,6 +5,7 @@ import org.example.models.Customer;
 import java.util.*;
 
 public class CustomerRepository implements Repository <Customer, String>{
+
     Map<String, Customer> customers = new LinkedHashMap<>();
 
     @Override

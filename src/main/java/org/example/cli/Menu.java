@@ -5,13 +5,14 @@ import org.example.systemIO.IIO;
 
 public class Menu {
     private final IIO io;
+    private final InputHandler input;
     private final OutputHandler output;
-    private final BookingUI bookingUI;
 
-    public Menu(IIO io, InputHandler input, OutputHandler output, CompletionService completionService) {
+    public Menu(IIO io, InputHandler input, OutputHandler output) {
         this.io = io;
         this.output = output;
-        this.bookingUI = new ConsoleUI(io, input, output, completionService);
+        this.input = input;
+
     }
 
     public void showServiceMenu() {
