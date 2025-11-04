@@ -29,7 +29,7 @@ public class AppConfig {
     private final LoggingService loggingService = new LoggingService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
     private final ConsoleUI ui = new ConsoleUI(IO, inputHandler, outputHandler, completionService);
-    private final Menu menuRun = new Menu((SystemIO) IO, ui);
+    private final Menu menuRun = new Menu(IO, inputHandler, outputHandler, completionService);
     public final Menu menuRunner(){return menuRun;}
 
 }
