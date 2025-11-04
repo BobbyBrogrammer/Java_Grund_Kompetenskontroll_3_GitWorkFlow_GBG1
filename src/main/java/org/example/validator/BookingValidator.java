@@ -1,4 +1,4 @@
 package org.example.validator;
 
-public class EmailValidator {
+public class BookingValidator {
 }
