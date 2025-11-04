@@ -36,5 +36,4 @@ public class AppConfig {
     private final ConsoleUI ui = new ConsoleUI(IO, completionService);
     private final Menu menuRun = new Menu((SystemIO) IO, ui);
     public final Menu menuRunner(){return menuRun;}
-
 }

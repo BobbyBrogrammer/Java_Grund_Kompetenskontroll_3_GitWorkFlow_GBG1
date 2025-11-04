@@ -6,12 +6,12 @@ import org.example.systemIO.IIO;
 public class Menu {
     private final IIO io;
     private final OutputHandler output;
-    private final ConsoleUI consoleUI;
+    private final BookingUI bookingUI;
 
     public Menu(IIO io, InputHandler input, OutputHandler output, CompletionService completionService) {
         this.io = io;
         this.output = output;
-        this.consoleUI = new ConsoleUI(io, input, output, completionService);
+        this.bookingUI = new ConsoleUI(io, input, output, completionService);
     }
 
     public void showServiceMenu() {
@@ -47,13 +47,16 @@ public class Menu {
             String choice = io.readLine().trim();
 
             switch (choice) {
-                case "1" -> consoleUI.createBooking();
-                case "2" -> consoleUI.showAllBookings();
-                case "3" -> consoleUI.searchBooking();
-                case "4" -> consoleUI.updateBooking();
-                case "5" -> consoleUI.deleteBooking();
-                case "6" -> showServiceMenu(); 
-                case "0" -> output.printExitProgram();
+                case "1" -> bookingUI.createBooking();
+                case "2" -> bookingUI.showAllBookings();
+                case "3" -> bookingUI.searchBooking();
+                case "4" -> bookingUI.deleteBooking();
+                case "5" -> bookingUI.updateBooking();
+                case "6" -> showServiceMenu();
+                case "0" -> {
+                    output.printExitProgram();
+                    System.exit(0);
+                }
                 default -> output.printDefaultMenuChoice();
             }
         }

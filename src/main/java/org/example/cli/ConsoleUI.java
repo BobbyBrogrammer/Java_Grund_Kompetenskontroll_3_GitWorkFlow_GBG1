@@ -74,6 +74,8 @@ public class ConsoleUI {
         int year = input.readYearModel();
 
         output.printBookingSuccess();
+
+
     }
 
     public void showAllBookings() {
