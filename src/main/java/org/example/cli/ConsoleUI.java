@@ -21,9 +21,9 @@ import java.util.List;
 public class ConsoleUI {
     private  LocalDate localDate;
     private final IIO io;
-    private final VehicleRepository vehicleRepository;
-    private final CustomerRepository customerRepository;
-    private final BookingRepository bookingRepository;
+    private final Repository<Vehicle, String> vehicleRepository;
+    private final Repository<Customer, String> customerRepository;
+    private final Repository<Booking, Integer> bookingRepository;
     private final InputHandler input;
     private final OutputHandler output;
     private final VehicleFactory vehicleFactory;
@@ -38,7 +38,7 @@ public class ConsoleUI {
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, VehicleRepository vehicleRepository, CustomerRepository customerRepository, BookingRepository bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository, Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction) {
         this.io = io;
         this.input = input;
         this.output = output;
