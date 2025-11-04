@@ -86,7 +86,34 @@ public class OutputHandler {
     //-----------------------------------------------------------------
     //---------------------------MenyText------------------------------
     public void printMenyChoices() {
-        io.printLine("\n--- Bilmeckarna ---");
+        io.printLine("\n--- Bilmeckarna AB ---");
+        io.printLine("1. Skapa bokning");
+        io.printLine("2. Visa alla bokningar");
+        io.printLine("3. Sök bokning");
+        io.printLine("4. Uppdatera bokning");
+        io.printLine("5. Ta bort bokning");
+        io.printLine("0. Avsluta");
+    }
+    public void printMenyChoicesRepair() {
+        io.printLine("\n--- Bilmeckarna AB Reparation---");
+        io.printLine("1. Skapa bokning");
+        io.printLine("2. Visa alla bokningar");
+        io.printLine("3. Sök bokning");
+        io.printLine("4. Uppdatera bokning");
+        io.printLine("5. Ta bort bokning");
+        io.printLine("0. Avsluta");
+    }
+    public void printMenyChoicesInspection() {
+        io.printLine("\n--- Bilmeckarna AB Besiktning ---");
+        io.printLine("1. Skapa bokning");
+        io.printLine("2. Visa alla bokningar");
+        io.printLine("3. Sök bokning");
+        io.printLine("4. Uppdatera bokning");
+        io.printLine("5. Ta bort bokning");
+        io.printLine("0. Avsluta");
+    }
+    public void printMenyChoicesService() {
+        io.printLine("\n--- Bilmeckarna AB Service---");
         io.printLine("1. Skapa bokning");
         io.printLine("2. Visa alla bokningar");
         io.printLine("3. Sök bokning");
