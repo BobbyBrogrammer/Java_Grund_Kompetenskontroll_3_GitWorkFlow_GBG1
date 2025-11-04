@@ -1,4 +1,5 @@
 package org.example.validator;
 
-public interface Validator {
+public interface Validator<T> {
+    boolean isValid(T input);
 }
