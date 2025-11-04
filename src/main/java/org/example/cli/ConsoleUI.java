@@ -4,6 +4,7 @@ import org.example.factory.BookingFactory;
 import org.example.factory.CustomerFactory;
 import org.example.factory.VehicleFactory;
 import org.example.models.Booking;
+import org.example.models.BookingType;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
 import org.example.repository.BookingRepository;
@@ -11,6 +12,7 @@ import org.example.repository.CustomerRepository;
 import org.example.repository.Repository;
 import org.example.repository.VehicleRepository;
 import org.example.service.CompletionService;
+import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
 
@@ -31,6 +33,7 @@ public class ConsoleUI implements BookingUI{
     private final BookingFactory bookingFactory;
     private final CompletionService completionService;
     private final List<String> bookings = new ArrayList<>();
+    private final PriceService priceService;
 
 
     //Meny actions
@@ -38,7 +41,7 @@ public class ConsoleUI implements BookingUI{
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository, Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository, Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction, PriceService priceService) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -52,6 +55,7 @@ public class ConsoleUI implements BookingUI{
         this.searchAction = searchAction;
         this.deleteAction = deleteAction;
         this.updateAction = updateAction;
+        this.priceService = priceService;
     }
 
     public void createBooking() {
@@ -121,4 +125,33 @@ public class ConsoleUI implements BookingUI{
          vehicleRepository.add(vehicle);
          bookingRepository.add(book);
     }
+
+    public void createServiceBooking() {
+        output.printStateCreateNewBookingTitle();
+        output.askForRegistrationNumber();
+        String reg = io.readLine();
+        output.askForModel();
+        String model = io.readLine();
+        output.askForYearModel();
+        int yearModel = Integer.parseInt(io.readLine());
+        Vehicle vehicle = vehicleFactory.createVehicle(reg, model, yearModel);
+        output.askForName();
+        String name = io.readLine();
+        output.askForPhoneNumber();
+        String phoneNumber = io.readLine();
+        output.askForEmail();
+        String email = io.readLine();
+        Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
+        double price = priceService.calculateServicePrice(yearModel);
+        LocalDate localDate = LocalDate.now();
+        Booking book = bookingFactory.bookService(vehicle, localDate, customer, price);
+        customerRepository.add(customer);
+        vehicleRepository.add(vehicle);
+        bookingRepository.add(book);
+        completionService.completeProcess(email, reg, BookingType.SERVICE, vehicle);
+    }
 }
+
+
+
+

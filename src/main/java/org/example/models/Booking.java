@@ -12,15 +12,15 @@ public class Booking {
     private double price;
     private Customer customer;        // <--- ändrat från String
     private Status status;
-    //private BookingType bookingType;
+    private BookingType bookingType;
 
-    public Booking(Vehicle vehicle, LocalDate date, double price, Customer customer) {
+    public Booking(Vehicle vehicle, LocalDate date, double price, Customer customer, BookingType bookingType) {
         this.id = counter++;
         this.vehicle = vehicle;
         this.date = date;
         this.price = price;
         this.customer = customer;
-       // this.bookingType = bookingType;
+        this.bookingType = bookingType;
         this.status = Status.NOT_DONE;
     }
 
@@ -69,18 +69,18 @@ public class Booking {
         this.status = status;
     }
 
-    //public BookingType getBookingType() {
-    //    return bookingType;
-    //}
+    public BookingType getBookingType() {
+        return bookingType;
+    }
 
-   // public void setBookingType(BookingType bookingType) {
-       // this.bookingType = bookingType;
-    //}
+    public void setBookingType(BookingType bookingType) {
+        this.bookingType = bookingType;
+    }
 
     @Override
     public String toString() {
         return "Booking ID: " + id +
-               // " | Type: " + bookingType +
+                " | Type: " + bookingType +
                 " | Vehicle: " + vehicle +
                 " | Date: " + date +
                 " | Price: " + price +
