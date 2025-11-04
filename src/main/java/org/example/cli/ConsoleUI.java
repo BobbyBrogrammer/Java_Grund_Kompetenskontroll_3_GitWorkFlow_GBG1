@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleUI {
+public class ConsoleUI implements BookingUI{
     private  LocalDate localDate;
     private final IIO io;
     private final VehicleRepository vehicleRepository;
@@ -38,14 +38,18 @@ public class ConsoleUI {
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, VehicleRepository vehicleRepository, CustomerRepository customerRepository, BookingRepository bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService,
+                     VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory,
+                     VehicleRepository vehicleRepository, CustomerRepository customerRepository,
+                     BookingRepository bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction,
+                     UpdateBooking updateAction) {
         this.io = io;
         this.input = input;
         this.output = output;
         this.completionService = completionService;
-        this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
+        this.vehicleFactory = vehicleFactory;
         this.vehicleRepository= vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
