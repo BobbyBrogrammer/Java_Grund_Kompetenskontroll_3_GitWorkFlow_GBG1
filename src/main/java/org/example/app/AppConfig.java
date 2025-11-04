@@ -5,6 +5,7 @@ import org.example.cli.*;
 import org.example.factory.BookingFactory;
 import org.example.factory.CustomerFactory;
 import org.example.factory.VehicleFactory;
+import org.example.menus.Menu;
 import org.example.models.Booking;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
@@ -15,9 +16,6 @@ import org.example.repository.VehicleRepository;
 import org.example.service.*;
 import org.example.systemIO.IIO;
 import org.example.systemIO.SystemIO;
-
-import java.time.LocalDate;
-import java.util.Locale;
 
 public class AppConfig {
 
