@@ -6,7 +6,7 @@ import org.example.systemIO.IIO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleUI {
+public class ConsoleUI implements BookingUI {
     private final IIO io;
     private final InputHandler input;
     private final OutputHandler output;
@@ -28,6 +28,7 @@ public class ConsoleUI {
         this.deleteAction = new DeleteBooking(input, output);
         this.updateAction = new UpdateBooking(input, output);
     }
+    @Override
     public void createBooking() {
         output.printStateCreateNewBookingTitle();
         output.printStateCustomerName();
@@ -52,6 +53,7 @@ public class ConsoleUI {
 
 
     }
+    @Override
     public void showAllBookings() {
         output.printShowAllBookingsTitle();
         if (bookings.isEmpty()) {
@@ -62,7 +64,18 @@ public class ConsoleUI {
             }
         }
     }
-    public void searchBooking() {searchAction.searchBooking(bookings);}
-    public void deleteBooking() {deleteAction.deleteBooking(bookings);}
-    public void updateBooking() {updateAction.updateBooking(bookings);}
+    @Override
+    public void searchBooking() {
+        searchAction.searchBooking(bookings);
+    }
+
+    @Override
+    public void deleteBooking() {
+        deleteAction.deleteBooking(bookings);
+    }
+
+    @Override
+    public void updateBooking() {
+        updateAction.updateBooking(bookings);
+    }
 }
