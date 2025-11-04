@@ -11,6 +11,7 @@ import org.example.repository.BookingRepository;
 import org.example.repository.CustomerRepository;
 import org.example.repository.Repository;
 import org.example.repository.VehicleRepository;
+import org.example.service.BookingService;
 import org.example.service.CompletionService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
@@ -34,6 +35,7 @@ public class ConsoleUI implements BookingUI{
     private final CompletionService completionService;
     private final List<String> bookings = new ArrayList<>();
     private final PriceService priceService;
+    private final BookingService bookingService;
 
 
     //Meny actions
@@ -41,7 +43,12 @@ public class ConsoleUI implements BookingUI{
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository, Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction, PriceService priceService) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService,
+                     VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory,
+                     Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
+                     Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction,
+                     DeleteBooking deleteAction, UpdateBooking updateAction, PriceService priceService,
+                     BookingService bookingService) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -56,6 +63,7 @@ public class ConsoleUI implements BookingUI{
         this.deleteAction = deleteAction;
         this.updateAction = updateAction;
         this.priceService = priceService;
+        this.bookingService = bookingService;
     }
 
     public void createBooking() {
@@ -106,7 +114,8 @@ public class ConsoleUI implements BookingUI{
 
 
     public void createInspectionBooking(){
-        output.askForRegistrationNumber();
+         output.printStateCreateNewBookingTitle();
+         output.askForRegistrationNumber();
          String reg = io.readLine();
          output.askForModel();
          String model = io.readLine();
@@ -144,11 +153,51 @@ public class ConsoleUI implements BookingUI{
         Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
         double price = priceService.calculateServicePrice(yearModel);
         LocalDate localDate = LocalDate.now();
-        Booking book = bookingFactory.bookService(vehicle, localDate, customer, price);
+        Booking booking = bookingFactory.bookService(vehicle, localDate, customer, price);
         customerRepository.add(customer);
         vehicleRepository.add(vehicle);
-        bookingRepository.add(book);
+        bookingRepository.add(booking);
         completionService.completeProcess(email, reg, BookingType.SERVICE, vehicle);
+        output.printSuccess("Service-bokning skapad för " + reg + ". Pris: " + price + " kr");
+    }
+
+    public void createRepairBooking() {
+        output.printStateCreateNewBookingTitle();
+        output.askForRegistrationNumber();
+        String reg = io.readLine();
+        output.askForModel();
+        String model = io.readLine();
+        output.askForYearModel();
+        int yearModel = Integer.parseInt(io.readLine());
+        Vehicle vehicle = vehicleFactory.createVehicle(reg, model, yearModel);
+        output.askForName();
+        String name = io.readLine();
+        output.askForPhoneNumber();
+        String phoneNumber = io.readLine();
+        output.askForEmail();
+        String email = io.readLine();
+        Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
+        Booking booking = bookingFactory.bookRepair(vehicle, localDate, customer);
+        customerRepository.add(customer);
+        vehicleRepository.add(vehicle);
+        bookingRepository.add(booking);
+        output.printSuccess("Reparation-bokning är skapad! Priset sätts efter att arbetet är klart.");
+    }
+
+    public void completeRepairBooking() {
+        output.printCompleteRepairTitle();
+        output.askForBookingId();
+        int bookingId = Integer.parseInt(io.readLine());
+
+        output.askForRepairPrice();
+        double repairPrice = Double.parseDouble(io.readLine());
+
+        try {
+            bookingService.completeRepairBooking(bookingId, repairPrice);
+            output.printSuccess("Reparationen är nu klar och e-post skickat till kunden.");
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+            output.printError(ex.getMessage());
+        }
     }
 }
 

@@ -7,9 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PriceService {
-   public double bookInspection(){
-       return 550.0;
-   }
+   public static final double INSPECTION_PRICE = 550.0;
 
         public double calculatePrice(BookingType bookingType, Vehicle vehicle) {
         return switch (bookingType) {
