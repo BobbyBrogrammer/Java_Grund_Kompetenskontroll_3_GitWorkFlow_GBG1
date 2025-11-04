@@ -1,8 +1,10 @@
 package org.example.app;
 
 
+import org.example.cli.InputHandler;
 import org.example.cli.Menu;
 import org.example.cli.ConsoleUI;
+import org.example.cli.OutputHandler;
 import org.example.models.Booking;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
@@ -21,11 +23,13 @@ public class AppConfig {
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
     private final PriceService priceService = new PriceService();
     private final ValidationService validationService = new ValidationService();
+    private final OutputHandler outputHandler = new OutputHandler(IO);
+    private final InputHandler inputHandler = new InputHandler(outputHandler,IO, validationService);
     private final MailService mailService = new MailService();
     private final LoggingService loggingService = new LoggingService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final ConsoleUI ui = new ConsoleUI(IO, completionService);
-    private final Menu menuRun = new Menu((SystemIO) IO, ui);
+    private final ConsoleUI ui = new ConsoleUI(IO, inputHandler, outputHandler, completionService);
+    private final Menu menuRun = new Menu(IO, inputHandler, outputHandler, completionService);
     public final Menu menuRunner(){return menuRun;}
 
 }
