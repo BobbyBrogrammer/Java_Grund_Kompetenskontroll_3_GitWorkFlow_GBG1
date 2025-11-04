@@ -13,8 +13,8 @@ public class BookingFactory {
 
     public BookingFactory(PriceService priceService) {
         this.priceService = priceService;
-
     }
+
 
     public Booking bookInspection(Vehicle vehicle, LocalDate localDate, Customer customer){
         double price = priceService.bookInspection();
