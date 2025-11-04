@@ -122,7 +122,3 @@ public class ConsoleUI implements BookingUI{
          bookingRepository.add(book);
     }
 }
-
-
-
-
