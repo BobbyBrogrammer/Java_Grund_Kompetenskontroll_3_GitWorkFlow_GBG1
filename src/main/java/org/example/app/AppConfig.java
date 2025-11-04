@@ -3,6 +3,8 @@ package org.example.app;
 
 import org.example.cli.Menu;
 import org.example.cli.ConsoleUI;
+import org.example.factory.BookingFactory;
+import org.example.factory.VehicleFactory;
 import org.example.models.Booking;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
@@ -14,12 +16,19 @@ import org.example.service.*;
 import org.example.systemIO.IIO;
 import org.example.systemIO.SystemIO;
 
+import java.time.LocalDate;
+import java.util.Locale;
+
 public class AppConfig {
     private final IIO IO = new SystemIO();
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
+
+    private final VehicleFactory vehicleFactory = new VehicleFactory();
     private final PriceService priceService = new PriceService();
+
+    private final BookingFactory bookingFactory = new BookingFactory(priceService);
     private final ValidationService validationService = new ValidationService();
     private final MailService mailService = new MailService();
     private final LoggingService loggingService = new LoggingService();

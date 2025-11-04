@@ -4,22 +4,9 @@ import org.example.models.BookingType;
 import org.example.models.Vehicle;
 
 public class PriceService {
-    private static final double INSPECTION_PRICE = 550.0;
-
-//    public double calculatePrice(String vehicleType) {
-//        // Enkel prisberäkning baserat på typ (exempel-tabell)
-//        switch (vehicleType.toLowerCase()) {
-//            case "car":
-//                return 500.0;
-//            case "truck":
-//                return 800.0;
-//            case "motorcycle":
-//                return 300.0;
-//            default:
-//                System.out.println("Okänd fordonstyp, pris sätts till 0 kr.");
-//                return 0.0;
-//        }
-//    }
+   public double bookInspection(){
+       return 550.0;
+   }
 
         public double calculatePrice(BookingType bookingType, Vehicle vehicle) {
         return switch (bookingType) {

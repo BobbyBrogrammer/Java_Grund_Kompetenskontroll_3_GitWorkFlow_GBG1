@@ -5,7 +5,7 @@ import org.example.validator.CustomerValidator;
 
 public class CustomerFactory {
     CustomerValidator validator;
-    public Customer customer(String name, String phoneNumber, String email){
+    public Customer createCustomer(String name, String phoneNumber, String email){
         validator.validateCustomer(name);
         validator.validatePhoneNumber(phoneNumber);
         validator.validateEmail(email);
