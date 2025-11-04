@@ -7,11 +7,13 @@ public class Menu {
     private final IIO io;
     private final InputHandler input;
     private final OutputHandler output;
+    private final BookingUI bookingUI;
 
-    public Menu(IIO io, InputHandler input, OutputHandler output) {
+    public Menu(IIO io, InputHandler input, OutputHandler output, BookingUI bookingUI) {
         this.io = io;
         this.output = output;
         this.input = input;
+        this.bookingUI = bookingUI;
 
     }
 
