@@ -1,8 +1,6 @@
 package org.example.factory;
 
-import org.example.models.Booking;
-import org.example.models.Customer;
-import org.example.models.Vehicle;
+import org.example.models.*;
 import org.example.service.PriceService;
 
 import java.time.LocalDate;
