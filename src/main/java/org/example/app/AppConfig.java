@@ -1,9 +1,9 @@
 package org.example.app;
 
 
-import org.example.cli.Menu;
-import org.example.cli.ConsoleUI;
+import org.example.cli.*;
 import org.example.factory.BookingFactory;
+import org.example.factory.CustomerFactory;
 import org.example.factory.VehicleFactory;
 import org.example.models.Booking;
 import org.example.models.Customer;
@@ -20,20 +20,24 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class AppConfig {
+    private final InputHandler input = new InputHandler();
+    private final OutputHandler output = new OutputHandler()
     private final IIO IO = new SystemIO();
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
-
     private final VehicleFactory vehicleFactory = new VehicleFactory();
+    private final CustomerFactory customerFactory = new CustomerFactory();
     private final PriceService priceService = new PriceService();
-
+    private final SearchForBooking searchAction = new SearchForBooking(input, output);
+    private final DeleteBooking deleteAction = new DeleteBooking(input, output);
+    private final UpdateBooking updateAction = new UpdateBooking(input, output);
     private final BookingFactory bookingFactory = new BookingFactory(priceService);
     private final ValidationService validationService = new ValidationService();
     private final MailService mailService = new MailService();
     private final LoggingService loggingService = new LoggingService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final ConsoleUI ui = new ConsoleUI(IO, completionService);
+    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository, customerRepository, bookingRepository, searchAction, deleteAction, updateAction);
     private final Menu menuRun = new Menu((SystemIO) IO, ui);
     public final Menu menuRunner(){return menuRun;}
 }

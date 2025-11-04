@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleUI {
-    private final LocalDate localDate;
+    private  LocalDate localDate;
     private final IIO io;
     private final VehicleRepository vehicleRepository;
     private final CustomerRepository customerRepository;
@@ -38,22 +38,20 @@ public class ConsoleUI {
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService,
-                     VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory,
-                     VehicleRepository vehicleRepository, CustomerRepository customerRepository,
-                     BookingRepository bookingRepository) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, VehicleRepository vehicleRepository, CustomerRepository customerRepository, BookingRepository bookingRepository, SearchForBooking searchAction, DeleteBooking deleteAction, UpdateBooking updateAction) {
         this.io = io;
         this.input = input;
         this.output = output;
+        this.completionService = completionService;
+        this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
         this.vehicleRepository= vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
-        this.completionService = new CompletionService();
-        this.searchAction = new SearchForBooking(input, output);
-        this.deleteAction = new DeleteBooking(input, output);
-        this.updateAction = new UpdateBooking(input, output);
+        this.searchAction = searchAction;
+        this.deleteAction = deleteAction;
+        this.updateAction = updateAction;
     }
 
     public void createBooking() {
@@ -77,8 +75,6 @@ public class ConsoleUI {
         int year = input.readYearModel();
 
         output.printBookingSuccess();
-
-
     }
 
     public void showAllBookings() {
