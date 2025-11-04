@@ -38,7 +38,10 @@ public class ConsoleUI {
     private final DeleteBooking deleteAction;
     private final UpdateBooking updateAction;
 
-    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService, VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory, VehicleRepository vehicleRepository, CustomerRepository customerRepository, BookingRepository bookingRepository) {
+    public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService,
+                     VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory,
+                     VehicleRepository vehicleRepository, CustomerRepository customerRepository,
+                     BookingRepository bookingRepository) {
         this.io = io;
         this.input = input;
         this.output = output;

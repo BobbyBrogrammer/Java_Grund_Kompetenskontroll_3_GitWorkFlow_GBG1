@@ -50,8 +50,8 @@ public class Menu {
                 case "1" -> bookingUI.createBooking();
                 case "2" -> bookingUI.showAllBookings();
                 case "3" -> bookingUI.searchBooking();
-                case "4" -> bookingUI.deleteBooking();
-                case "5" -> bookingUI.updateBooking();
+                case "4" -> bookingUI.updateBooking();
+                case "5" -> bookingUI.deleteBooking();
                 case "6" -> showServiceMenu();
                 case "0" -> {
                     output.printExitProgram();
