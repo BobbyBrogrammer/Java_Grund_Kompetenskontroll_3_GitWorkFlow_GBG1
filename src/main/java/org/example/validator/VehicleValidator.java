@@ -1,13 +1,12 @@
-
 package org.example.validator;
-
 
 import org.example.exceptions.InvalidRegistrationNumberException;
 import org.example.exceptions.InvalidYearModelException;
 import org.example.models.Vehicle;
 
-
 public class VehicleValidator {
+
+
 
 
     public void validateRegistrationNumber(String reg){
@@ -25,6 +24,4 @@ public class VehicleValidator {
             throw new InvalidYearModelException("Årsmodell kan inte vara under år 1900 eller över 2026 " + year);
         }
     }
-
-
 }
