@@ -129,7 +129,7 @@ public class ConsoleUI implements BookingUI{
          output.askForEmail();
          String email = io.readLine();
          Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
-         LocalDate date = LocalDate.now();
+         LocalDate localDate = LocalDate.now();
          Booking book =  bookingFactory.bookInspection(vehicle, localDate, customer);
          customerRepository.add(customer);
          vehicleRepository.add(vehicle);
@@ -178,7 +178,7 @@ public class ConsoleUI implements BookingUI{
         output.askForEmail();
         String email = io.readLine();
         Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
-        LocalDate date = LocalDate.now();
+        LocalDate localDate = LocalDate.now();
         Booking booking = bookingFactory.bookRepair(vehicle, localDate, customer);
         customerRepository.add(customer);
         vehicleRepository.add(vehicle);
