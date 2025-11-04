@@ -9,6 +9,7 @@ import org.example.repository.BookingRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -20,17 +21,17 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final LoggingService loggingService;
     private final ValidationService validationService;
-    private final PriceService priceCalculatorService;
+    private final PriceService priceService;
 
     // 🔹 Constructor med dependency injection
     public BookingService(BookingRepository bookingRepository,
                           LoggingService loggingService,
                           ValidationService validationService,
-                          PriceService priceCalculatorService) {
+                          PriceService priceService) {
         this.bookingRepository = bookingRepository;
         this.loggingService = loggingService;
         this.validationService = validationService;
-        this.priceCalculatorService = priceCalculatorService;
+        this.priceService = priceService;
     }
 
     // --------------------------------------------------
@@ -38,16 +39,16 @@ public class BookingService {
     /**
      * Skapar en ny bokning om all data är giltig.
      */
-    public void createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType type) {
+    public void createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType bookingType) {
         if (!validationService.isValidDate(date)) {
             System.out.println("❌ Ogiltigt datum!");
             return;
         }
 
-        double price = priceCalculatorService.calculatePrice(type, vehicle);
+        double price = priceService.calculatePrice(bookingType, vehicle);
 
-        Booking booking = new Booking(vehicle, date, price, customer, type);
-        bookingRepository.addBooking(booking);
+        Booking booking = new Booking(vehicle, date, price, customer, bookingType);
+        bookingRepository.add(booking);
         loggingService.logInfo("✅ Ny bokning skapad: " + booking);
     }
 
@@ -57,7 +58,7 @@ public class BookingService {
      * Hämtar alla bokningar
      */
     public List<Booking> getAllBookings() {
-        return bookingRepository.getAllBookings();
+        return bookingRepository.findAll();
     }
 
     // --------------------------------------------------
@@ -66,7 +67,7 @@ public class BookingService {
      * Filtrerar bokningar baserat på status (DONE / NOT_DONE)
      */
     public List<Booking> getBookingsByStatus(Status status) {
-        return bookingRepository.getAllBookings().stream()
+        return bookingRepository.findAll().stream()
                 .filter(b -> b.getStatus() == status)
                 .collect(Collectors.toList());
     }
@@ -77,7 +78,7 @@ public class BookingService {
      * Filtrerar bokningar per kund
      */
     public List<Booking> getBookingsByCustomer(String customerName) {
-        return bookingRepository.getAllBookings().stream()
+        return bookingRepository.findAll().stream()
                 .filter(b -> b.getCustomer().getName().equalsIgnoreCase(customerName))
                 .collect(Collectors.toList());
     }
@@ -88,13 +89,11 @@ public class BookingService {
      * Markerar en bokning som färdig (DONE)
      */
     public void completeBooking(int bookingId) {
-        Booking booking = bookingRepository.findById(bookingId);
-        if (booking != null) {
-            booking.setStatus(Status.DONE);
-            loggingService.logInfo("🟢 Bokning " + bookingId + " markerad som klar.");
-        } else {
-            loggingService.logError("❌ Bokning med ID " + bookingId + " hittades inte!");
-        }
+        bookingRepository.findById(bookingId).ifPresentOrElse(
+                booking -> {booking.setStatus(Status.DONE);
+                loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
+                }, () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
+        );
     }
 
     // --------------------------------------------------
@@ -103,8 +102,13 @@ public class BookingService {
      * Tar bort en bokning
      */
     public void removeBooking(int bookingId) {
-        bookingRepository.removeBooking(bookingId);
-        loggingService.logInfo("🗑️ Bokning med ID " + bookingId + " har tagits bort.");
+        bookingRepository.findById(bookingId).ifPresentOrElse(
+                booking -> {
+                    bookingRepository.remove(bookingId);
+                    loggingService.logInfo("Bokning med ID: " + booking + " har tagits bort.");
+                },
+                () -> loggingService.logError("Bokning med ID " + bookingId + " hittades inte.")
+        );
     }
 
     // --------------------------------------------------
@@ -113,11 +117,9 @@ public class BookingService {
      * Skriver ut alla bokningar till konsolen
      */
     public void printAllBookings() {
-        List<Booking> bookings = bookingRepository.getAllBookings();
-        if (bookings.isEmpty()) {
-            System.out.println("📭 Inga bokningar tillgängliga.");
-        } else {
-            bookings.forEach(System.out::println);
-        }
+        List<Booking> bookings = bookingRepository.findAll();
+        Optional.of(bookings).filter(list -> !list.isEmpty())
+                .ifPresentOrElse(list -> list.forEach(b -> System.out.println(b)),
+                        () -> System.out.println("Inga bokningar är tillgängliga."));
     }
 }

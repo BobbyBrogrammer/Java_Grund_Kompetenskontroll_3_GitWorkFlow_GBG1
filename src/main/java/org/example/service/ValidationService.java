@@ -1,5 +1,7 @@
 package org.example.service;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class ValidationService {
@@ -22,4 +24,21 @@ public class ValidationService {
         }
         return valid;
     }
+
+    public boolean isValidDate(String date) {
+        if (date == null || date.isBlank()) {
+            return false;
+        }
+        try {
+            LocalDate parsedDate = LocalDate.parse(date);
+            return !parsedDate.isBefore(LocalDate.now());
+        } catch (DateTimeException ex) {
+            System.out.println("Ogiltigt datumformat. Använd ÅÅÅÅ-MM-DD.");
+            return false;
+        }
+    }
+    public boolean isValidDate(LocalDate date) {
+        return date != null && !date.isBefore(LocalDate.now());
+    }
+
 }
