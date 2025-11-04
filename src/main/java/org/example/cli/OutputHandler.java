@@ -104,6 +104,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printMenyChoicesRepair() {
@@ -150,4 +151,28 @@ public class OutputHandler {
     public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
     public void printWrongDate() {io.printLine("Ogiltigt datumformat.");}
     public void printInputDate() {io.printLine("Ange datum (ÅÅÅÅ-MM-DD): ");}
+
+
+
+    //bookingMenu
+    public void printChooseBookingMenu(){
+        io.printLine("----Välj tjänst----");
+        io.printLine("1. Besiktning. ");
+        io.printLine("2. Service. ");
+        io.printLine("3. Reparation. ");
+        io.printLine("0 Tillbaks. ");
+    }
+    public void askForRegistrationNumber(){io.printLine("Ange registreringsnummer ");}
+    public void askForModel(){io.printLine("Ange bilmärke ");}
+    public void askForYearModel(){io.printLine("Ange årsmodell ");}
+    public void askForName(){io.printLine("Ange kundens namn ");}
+    public void askForPhoneNumber(){io.printLine("Ange kundens telefonnummer. ");}
+    public void askForEmail(){io.printLine("Ange kundens email ");}
+
+
+
+
+
+
 }
+
