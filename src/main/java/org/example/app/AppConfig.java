@@ -39,6 +39,6 @@ public class AppConfig {
     private final LoggingService loggingService = new LoggingService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
     private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction);
-    private final Menu menuRun = new Menu(IO, input, output );
+    private final Menu menuRun = new Menu(IO, input, output, ui);
     public final Menu menuRunner(){return menuRun;}
 }
