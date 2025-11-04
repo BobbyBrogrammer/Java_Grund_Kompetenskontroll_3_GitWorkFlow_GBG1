@@ -1,4 +1,4 @@
 package org.example.factory;
 
-public interface Factory {
+public interface Factory
 }
