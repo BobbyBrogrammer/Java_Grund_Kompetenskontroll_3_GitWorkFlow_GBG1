@@ -104,6 +104,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. Tillbaka till huvudmenyn");
         io.printLine("0. Avsluta");
     }
     public void printMenyChoicesRepair() {
