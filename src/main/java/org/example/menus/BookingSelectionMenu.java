@@ -23,22 +23,11 @@ public class BookingSelectionMenu {
              int choice = Integer.parseInt(io.readLine());
              switch (choice){
                  case 1 ->{ui.createInspectionBooking();}
-                 case 2 ->{}
-                 case 3 ->{}
-                 case 0 ->{}
+                 case 2 ->{ui.createServiceBooking();}
+                 case 3 ->{ui.createRepairBooking();}
+                 case 0 ->{running = false;}
                  default -> {io.printLine("Ogiltigt val välj mellan 0-3 ");}
              }
-
-
-
-
-
-
-
-
-
-
-
          }
     }
 }
