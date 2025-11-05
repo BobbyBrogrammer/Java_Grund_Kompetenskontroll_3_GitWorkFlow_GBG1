@@ -26,6 +26,7 @@ import javax.xml.validation.Validator;
 public class AppConfig {
 
     private final IIO IO = new SystemIO();
+    private final LoggingService loggingService = new LoggingService();
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
@@ -43,7 +44,6 @@ public class AppConfig {
     private final DeleteBooking deleteAction = new DeleteBooking(input, output);
     private final UpdateBooking updateAction = new UpdateBooking(input, output);
     private final MailService mailService = new MailService();
-    private final LoggingService loggingService = new LoggingService();
     private final BookingService bookingService = new BookingService(bookingRepository, loggingService, validationService, priceService, mailService);
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
     private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService);
