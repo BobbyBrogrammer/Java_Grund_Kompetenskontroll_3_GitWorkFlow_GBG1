@@ -25,21 +25,19 @@ public class BookingService {
     private final LoggingService loggingService;
     private final ValidationService validationService;
     private final PriceService priceService;
-    private final MailService mailService;
     private final CompletionService completionService;
 
     //Constructor med dependency injection
     public BookingService(Repository<Booking, Integer> bookingRepository, Repository<Vehicle,
                                   String> vehicleRepository, Repository<Customer, String> customerRepository,
                           LoggingService loggingService, ValidationService validationService,
-                          PriceService priceService, MailService mailService, CompletionService completionService) {
+                          PriceService priceService, CompletionService completionService) {
         this.bookingRepository = bookingRepository;
         this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.loggingService = loggingService;
         this.validationService = validationService;
         this.priceService = priceService;
-        this.mailService = mailService;
         this.completionService = completionService;
     }
 
@@ -49,7 +47,6 @@ public class BookingService {
         //Validera datum
         if (!validationService.isValidDate(date)) {
             loggingService.logError("Ogiltigt datum vid bokning: " + date);
-            return null;
         }
         //Beräkna pris
         double price = priceService.calculatePrice(bookingType, vehicle);
@@ -141,25 +138,5 @@ public class BookingService {
                         () -> System.out.println("Inga bokningar är tillgängliga."));
     }
 
-    public Booking completeRepairBooking(int bookingId, double repairPrice) {
-        Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
-        if (optionalBooking.isEmpty()) {
-            throw new IllegalArgumentException("Ingen bokning hittades med ID: " + bookingId);
-        }
-        Booking booking = optionalBooking.get();
-        if (booking.getBookingType() != BookingType.REPAIR) {
-            throw new IllegalStateException("Denna bokning är inte en reparation.");
-        }
-        if (repairPrice <= 0) {
-            throw new IllegalArgumentException("Priset måste vara större än 0kr.");
-        }
-
-        booking.setPrice(repairPrice);
-        booking.setStatus(Status.DONE);
-
-        mailService.sendMail(booking.getCustomer().getEmail(), "Din bil är klar! Det totala priset: "
-                + repairPrice + " kr. Tack för att du kom till Bilmeckarna AB!");
-        return booking;
-    }
 
 }

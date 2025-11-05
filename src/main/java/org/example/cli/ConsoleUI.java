@@ -7,7 +7,6 @@ import org.example.models.Booking;
 import org.example.models.BookingType;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
-import org.example.repository.*;
 import org.example.repository.Repository;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
@@ -19,8 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleUI implements BookingUI {
-    private LocalDate localDate;
+public class ConsoleUI implements BookingUI{
+    private  LocalDate localDate;
     private final IIO io;
     private final Repository<Vehicle, String> vehicleRepository;
     private final Repository<Customer, String> customerRepository;
@@ -33,7 +32,7 @@ public class ConsoleUI implements BookingUI {
     private final CompletionService completionService;
     private final PriceService priceService;
     private final BookingService bookingService;
-
+    private final Booking booking;
 
 
     //Meny actions
@@ -179,7 +178,39 @@ public class ConsoleUI implements BookingUI {
         }
     }
 
-  }
+    public void completeRepairBooking() {
+        //Läs in boknings-ID
+        output.askForBookingId();
+        int bookingId;
+        try {
+            bookingId = Integer.parseInt(io.readLine().trim());
+        } catch (NumberFormatException ex) {
+            output.printError("Ogiltigt ID. Du måste ange siffror.");
+            return;
+        }
+        //Läs in mekanikern pris
+        output.askForRepairPrice();
+        double repairPrice;
+        try {
+            repairPrice = Double.parseDouble(io.readLine().trim());
+        } catch (NumberFormatException ex) {
+            output.printError("Ogiltigt pris, tar endast emot siffror.");
+            return;
+        }
+        //Markera reparation som klar
+        try {
+            Booking updated = bookingService.completeRepairBooking(bookingId, repairPrice);
+
+            if (updated != null) {
+                output.printSuccess("Reparationen är markerad som klar!\n" + updated);
+            } else {
+                output.printError("Ingen bokning hittades med ID: " + bookingId);
+            }
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+            output.printError("Fel: " + ex.getMessage());
+        }
+    }
+}
 
 
 
