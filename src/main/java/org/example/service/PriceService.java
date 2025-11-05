@@ -2,52 +2,75 @@ package org.example.service;
 
 import org.example.models.BookingType;
 import org.example.models.Vehicle;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.example.validator.PriceValidator;
 
 public class PriceService {
-   public static final double INSPECTION_PRICE = 550.0;
+   private static final double INSPECTION_PRICE = 550.0;
 
-        public double calculatePrice(BookingType bookingType, Vehicle vehicle) {
+
+        private final PriceValidator priceValidator;
+
+        public PriceService(PriceValidator priceValidator) {
+            this.priceValidator = priceValidator;
+    }
+        public double bookInspection() {
+        // validerar grundpris:
+        priceValidator.validateBasePrice(INSPECTION_PRICE);
+        return INSPECTION_PRICE;
+    }
+
+
+    public double calculatePrice(BookingType bookingType, Vehicle vehicle) {
         return switch (bookingType) {
             case INSPECTION -> getInspectionPrice();
-            case SERVICE -> calculateServicePrice(vehicle.getYearModel());
-            case REPAIR -> 0.0;
+            case SERVICE   -> calculateServicePrice(vehicle.getYearModel());
+            case REPAIR    -> calculateRepairPrice(vehicle.getYearModel());
         };
     }
+    public double calculateRepairPrice(int yearModel) {
+        double price;
+
+        if (yearModel > 2020) {
+            price = 2500.0;
+        } else if (yearModel >= 2015) {
+            price = 3000.0;
+        } else if (yearModel >= 2010) {
+            price = 3500.0;
+        } else if (yearModel >= 2005) {
+            price = 4000.0;
+        } else {
+            price = 4500.0;
+        }
+        priceValidator.validateBasePrice(price);
+        return price;
+    }
+
 
         public double getInspectionPrice() {
         return INSPECTION_PRICE;
         }
 
-        private static final Map<Integer, Double> SERVICE_PRICES = Map.ofEntries(
-                Map.entry(2021, 1500.0),
-                Map.entry(2015, 1800.0),
-                Map.entry(2010, 2000.0),
-                Map.entry(2005, 2300.0),
-                Map.entry(0, 2800.0)
-        );
-
-
         public double calculateServicePrice(int yearModel) {
-            return SERVICE_PRICES.entrySet().stream()
-                    .sorted((a, b) -> b.getKey().compareTo(a.getKey()))//Sortera nycklar i fallande ordning
-                    .filter(e -> yearModel >= e.getKey())
-                    .findFirst()
-                    .map(Map.Entry::getValue)
-                    .orElse(2800.0);
-        }
+            double price;
 
+            if (yearModel > 2020) {
+                return 1500.0;
+            } else if (yearModel >= 2015) {
+                return 1800.0;
+            } else if (yearModel >= 2010) {
+                return 2000.0;
+            } else if (yearModel >= 2005) {
+                price = 2300.0;
+            } else {
+                price = 2800.0;
+            }
+        priceValidator.validateBasePrice(price);
+        return price;
+        }
 
         public double confirmRepairPrice(double repairPrice) {
-            if (repairPrice <= 0) {
-                throw new IllegalArgumentException("Priset för reparation måste vara större än 0 kr.");
-            }
-            return repairPrice;
+        priceValidator.validateRepairPrice(repairPrice);
+        return repairPrice;
         }
-
-
-
 
 }

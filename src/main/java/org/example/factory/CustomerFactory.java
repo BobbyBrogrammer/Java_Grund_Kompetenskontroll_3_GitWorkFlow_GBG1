@@ -5,6 +5,12 @@ import org.example.validator.CustomerValidator;
 
 public class CustomerFactory {
     CustomerValidator validator;
+
+
+    public CustomerFactory(CustomerValidator validator) {
+        this.validator = validator;
+    }
+
     public Customer createCustomer(String name, String phoneNumber, String email){
         validator.validateCustomer(name);
         validator.validatePhoneNumber(phoneNumber);
