@@ -168,6 +168,12 @@ public class OutputHandler {
     public void askForName(){io.printLine("Ange kundens namn ");}
     public void askForPhoneNumber(){io.printLine("Ange kundens telefonnummer. ");}
     public void askForEmail(){io.printLine("Ange kundens email ");}
+    public void askForBookingId(){io.printLine("Ange boknings-ID:");}
+    public void askForRepairPrice(){io.printLine("Ange slutpris för reparationen: ");}
+
+    public void printCompleteRepairTitle() {
+        io.printLine("\n=== Avsluta reparation ===");
+    }
 
 
 
