@@ -33,7 +33,7 @@ public class ConsoleUI implements BookingUI{
     private final CompletionService completionService;
     private final PriceService priceService;
     private final BookingService bookingService;
-    private final Booking booking;
+
 
 
     //Meny actions
@@ -47,7 +47,7 @@ public class ConsoleUI implements BookingUI{
                      Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
                      Repository<Booking, Integer>  bookingRepository, SearchForBooking searchForBooking,
                      DeleteBooking deleteBooking, UpdateBooking updateBooking, PriceService priceService,
-                     BookingService bookingService, Booking booking, ShowAllBookings showAllBookings) {
+                     BookingService bookingService, ShowAllBookings showAllBookings) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -64,7 +64,7 @@ public class ConsoleUI implements BookingUI{
         this.priceService = priceService;
         this.showAllBookings = showAllBookings;
         this.bookingService = bookingService;
-        this.booking = booking;
+
     }
 
     public void createBooking() {
