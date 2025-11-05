@@ -24,4 +24,5 @@ public class LoggingService {
     public void logDebug(String message) {
         logger.debug(message);
     }
+    public void logWarn(String message){logger.warn(message);}
 }

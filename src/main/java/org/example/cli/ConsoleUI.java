@@ -32,7 +32,6 @@ public class ConsoleUI implements BookingUI{
     private final CompletionService completionService;
     private final PriceService priceService;
     private final BookingService bookingService;
-    private final Booking booking;
 
 
     //Meny actions
@@ -46,7 +45,7 @@ public class ConsoleUI implements BookingUI{
                      Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
                      Repository<Booking, Integer>  bookingRepository, SearchForBooking searchForBooking,
                      DeleteBooking deleteBooking, UpdateBooking updateBooking, PriceService priceService,
-                     BookingService bookingService, Booking booking, ShowAllBookings showAllBookings) {
+                     BookingService bookingService, ShowAllBookings showAllBookings) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -63,7 +62,6 @@ public class ConsoleUI implements BookingUI{
         this.priceService = priceService;
         this.showAllBookings = showAllBookings;
         this.bookingService = bookingService;
-        this.booking = booking;
     }
 
     public void createBooking() {
@@ -103,15 +101,18 @@ public class ConsoleUI implements BookingUI{
                 input.readRegistrationNumber(),
                 input.readVehicleModel(),
                 input.readYearModel());
+        vehicleRepository.add(vehicle);
         //Skapa kund
         Customer customer = customerFactory.createCustomer(
                 input.readCustomerName(),
                 input.readPhoneNumber(),
                 input.readEmail());
+        customerRepository.add(customer);
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
             output.printSuccess("Bokning skapad!\n" + booking);
@@ -166,6 +167,7 @@ public class ConsoleUI implements BookingUI{
         LocalDate date = input.readDate();
         //Skapa bokning
         Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
+        bookingRepository.add(booking);
         //Visa resultat
         if(booking != null) {
             output.printSuccess("Reparation bokning skapad!\n" + booking + "\nPriset sätts när arbetet är klart.");
@@ -174,38 +176,6 @@ public class ConsoleUI implements BookingUI{
         }
     }
 
-    public void completeRepairBooking() {
-        //Läs in boknings-ID
-        output.askForBookingId();
-        int bookingId;
-        try {
-            bookingId = Integer.parseInt(io.readLine().trim());
-        } catch (NumberFormatException ex) {
-            output.printError("Ogiltigt ID. Du måste ange siffror.");
-            return;
-        }
-        //Läs in mekanikern pris
-        output.askForRepairPrice();
-        double repairPrice;
-        try {
-            repairPrice = Double.parseDouble(io.readLine().trim());
-        } catch (NumberFormatException ex) {
-            output.printError("Ogiltigt pris, tar endast emot siffror.");
-            return;
-        }
-        //Markera reparation som klar
-        try {
-            Booking updated = bookingService.completeRepairBooking(bookingId, repairPrice);
-
-            if (updated != null) {
-                output.printSuccess("Reparationen är markerad som klar!\n" + updated);
-            } else {
-                output.printError("Ingen bokning hittades med ID: " + bookingId);
-            }
-        } catch (IllegalArgumentException | IllegalStateException ex) {
-            output.printError("Fel: " + ex.getMessage());
-        }
-    }
 }
 
 
