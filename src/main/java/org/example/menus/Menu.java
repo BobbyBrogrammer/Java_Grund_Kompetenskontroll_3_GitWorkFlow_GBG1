@@ -29,15 +29,15 @@ public class Menu {
             switch (choice) {
                 case "1" -> {
                     output.printBesiktningChoice();
-                    showMainMenu();
+                    showInspectionMenu();
                 }
                 case "2" -> {
                     output.printReparationChoice();
-                    showMainMenu();
+                    showRepairMenu();
                 }
                 case "3" -> {
                     output.printServiceChoice();
-                    showMainMenu();
+                    showServiceBookingMenu();
                 }
                 case "0" -> {
                     output.printExitProgram();
@@ -54,6 +54,69 @@ public class Menu {
             String choice = io.readLine().trim();
             switch (choice) {
                 case "1" -> bookingSelectionMenu.runMenu();
+                case "2" -> bookingUI.showAllBookings();
+                case "3" -> bookingUI.searchBooking();
+                case "4" -> bookingUI.updateBooking();
+                case "5" -> bookingUI.deleteBooking();
+                case "6" -> showServiceMenu();
+                case "0" -> {
+                    output.printExitProgram();
+                    System.exit(0);
+                }
+                default -> output.printDefaultMenuChoice();
+            }
+        }
+    }
+
+    public void showInspectionMenu() {
+        while (true) {
+            output.printMenyChoicesInspection();
+            String choice = io.readLine().trim();
+
+            switch (choice) {
+                case "1" -> bookingUI.createBooking();
+                case "2" -> bookingUI.showAllBookings();
+                case "3" -> bookingUI.searchBooking();
+                case "4" -> bookingUI.updateBooking();
+                case "5" -> bookingUI.deleteBooking();
+                case "6" -> showServiceMenu(); // Gå tillbaka
+                case "0" -> {
+                    output.printExitProgram();
+                    System.exit(0);
+                }
+                default -> output.printDefaultMenuChoice();
+            }
+        }
+    }
+
+    public void showRepairMenu() {
+        while (true) {
+            output.printMenyChoicesRepair();
+            String choice = io.readLine().trim();
+
+            switch (choice) {
+                case "1" -> bookingUI.createBooking();
+                case "2" -> bookingUI.showAllBookings();
+                case "3" -> bookingUI.searchBooking();
+                case "4" -> bookingUI.updateBooking();
+                case "5" -> bookingUI.deleteBooking();
+                case "6" -> showServiceMenu(); // Tillbaka
+                case "0" -> {
+                    output.printExitProgram();
+                    System.exit(0);
+                }
+                default -> output.printDefaultMenuChoice();
+            }
+        }
+    }
+
+    public void showServiceBookingMenu() {
+        while (true) {
+            output.printMenyChoicesService();
+            String choice = io.readLine().trim();
+
+            switch (choice) {
+                case "1" -> bookingUI.createBooking();
                 case "2" -> bookingUI.showAllBookings();
                 case "3" -> bookingUI.searchBooking();
                 case "4" -> bookingUI.updateBooking();

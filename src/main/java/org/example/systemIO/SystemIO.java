@@ -11,4 +11,8 @@ public class SystemIO implements IIO {
     public void printLine(String message) {
         System.out.println(message);
     }
+    @Override
+    public void print(String message) {
+        System.out.print(message);
+    }
 }
