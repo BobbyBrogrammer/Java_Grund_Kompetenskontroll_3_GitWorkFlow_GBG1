@@ -36,13 +36,13 @@ public class AppConfig {
     private final CustomerFactory customerFactory = new CustomerFactory(customerValidator);
     private final PriceService priceService = new PriceService(priceValidator);
     private final BookingFactory bookingFactory = new BookingFactory(priceService);
-    private final ValidationService validationService = new ValidationService();
+    private final ValidationService validationService = new ValidationService(output);
     private final OutputHandler output = new OutputHandler(IO);
     private final InputHandler input = new InputHandler(output, IO, validationService);
     private final SearchForBooking searchAction = new SearchForBooking(input, output);
     private final DeleteBooking deleteAction = new DeleteBooking(input, output);
     private final UpdateBooking updateAction = new UpdateBooking(input, output);
-    private final MailService mailService = new MailService();
+    private final MailService mailService = new MailService(output);
     private final LoggingService loggingService = new LoggingService();
     private final BookingService bookingService = new BookingService(bookingRepository, loggingService, validationService, priceService, mailService);
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
