@@ -20,25 +20,17 @@ public class BookingSelectionMenu {
         boolean running = true;
          while (running){
              output.printChooseBookingMenu();
-             int choice = Integer.parseInt(io.readLine());
+             String choice = io.readLine().trim();
              switch (choice){
-                 case 1 ->{ui.createInspectionBooking();}
-                 case 2 ->{}
-                 case 3 ->{}
-                 case 0 ->{}
+                 case "1" ->{ui.createInspectionBooking();
+                 running = false; }
+                 case "2" ->{ui.createServiceBooking();
+                 running = false;}
+                 case "3" ->{ui.createRepairBooking();
+                 running = false; }
+                 case "0" ->{running = false;}
                  default -> {io.printLine("Ogiltigt val välj mellan 0-3 ");}
              }
-
-
-
-
-
-
-
-
-
-
-
          }
     }
 }

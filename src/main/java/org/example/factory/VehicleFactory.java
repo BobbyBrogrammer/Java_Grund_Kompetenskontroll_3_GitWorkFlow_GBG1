@@ -6,8 +6,11 @@ import org.example.validator.VehicleValidator;
 
 
 public class VehicleFactory {
-    VehicleValidator validator;
+    private final VehicleValidator validator;
 
+    public VehicleFactory(VehicleValidator validator) {
+        this.validator = validator;
+    }
 
     public Vehicle createVehicle(String name, String model, int year){
         validator.validateRegistrationNumber(name);

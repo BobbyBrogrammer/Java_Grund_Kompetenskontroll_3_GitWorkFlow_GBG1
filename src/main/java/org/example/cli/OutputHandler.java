@@ -104,7 +104,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
-        io.printLine("6. Gå tillbaka");
+        io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printMenyChoicesRepair() {
@@ -114,6 +114,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printMenyChoicesInspection() {
@@ -123,6 +124,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
+        io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printMenyChoicesService() {
@@ -132,7 +134,7 @@ public class OutputHandler {
         io.printLine("3. Sök bokning");
         io.printLine("4. Uppdatera bokning");
         io.printLine("5. Ta bort bokning");
-        io.printLine("6. Gå tillbaka");
+        io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
     }
     public void printExitProgram() {
