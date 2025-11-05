@@ -52,6 +52,10 @@ public class BookingService {
         loggingService.logInfo("✅ Ny bokning skapad: " + booking);
     }
 
+    public void createRepairBooking(Vehicle vehicle, LocalDate date, Customer customer) {
+        createBooking(vehicle, date, customer, BookingType.REPAIR);
+    }
+
     // --------------------------------------------------
 
     /**

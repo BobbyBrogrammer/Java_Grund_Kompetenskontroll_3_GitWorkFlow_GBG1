@@ -15,25 +15,26 @@ import org.example.repository.VehicleRepository;
 import org.example.service.*;
 import org.example.systemIO.IIO;
 import org.example.systemIO.SystemIO;
+import org.example.validator.PriceValidator;
 
 import java.time.LocalDate;
 import java.util.Locale;
 
 public class AppConfig {
     private final IIO IO = new SystemIO();
+    private final PriceValidator priceValidator = new PriceValidator();
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
 
     private final VehicleFactory vehicleFactory = new VehicleFactory();
-    private final PriceService priceService = new PriceService();
+    private final PriceService priceService = new PriceService(priceValidator);
 
     private final BookingFactory bookingFactory = new BookingFactory(priceService);
     private final ValidationService validationService = new ValidationService();
     private final MailService mailService = new MailService();
     private final LoggingService loggingService = new LoggingService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final ConsoleUI ui = new ConsoleUI(IO, completionService);
     private final Menu menuRun = new Menu((SystemIO) IO, ui);
     public final Menu menuRunner(){return menuRun;}
 
