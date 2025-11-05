@@ -205,6 +205,12 @@ public class OutputHandler {
         io.printLine("\n=== Avsluta reparation ===");
     }
 
+    public void printSortOptions() {
+        io.printLine("1. Sortera efter ID");
+        io.printLine("2. Sortera efter Datum");
+        io.printLine("3. Sortera efter Status");
+    }
+
 
 
 

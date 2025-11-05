@@ -16,19 +16,23 @@ public class SearchForBooking {
         this.bookingRepository = bookingRepository;
     }
 
-    public void searchBooking(List<String> bookings) {
+    public void searchBooking() {
         output.printSearchForBookingTitle();
         String search = input.readRegistrationNumber();
 
-        List<String> bookingFound = bookingRepository.findAll().stream()
-                .filter(b -> b.getVehicle().getRegistrationNumber().equalsIgnoreCase())
+        List<Booking> bookingFound = bookingRepository.findAll().stream()
+                .filter(b -> b.getVehicle().getRegistrationNumber().equalsIgnoreCase(search))
                 .toList();
 
         if (bookingFound.isEmpty()) {
             output.printNoBookingFound();
         } else {
             output.printBookingFound();
-            bookingFound.forEach(output::printSuccess);
+            for (Booking booking : bookingFound) {
+                output.printSuccess(booking.toString());
+            }
         }
     }
+
+
 }
