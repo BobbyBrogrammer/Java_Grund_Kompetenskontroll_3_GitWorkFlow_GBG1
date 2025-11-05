@@ -146,15 +146,18 @@ public class ConsoleUI implements BookingUI{
                 input.readRegistrationNumber(),
                 input.readVehicleModel(),
                 input.readYearModel());
+        vehicleRepository.add(vehicle);
         //Skapa kund
         Customer customer = customerFactory.createCustomer(
                 input.readCustomerName(),
                 input.readPhoneNumber(),
                 input.readEmail());
+        customerRepository.add(customer);
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
         Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.SERVICE);
+        bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
             output.printSuccess("Service bokning skapad!\n" + booking);
@@ -171,11 +174,13 @@ public class ConsoleUI implements BookingUI{
                 input.readRegistrationNumber(),
                 input.readVehicleModel(),
                 input.readYearModel());
+        vehicleRepository.add(vehicle);
         //Skapa kund
         Customer customer = customerFactory.createCustomer(
                 input.readCustomerName(),
                 input.readPhoneNumber(),
                 input.readEmail());
+        customerRepository.add(customer);
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
