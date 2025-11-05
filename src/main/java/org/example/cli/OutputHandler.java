@@ -98,7 +98,7 @@ public class OutputHandler {
         io.printLine("3. Service");
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m=========================\u001B[0m");
-        io.printLine("Val: ");
+        io.print("Val: ");
 
     }
 
@@ -114,12 +114,13 @@ public class OutputHandler {
         io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Val: ");
+        io.print("Val: ");
 
     }
     public void printMenyChoicesRepair() {
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Bilmeckarna AB [Reparation]");
+        io.printLine("      Bilmeckarna AB");
+        io.printLine("       [Reparation]");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("1. Skapa bokning");
         io.printLine("2. Visa alla bokningar");
@@ -129,12 +130,13 @@ public class OutputHandler {
         io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Val: ");
+        io.print("Val: ");
 
     }
     public void printMenyChoicesInspection() {
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Bilmeckarna AB [Besiktning]");
+        io.printLine("      Bilmeckarna AB");
+        io.printLine("       [Besiktning]");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("1. Skapa bokning");
         io.printLine("2. Visa alla bokningar");
@@ -144,12 +146,13 @@ public class OutputHandler {
         io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("\nVal: ");
+        io.print("Val: ");
 
     }
     public void printMenyChoicesService() {
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Bilmeckarna AB [Service]");
+        io.printLine("      Bilmeckarna AB");
+        io.printLine("        [Service]");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("1. Skapa bokning");
         io.printLine("2. Visa alla bokningar");
@@ -159,7 +162,7 @@ public class OutputHandler {
         io.printLine("6. <- Gå tillbaka");
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("Val: ");
+        io.print("Val:");
 
     }
     public void printExitProgram() {
