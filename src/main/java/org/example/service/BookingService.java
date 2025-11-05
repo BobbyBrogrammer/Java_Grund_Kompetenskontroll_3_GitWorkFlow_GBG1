@@ -20,40 +20,50 @@ import java.util.stream.Collectors;
 public class BookingService {
 
     private final Repository<Booking, Integer> bookingRepository;
+    private final Repository<Vehicle, String> vehicleRepository;
+    private final Repository<Customer, String> customerRepository;
     private final LoggingService loggingService;
     private final ValidationService validationService;
     private final PriceService priceService;
     private final MailService mailService;
+    private final CompletionService completionService;
 
-    // 🔹 Constructor med dependency injection
-    public BookingService(Repository<Booking, Integer> bookingRepository,
-                          LoggingService loggingService,
-                          ValidationService validationService,
-                          PriceService priceService,
-                          MailService mailService) {
+    //Constructor med dependency injection
+    public BookingService(Repository<Booking, Integer> bookingRepository, Repository<Vehicle,
+                                  String> vehicleRepository, Repository<Customer, String> customerRepository,
+                          LoggingService loggingService, ValidationService validationService,
+                          PriceService priceService, MailService mailService, CompletionService completionService) {
         this.bookingRepository = bookingRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.customerRepository = customerRepository;
         this.loggingService = loggingService;
         this.validationService = validationService;
         this.priceService = priceService;
         this.mailService = mailService;
+        this.completionService = completionService;
     }
 
     // --------------------------------------------------
 
-    /**
-     * Skapar en ny bokning om all data är giltig.
-     */
-    public void createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType bookingType) {
+    public Booking createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType bookingType) {
+        //Validera datum
         if (!validationService.isValidDate(date)) {
-            System.out.println("❌ Ogiltigt datum!");
-            return;
+            loggingService.logError("Ogiltigt datum vid bokning: " + date);
+            return null;
         }
-
+        //Beräkna pris
         double price = priceService.calculatePrice(bookingType, vehicle);
-
+        //Skapa bokning
         Booking booking = new Booking(vehicle, date, price, customer, bookingType);
+        //Spara i repositorys
+        customerRepository.add(customer);
+        vehicleRepository.add(vehicle);
         bookingRepository.add(booking);
+        //Slutför processen
+        completionService.completeProcess(customer.getEmail(), vehicle.getRegistrationNumber(), bookingType, vehicle);
+        //Loggar skapandet av bokningen
         loggingService.logInfo("✅ Ny bokning skapad: " + booking);
+        return booking;
     }
 
     public void createRepairBooking(Vehicle vehicle, LocalDate date, Customer customer) {
