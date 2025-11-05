@@ -29,7 +29,7 @@ public class Menu {
             switch (choice) {
                 case "1" -> {
                     output.printBesiktningChoice();
-                    showMainMenu();
+                    output.printMenyChoicesInspection();
                 }
                 case "2" -> {
                     output.printReparationChoice();
