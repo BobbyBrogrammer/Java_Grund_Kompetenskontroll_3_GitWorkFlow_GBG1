@@ -7,10 +7,7 @@ import org.example.models.Booking;
 import org.example.models.BookingType;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
-import org.example.repository.BookingRepository;
-import org.example.repository.CustomerRepository;
-import org.example.repository.Repository;
-import org.example.repository.VehicleRepository;
+import org.example.repository.*;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
 import org.example.service.PriceService;
@@ -119,18 +116,21 @@ public class ConsoleUI implements BookingUI{
         output.printStateCreateNewBookingTitle();
         //Skapa fordon
         Vehicle vehicle = vehicleFactory.createVehicle(
-                input.readRegistrationNumber(),
-                input.readVehicleModel(),
-                input.readYearModel());
+        input.readRegistrationNumber(),
+        input.readVehicleModel(),
+        input.readYearModel());
+        vehicleRepository.add(vehicle);
         //Skapa kund
         Customer customer = customerFactory.createCustomer(
-                input.readCustomerName(),
-                input.readPhoneNumber(),
-                input.readEmail());
+        input.readCustomerName(),
+        input.readPhoneNumber(),
+        input.readEmail());
+        customerRepository.add(customer);
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        Booking booking = bookingFactory.bookInspection(vehicle, localDate, customer);
+        bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
             output.printSuccess("Bokning skapad!\n" + booking);
