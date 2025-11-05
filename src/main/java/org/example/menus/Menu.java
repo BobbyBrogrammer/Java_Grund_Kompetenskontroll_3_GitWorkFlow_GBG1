@@ -25,7 +25,6 @@ public class Menu {
         while (true) {
             output.printServiceChoices();
             String choice = io.readLine().trim();
-            io.printLine("\u001B[34m==========================\u001B[0m");
 
             switch (choice) {
                 case "1" -> {
