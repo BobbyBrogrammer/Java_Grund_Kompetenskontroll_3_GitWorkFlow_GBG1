@@ -27,6 +27,7 @@ public class AppConfig {
 
     private final IIO IO = new SystemIO();
     private final LoggingService loggingService = new LoggingService();
+
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
@@ -40,14 +41,13 @@ public class AppConfig {
     private final ValidationService validationService = new ValidationService();
     private final OutputHandler output = new OutputHandler(IO);
     private final InputHandler input = new InputHandler(output, IO, validationService);
-    private final SearchForBooking searchAction = new SearchForBooking(input, output, bookingRepository, loggingService);
-    private final DeleteBooking deleteAction = new DeleteBooking(output, bookingRepository, IO, loggingService);
-    private final UpdateBooking updateAction = new UpdateBooking(input, output, bookingRepository, IO, loggingService);
-    private final ShowAllBookings showAllBookings = new ShowAllBookings(output, bookingRepository, IO);
+    private final SearchForBooking searchAction = new SearchForBooking(input, output, loggingService);
+    private final DeleteBooking deleteAction = new DeleteBooking(input, output, loggingService);
+    private final UpdateBooking updateAction = new UpdateBooking(input, output, loggingService);
     private final MailService mailService = new MailService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final BookingService bookingService = new BookingService(bookingRepository, vehicleRepository, customerRepository, loggingService, validationService, priceService, completionService);
-    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory, customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, showAllBookings);
+    private final BookingService bookingService = new BookingService(bookingRepository, vehicleRepository, customerRepository,  loggingService, validationService, priceService, mailService, completionService);
+    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, );
     private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui);
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
     public final Menu menuRunner(){return menuRun;}
