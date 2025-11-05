@@ -99,7 +99,6 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m=========================\u001B[0m");
         io.print("Val: ");
-
     }
 
     public void printMenyChoices() {
@@ -115,8 +114,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesRepair() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -131,8 +130,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesInspection() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -147,8 +146,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesService() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -163,8 +162,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val:");
-
     }
+
     public void printExitProgram() {
         io.printLine("Avslutar programmet...Hejdå!");
     }
@@ -181,8 +180,6 @@ public class OutputHandler {
     public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
     public void printWrongDate() {io.printLine("Ogiltigt datumformat.");}
     public void printInputDate() {io.printLine("Ange datum (ÅÅÅÅ-MM-DD): ");}
-
-
 
     //bookingMenu
     public void printChooseBookingMenu(){
