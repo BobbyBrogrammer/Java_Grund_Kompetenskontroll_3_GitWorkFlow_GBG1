@@ -7,14 +7,12 @@ import org.example.systemIO.IIO;
 import java.util.Optional;
 
 public class DeleteBooking {
-    private final InputHandler input;
     private final OutputHandler output;
     private final Repository<Booking, Integer> bookingRepository;
     private final IIO io;
     private final LoggingService logger;
 
-    public DeleteBooking(InputHandler input, OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger) {
-        this.input = input;
+    public DeleteBooking(OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger) {
         this.output = output;
         this.bookingRepository = bookingRepository;
         this.io = io;
