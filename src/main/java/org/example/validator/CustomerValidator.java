@@ -21,8 +21,10 @@ public class CustomerValidator {
     }
 
     public void validateEmail(String email) {
-        if (!email.matches("^[^@]+@[^@]+\\\\.(se|com)$"))
-            throw new InvalidEmailAdressException(email);
-
+        if (!email.matches("^[^@]+@[^@]+\\.(se|com)$")) {
+            throw new InvalidEmailAdressException("Ogiltig e-postadress: " + email);
+        }
     }
+
+
 }
