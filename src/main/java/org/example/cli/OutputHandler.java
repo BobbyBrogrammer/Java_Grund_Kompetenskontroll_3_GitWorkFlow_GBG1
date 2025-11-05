@@ -206,9 +206,7 @@ public class OutputHandler {
     }
 
     // ---------------------------- Mail -----------------------------
-    public void printSendMail(String email, String message) {
-        io.printLine("Mejl skickat till kund (" + email + "): " + message);
-    }
+    public void printSendMail(String email, String message) {io.printLine("Mejl skickat till kund (" + email + "): " + message);}
 
 
 
