@@ -15,6 +15,6 @@ public class StartApp {
             logger.info("Programmet startar. ");
            AppConfig app = new AppConfig();
            Menu menu = app.menuRunner();
-           menu.showServiceMenu();
+           menu.showMainMenu();
     }
 }
