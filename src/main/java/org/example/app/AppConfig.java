@@ -46,8 +46,10 @@ public class AppConfig {
     private final LoggingService loggingService = new LoggingService();
     private final BookingService bookingService = new BookingService(bookingRepository, loggingService, validationService, priceService, mailService);
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService);
+    private final InitializationService initializationService = new InitializationService((VehicleRepository) vehicleRepository, (BookingRepository) bookingRepository, (CustomerRepository) customerRepository);
+    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService,  null, initializationService);
     private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui);
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
+    public AppConfig() {initializationService.loadInitialData();}
     public final Menu menuRunner(){return menuRun;}
 }

@@ -13,6 +13,7 @@ import org.example.repository.Repository;
 import org.example.repository.VehicleRepository;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
+import org.example.service.InitializationService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
@@ -36,6 +37,7 @@ public class ConsoleUI implements BookingUI{
     private final PriceService priceService;
     private final BookingService bookingService;
     private final Booking booking;
+    private final InitializationService initializationService;
 
 
     //Meny actions
@@ -48,7 +50,7 @@ public class ConsoleUI implements BookingUI{
                      Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
                      Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction,
                      DeleteBooking deleteAction, UpdateBooking updateAction, PriceService priceService,
-                     BookingService bookingService, Booking booking) {
+                     BookingService bookingService, Booking booking, InitializationService initializationService) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -65,6 +67,7 @@ public class ConsoleUI implements BookingUI{
         this.priceService = priceService;
         this.bookingService = bookingService;
         this.booking = booking;
+        this.initializationService = initializationService;
     }
 
     public void createBooking() {
