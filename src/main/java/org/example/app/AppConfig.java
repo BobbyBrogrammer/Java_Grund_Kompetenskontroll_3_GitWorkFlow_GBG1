@@ -40,14 +40,14 @@ public class AppConfig {
     private final ValidationService validationService = new ValidationService();
     private final OutputHandler output = new OutputHandler(IO);
     private final InputHandler input = new InputHandler(output, IO, validationService);
-    private final SearchForBooking searchAction = new SearchForBooking(input, output, loggingService);
-    private final DeleteBooking deleteAction = new DeleteBooking(input, output, loggingService);
-    private final UpdateBooking updateAction = new UpdateBooking(input, output, loggingService);
+    private final SearchForBooking searchAction = new SearchForBooking(input, output, bookingRepository, loggingService);
+    private final DeleteBooking deleteAction = new DeleteBooking(output,bookingRepository, IO, loggingService );
+    private final UpdateBooking updateAction = new UpdateBooking(input, output, bookingRepository,IO, loggingService);
     private final MailService mailService = new MailService();
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
     private final BookingService bookingService = new BookingService(bookingRepository, vehicleRepository, customerRepository,  loggingService, validationService, priceService, mailService, completionService);
     private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, );
     private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui, loggingService);
-    private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
+    private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu, loggingService);
     public final Menu menuRunner(){return menuRun;}
 }
