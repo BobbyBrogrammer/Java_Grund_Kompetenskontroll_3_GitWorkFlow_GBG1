@@ -205,6 +205,11 @@ public class OutputHandler {
         io.printLine("\n=== Avsluta reparation ===");
     }
 
+    // ---------------------------- Mail -----------------------------
+    public void printSendMail(String email, String message) {
+        io.printLine("Mejl skickat till kund (" + email + "): " + message);
+    }
+
 
 
 

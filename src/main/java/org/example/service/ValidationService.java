@@ -1,16 +1,25 @@
 package org.example.service;
 
+import org.example.cli.OutputHandler;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class ValidationService {
+
+    private final OutputHandler output;
+
+    public ValidationService(OutputHandler output) {
+        this.output = output;
+    }
+
     // Enkel e-postvalidering
     public boolean validateEmail(String email) {
         String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
         boolean valid = Pattern.matches(regex, email);
         if (!valid) {
-            System.out.println("Ogiltig e-postadress: " + email);
+            output.printWrongEmail();
         }
         return valid;
     }
@@ -20,7 +29,7 @@ public class ValidationService {
         String regex = "^[A-ZÅÄÖ]{3}\\d{3}$"; // Svenska formatet, t.ex. ABC123
         boolean valid = Pattern.matches(regex, regNumber.toUpperCase());
         if (!valid) {
-            System.out.println("Ogiltigt registreringsnummer: " + regNumber);
+            output.printWrongRegNumber();
         }
         return valid;
     }
@@ -33,7 +42,7 @@ public class ValidationService {
             LocalDate parsedDate = LocalDate.parse(date);
             return !parsedDate.isBefore(LocalDate.now());
         } catch (DateTimeException ex) {
-            System.out.println("Ogiltigt datumformat. Använd ÅÅÅÅ-MM-DD.");
+            output.printWrongDate();
             return false;
         }
     }
