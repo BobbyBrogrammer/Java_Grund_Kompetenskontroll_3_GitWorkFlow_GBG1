@@ -19,8 +19,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleUI implements BookingUI{
-    private  LocalDate localDate;
+public class ConsoleUI implements BookingUI {
+    private LocalDate localDate;
     private final IIO io;
     private final Repository<Vehicle, String> vehicleRepository;
     private final Repository<Customer, String> customerRepository;
@@ -55,7 +55,7 @@ public class ConsoleUI implements BookingUI{
         this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
-        this.vehicleRepository= vehicleRepository;
+        this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
         this.searchForBooking = searchForBooking;
@@ -101,20 +101,20 @@ public class ConsoleUI implements BookingUI{
         output.printStateCreateNewBookingTitle();
         //Skapa fordon
         Vehicle vehicle = vehicleFactory.createVehicle(
-        input.readRegistrationNumber(),
-        input.readVehicleModel(),
-        input.readYearModel());
+                input.readRegistrationNumber(),
+                input.readVehicleModel(),
+                input.readYearModel());
         vehicleRepository.add(vehicle);
         //Skapa kund
         Customer customer = customerFactory.createCustomer(
-        input.readCustomerName(),
-        input.readPhoneNumber(),
-        input.readEmail());
+                input.readCustomerName(),
+                input.readPhoneNumber(),
+                input.readEmail());
         customerRepository.add(customer);
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        Booking booking = bookingFactory.bookInspection(vehicle, localDate, customer);
+        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
         bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
@@ -170,6 +170,7 @@ public class ConsoleUI implements BookingUI{
         LocalDate date = input.readDate();
         //Skapa bokning
         Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
+        bookingRepository.add(booking);
         //Visa resultat
         if(booking != null) {
             output.printSuccess("Reparation bokning skapad!\n" + booking + "\nPriset sätts när arbetet är klart.");
@@ -178,39 +179,7 @@ public class ConsoleUI implements BookingUI{
         }
     }
 
-    public void completeRepairBooking() {
-        //Läs in boknings-ID
-        output.askForBookingId();
-        int bookingId;
-        try {
-            bookingId = Integer.parseInt(io.readLine().trim());
-        } catch (NumberFormatException ex) {
-            output.printError("Ogiltigt ID. Du måste ange siffror.");
-            return;
-        }
-        //Läs in mekanikern pris
-        output.askForRepairPrice();
-        double repairPrice;
-        try {
-            repairPrice = Double.parseDouble(io.readLine().trim());
-        } catch (NumberFormatException ex) {
-            output.printError("Ogiltigt pris, tar endast emot siffror.");
-            return;
-        }
-        //Markera reparation som klar
-        try {
-            Booking updated = bookingService.completeRepairBooking(bookingId, repairPrice);
-
-            if (updated != null) {
-                output.printSuccess("Reparationen är markerad som klar!\n" + updated);
-            } else {
-                output.printError("Ingen bokning hittades med ID: " + bookingId);
-            }
-        } catch (IllegalArgumentException | IllegalStateException ex) {
-            output.printError("Fel: " + ex.getMessage());
-        }
-    }
-}
+  }
 
 
 

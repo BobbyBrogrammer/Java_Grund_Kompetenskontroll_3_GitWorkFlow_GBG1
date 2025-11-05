@@ -47,7 +47,7 @@ public class AppConfig {
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
     private final BookingService bookingService = new BookingService(bookingRepository, vehicleRepository, customerRepository,  loggingService, validationService, priceService, mailService, completionService);
     private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, );
-    private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui);
+    private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui, loggingService);
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
     public final Menu menuRunner(){return menuRun;}
 }
