@@ -15,14 +15,16 @@ public class CustomerValidator {
     }
 
     public void validatePhoneNumber(String number) {
-        if (!number.matches("^\\+[0-9]+$"))
+        if (!number.matches("^\\s*\\+?[0-9\\s]+\\s*$"))
             throw new InvalidPhoneNumberException("telefonnummer ogiltigt kontrollera att det är rätt. " + number);
 
     }
 
     public void validateEmail(String email) {
-        if (!email.matches("^[^@]+@[^@]+\\\\.(se|com)$"))
-            throw new InvalidEmailAdressException(email);
-
+        if (!email.matches("^[^@]+@[^@]+\\.(se|com)$")) {
+            throw new InvalidEmailAdressException("Ogiltig e-postadress: " + email);
+        }
     }
+
+
 }
