@@ -1,31 +1,44 @@
 package org.example.cli;
 
+import org.example.models.Booking;
+import org.example.repository.Repository;
 import org.example.service.LoggingService;
-
-import java.util.List;
+import org.example.systemIO.IIO;
+import java.util.Optional;
 
 public class DeleteBooking {
     private final InputHandler input;
     private final OutputHandler output;
+    private final Repository<Booking, Integer> bookingRepository;
+    private final IIO io;
     private final LoggingService logger;
 
-    public DeleteBooking(InputHandler input, OutputHandler output, LoggingService logger) {
+    public DeleteBooking(InputHandler input, OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger) {
         this.input = input;
         this.output = output;
+        this.bookingRepository = bookingRepository;
+        this.io = io;
         this.logger = logger;
     }
 
-    public void deleteBooking(List<String> bookings) {
-        logger.logInfo("Radera bokning har startats ");
+    public void deleteBooking() {
         output.printRemoveBooking();
-        String search = input.readRegistrationNumber();
-        boolean removed = bookings.removeIf(b -> b.contains(search));
+        output.askForBookingId();
+        try {
+            int id = Integer.parseInt(io.readLine());
+            Optional<Booking> bookingToDelete = bookingRepository.findAll().stream()
+                    .filter(b -> b.getId() == id).findFirst();
 
-        if (removed) {
-            output.printBookingWasRemoved();
-            logger.logInfo("Bokning har blivit raderat. ");
-        } else {
-            output.printNoBookingFoundToRemove();
+            if (bookingToDelete.isPresent()) {
+                bookingRepository.remove(id);
+                output.printBookingWasRemoved();
+                output.printSuccess("Borttagen bokning: " + bookingToDelete.get());
+            } else {
+                output.printNoBookingFoundToRemove();
+            }
+
+        } catch (NumberFormatException ex) {
+            output.printError("Ogiltigt ID, endast siffror är tillåtet!");
         }
     }
 }

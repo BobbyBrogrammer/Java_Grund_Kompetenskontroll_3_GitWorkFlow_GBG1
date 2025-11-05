@@ -141,7 +141,7 @@ public class BookingService {
                         () -> System.out.println("Inga bokningar är tillgängliga."));
     }
 
-    public void completeRepairBooking(int bookingId, double repairPrice) {
+    public Booking completeRepairBooking(int bookingId, double repairPrice) {
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
         if (optionalBooking.isEmpty()) {
             throw new IllegalArgumentException("Ingen bokning hittades med ID: " + bookingId);
@@ -159,6 +159,7 @@ public class BookingService {
 
         mailService.sendMail(booking.getCustomer().getEmail(), "Din bil är klar! Det totala priset: "
                 + repairPrice + " kr. Tack för att du kom till Bilmeckarna AB!");
+        return booking;
     }
 
 }
