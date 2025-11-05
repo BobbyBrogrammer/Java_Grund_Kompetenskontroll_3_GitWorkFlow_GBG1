@@ -27,26 +27,27 @@ public class AppConfig {
 
     private final IIO IO = new SystemIO();
     private final LoggingService loggingService = new LoggingService();
+
     private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository();
     private final Repository<Customer, String> customerRepository = new CustomerRepository();
     private final VehicleValidator vehicleValidator = new VehicleValidator();
     private final CustomerValidator customerValidator = new CustomerValidator();
     private final PriceValidator priceValidator = new PriceValidator();
-    private final VehicleFactory vehicleFactory = new VehicleFactory(vehicleValidator);
-    private final CustomerFactory customerFactory = new CustomerFactory(customerValidator);
+    private final VehicleFactory vehicleFactory = new VehicleFactory(vehicleValidator, loggingService);
+    private final CustomerFactory customerFactory = new CustomerFactory(customerValidator, loggingService);
     private final PriceService priceService = new PriceService(priceValidator);
-    private final BookingFactory bookingFactory = new BookingFactory(priceService);
+    private final BookingFactory bookingFactory = new BookingFactory(priceService, loggingService);
     private final ValidationService validationService = new ValidationService();
     private final OutputHandler output = new OutputHandler(IO);
     private final InputHandler input = new InputHandler(output, IO, validationService);
-    private final SearchForBooking searchAction = new SearchForBooking(input, output);
-    private final DeleteBooking deleteAction = new DeleteBooking(input, output);
-    private final UpdateBooking updateAction = new UpdateBooking(input, output);
+    private final SearchForBooking searchAction = new SearchForBooking(input, output, loggingService);
+    private final DeleteBooking deleteAction = new DeleteBooking(input, output, loggingService);
+    private final UpdateBooking updateAction = new UpdateBooking(input, output, loggingService);
     private final MailService mailService = new MailService();
-    private final BookingService bookingService = new BookingService(bookingRepository, loggingService, validationService, priceService, mailService);
     private final CompletionService completionService = new CompletionService(priceService, validationService,mailService,loggingService);
-    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService);
+    private final BookingService bookingService = new BookingService(bookingRepository, vehicleRepository, customerRepository,  loggingService, validationService, priceService, mailService, completionService);
+    private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, );
     private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui);
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
     public final Menu menuRunner(){return menuRun;}
