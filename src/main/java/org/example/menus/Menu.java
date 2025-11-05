@@ -74,7 +74,7 @@ public class Menu {
             String choice = io.readLine().trim();
 
             switch (choice) {
-                case "1" -> bookingSelectionMenu.runMenu();
+                case "1" -> bookingUI.createBooking();
                 case "2" -> bookingUI.showAllBookings();
                 case "3" -> bookingUI.searchBooking();
                 case "4" -> bookingUI.updateBooking();
@@ -95,7 +95,7 @@ public class Menu {
             String choice = io.readLine().trim();
 
             switch (choice) {
-                case "1" -> bookingSelectionMenu.runMenu();
+                case "1" -> bookingUI.createBooking();
                 case "2" -> bookingUI.showAllBookings();
                 case "3" -> bookingUI.searchBooking();
                 case "4" -> bookingUI.updateBooking();
@@ -116,7 +116,7 @@ public class Menu {
             String choice = io.readLine().trim();
 
             switch (choice) {
-                case "1" -> bookingSelectionMenu.runMenu();
+                case "1" -> bookingUI.createBooking();
                 case "2" -> bookingUI.showAllBookings();
                 case "3" -> bookingUI.searchBooking();
                 case "4" -> bookingUI.updateBooking();

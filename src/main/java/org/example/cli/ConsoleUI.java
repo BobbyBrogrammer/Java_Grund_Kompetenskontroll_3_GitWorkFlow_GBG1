@@ -33,9 +33,9 @@ public class ConsoleUI implements BookingUI{
     private final CustomerFactory customerFactory;
     private final BookingFactory bookingFactory;
     private final CompletionService completionService;
-    private final List<String> bookings = new ArrayList<>();
     private final PriceService priceService;
     private final BookingService bookingService;
+    private final Booking booking;
 
 
     //Meny actions
@@ -48,7 +48,7 @@ public class ConsoleUI implements BookingUI{
                      Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
                      Repository<Booking, Integer>  bookingRepository, SearchForBooking searchAction,
                      DeleteBooking deleteAction, UpdateBooking updateAction, PriceService priceService,
-                     BookingService bookingService) {
+                     BookingService bookingService, Booking booking) {
         this.io = io;
         this.input = input;
         this.output = output;
@@ -64,6 +64,7 @@ public class ConsoleUI implements BookingUI{
         this.updateAction = updateAction;
         this.priceService = priceService;
         this.bookingService = bookingService;
+        this.booking = booking;
     }
 
     public void createBooking() {
@@ -91,17 +92,18 @@ public class ConsoleUI implements BookingUI{
 
     public void showAllBookings() {
         output.printShowAllBookingsTitle();
-        if (bookings.isEmpty()) {
+        List<Booking> allBookings = bookingRepository.findAll();
+        if (allBookings.isEmpty()) {
             output.printIfNoBookings();
         } else {
-            for (int i = 0; i < bookings.size(); i++) {
-                io.printLine((i + 1) + ". " + bookings.get(i));
+            for (int i = 0; i < allBookings.size(); i++) {
+                io.printLine((i + 1) + ". " + allBookings.get(i));
             }
         }
     }
 
     public void searchBooking() {
-        searchAction.searchBooking(bookings);
+        searchAction.searchBooking();
     }
 
     public void deleteBooking() {
@@ -113,81 +115,82 @@ public class ConsoleUI implements BookingUI{
     }
 
 
-    public void createInspectionBooking(){
-         output.printStateCreateNewBookingTitle();
-         output.askForRegistrationNumber();
-         String reg = io.readLine();
-         output.askForModel();
-         String model = io.readLine();
-         output.askForYearModel();
-         int yearModel = Integer.parseInt(io.readLine());
-         Vehicle vehicle = vehicleFactory.createVehicle(reg, model, yearModel);
-         output.askForName();
-         String name = io.readLine();
-         output.askForPhoneNumber();
-         String phoneNumber = io.readLine();
-         output.askForEmail();
-         String email = io.readLine();
-         Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
-         LocalDate localDate = LocalDate.now();
-         Booking book =  bookingFactory.bookInspection(vehicle, localDate, customer);
-         customerRepository.add(customer);
-         vehicleRepository.add(vehicle);
-         bookingRepository.add(book);
+    public void createInspectionBooking() {
+        output.printStateCreateNewBookingTitle();
+        //Skapa fordon
+        Vehicle vehicle = vehicleFactory.createVehicle(
+                input.readRegistrationNumber(),
+                input.readVehicleModel(),
+                input.readYearModel());
+        //Skapa kund
+        Customer customer = customerFactory.createCustomer(
+                input.readCustomerName(),
+                input.readPhoneNumber(),
+                input.readEmail());
+        //Läs in datum
+        LocalDate date = input.readDate();
+        //Skapa bokning
+        bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        //Visa resultat
+        if (booking != null) {
+            output.printSuccess("Bokning skapad!\n" + booking);
+        } else {
+            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
+        }
     }
 
     public void createServiceBooking() {
         output.printStateCreateNewBookingTitle();
-        output.askForRegistrationNumber();
-        String reg = io.readLine();
-        output.askForModel();
-        String model = io.readLine();
-        output.askForYearModel();
-        int yearModel = Integer.parseInt(io.readLine());
-        Vehicle vehicle = vehicleFactory.createVehicle(reg, model, yearModel);
-        output.askForName();
-        String name = io.readLine();
-        output.askForPhoneNumber();
-        String phoneNumber = io.readLine();
-        output.askForEmail();
-        String email = io.readLine();
-        Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
-        double price = priceService.calculateServicePrice(yearModel);
-        LocalDate localDate = LocalDate.now();
-        Booking booking = bookingFactory.bookService(vehicle, localDate, customer, price);
-        customerRepository.add(customer);
-        vehicleRepository.add(vehicle);
-        bookingRepository.add(booking);
-        completionService.completeProcess(email, reg, BookingType.SERVICE, vehicle);
-        output.printSuccess("Service-bokning skapad för " + reg + ". Pris: " + price + " kr");
+        //Skapa fordon
+        Vehicle vehicle = vehicleFactory.createVehicle(
+                input.readRegistrationNumber(),
+                input.readVehicleModel(),
+                input.readYearModel());
+        //Skapa kund
+        Customer customer = customerFactory.createCustomer(
+                input.readCustomerName(),
+                input.readPhoneNumber(),
+                input.readEmail());
+        //Läs in datum
+        LocalDate date = input.readDate();
+        //Skapa bokning
+        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.SERVICE);
+        //Visa resultat
+        if (booking != null) {
+            output.printSuccess("Service bokning skapad!\n" + booking);
+        } else {
+            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
+        }
+
     }
 
     public void createRepairBooking() {
         output.printStateCreateNewBookingTitle();
-        output.askForRegistrationNumber();
-        String reg = io.readLine();
-        output.askForModel();
-        String model = io.readLine();
-        output.askForYearModel();
-        int yearModel = Integer.parseInt(io.readLine());
-        Vehicle vehicle = vehicleFactory.createVehicle(reg, model, yearModel);
-        output.askForName();
-        String name = io.readLine();
-        output.askForPhoneNumber();
-        String phoneNumber = io.readLine();
-        output.askForEmail();
-        String email = io.readLine();
-        Customer customer = customerFactory.createCustomer(name, phoneNumber, email);
-        LocalDate localDate = LocalDate.now();
-        Booking booking = bookingFactory.bookRepair(vehicle, localDate, customer);
-        customerRepository.add(customer);
-        vehicleRepository.add(vehicle);
-        bookingRepository.add(booking);
-        output.printSuccess("Reparation-bokning är skapad! Priset sätts efter att arbetet är klart.");
+        //Skapa fordon
+        Vehicle vehicle = vehicleFactory.createVehicle(
+                input.readRegistrationNumber(),
+                input.readVehicleModel(),
+                input.readYearModel());
+        //Skapa kund
+        Customer customer = customerFactory.createCustomer(
+                input.readCustomerName(),
+                input.readPhoneNumber(),
+                input.readEmail());
+        //Läs in datum
+        LocalDate date = input.readDate();
+        //Skapa bokning
+        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
+        //Visa resultat
+        if(booking != null) {
+            output.printSuccess("Reparation bokning skapad!\n" + booking + "\nPriset sätts när arbetet är klart.");
+        } else {
+            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
+        }
     }
 
     public void completeRepairBooking() {
         output.printCompleteRepairTitle();
+        //Läs in boknings-ID
         output.askForBookingId();
         int bookingId = Integer.parseInt(io.readLine());
 
