@@ -44,14 +44,14 @@ public class Menu {
 //                default -> output.printDefaultMenuChoice();
 //            }
 //        }
-    }
-
-   //public void showMainMenu() {
-      //  while (true) {
-      //      output.printMenyChoices();
-          //  String choice = io.readLine().trim();
-
-        //      case "1" -> bookingUI.createBooking();
+//    }
+//
+//    public void showMainMenu() {
+//        while (true) {
+//            output.printMenyChoices();
+//            String choice = io.readLine().trim();
+//            switch (choice) {
+//                case "1" -> bookingUI.createBooking();
 //                case "2" -> bookingUI.showAllBookings();
 //                case "3" -> bookingUI.searchBooking();
 //                case "4" -> bookingUI.updateBooking();
@@ -65,5 +65,4 @@ public class Menu {
 //            }
 //        }
 //    }
-//}
-
+}
