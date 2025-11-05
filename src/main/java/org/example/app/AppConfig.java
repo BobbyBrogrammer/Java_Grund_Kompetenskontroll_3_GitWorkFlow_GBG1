@@ -34,7 +34,7 @@ public class AppConfig {
     private final PriceValidator priceValidator = new PriceValidator();
     private final VehicleFactory vehicleFactory = new VehicleFactory(vehicleValidator);
     private final CustomerFactory customerFactory = new CustomerFactory(customerValidator);
-    private final PriceService priceService = new PriceService();
+    private final PriceService priceService = new PriceService(priceValidator);
     private final BookingFactory bookingFactory = new BookingFactory(priceService);
     private final ValidationService validationService = new ValidationService();
     private final OutputHandler output = new OutputHandler(IO);
