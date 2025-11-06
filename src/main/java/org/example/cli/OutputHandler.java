@@ -191,8 +191,6 @@ public class OutputHandler {
     public void printStatusNotCorrect(){io.printLine("Ogiltigt val, skriv DONE eller NOT_DONE.");}
     public void printBackSpaceChoice(){io.printLine("<- Gå tillbaka.");}
     public void printUnkownChoice(){io.printLine("Ogiltigt val, försök igen.");}
-    public void printBookingCancel() {io.printLine("Bokning avbruten. Återgår till menyn...");}
-    public void printBookingCancelInfo() {io.printLine("(Skriv 0 för att avbryta och återgå till menyn)");}
 
 
 
