@@ -22,21 +22,51 @@ public class DeleteBooking {
     public void deleteBooking() {
         output.printRemoveBooking();
         output.askForBookingId();
-        try {
-            int id = Integer.parseInt(io.readLine());
-            Optional<Booking> bookingToDelete = bookingRepository.findAll().stream()
-                    .filter(b -> b.getId() == id).findFirst();
 
-            if (bookingToDelete.isPresent()) {
+        String idInput = io.readLine().trim();
+
+        int id;
+        try {
+            id = Integer.parseInt(idInput);
+        } catch (NumberFormatException ex) {
+            output.printError("Ogiltigt ID, endast siffror är tillåtna!");
+            logger.logError("Felaktigt ID vid borttagning: " + idInput);
+            return;
+        }
+
+        // Hitta bokningen via repository
+        Optional<Booking> bookingToDelete = bookingRepository.findById(id);
+
+        if (bookingToDelete.isEmpty()) {
+            output.printNoBookingFoundToRemove();
+            logger.logInfo("Ingen bokning hittades med ID: " + id);
+            return;
+        }
+
+        Booking booking = bookingToDelete.get();
+
+        // Visa bokningen som hittats
+        output.printBookingFound();
+        io.printLine(booking.toString());
+
+        // Bekräfta borttagning
+        output.printConfirmDeleteQuestion();
+
+        while (true) {
+            String answer = io.readLine().trim().toUpperCase();
+
+            if (answer.equals("Y") || answer.equals("J")) {
                 bookingRepository.remove(id);
                 output.printBookingWasRemoved();
-                output.printSuccess("Borttagen bokning: " + bookingToDelete.get());
+                logger.logInfo("Bokning med ID " + id + " togs bort: " + booking);
+                break;
+            } else if (answer.equals("N")) {
+                output.printDeleteCancelled();
+                logger.logInfo("Borttagning av bokning med ID " + id + " avbröts av användaren.");
+                break;
             } else {
-                output.printNoBookingFoundToRemove();
+                output.printError("Ogiltigt svar. Skriv Y/N (Y)för ja eller (N) för nej:");
             }
-
-        } catch (NumberFormatException ex) {
-            output.printError("Ogiltigt ID, endast siffror är tillåtet!");
         }
     }
 }

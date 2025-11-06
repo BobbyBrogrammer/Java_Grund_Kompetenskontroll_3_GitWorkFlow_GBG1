@@ -30,7 +30,6 @@ public class UpdateBooking {
                     .filter(b -> b.getId() == id)
                     .findFirst()
                     .ifPresentOrElse(b -> {
-                        output.printStateCarModel();
                         String newModel = input.readVehicleModel();
                         b.getVehicle().setModel(newModel);
                         output.printBookingHaveBeenUpdated();

@@ -33,7 +33,6 @@ public class ValidationService {
             LocalDate parsedDate = LocalDate.parse(date);
             return !parsedDate.isBefore(LocalDate.now());
         } catch (DateTimeException ex) {
-            System.out.println("Ogiltigt datumformat. Använd ÅÅÅÅ-MM-DD.");
             return false;
         }
     }
