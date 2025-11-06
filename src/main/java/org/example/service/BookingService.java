@@ -136,9 +136,6 @@ public class BookingService {
                     booking -> {
                         booking.setStatus(Status.DONE);
                         loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
-
-                        // 🔹 Skicka mail när fordonet är klart:
-                        completionService.notifyVehicleReady(booking);
                     },
                     () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
             );
