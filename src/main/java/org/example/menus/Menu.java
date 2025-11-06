@@ -53,6 +53,7 @@ public class Menu {
                 default ->{
                     logger.logInfo("Felaktigt menyval: " + choice);
                     output.printDefaultMenuChoice();
+
                 }
             }
         }
@@ -89,8 +90,11 @@ public class Menu {
                 }
                 case "0" -> {
                     logger.logInfo("Program avslutas från huvudmeny. ");
+                    logger.logWarn("Användaren avslutade programmet.");
+                    logger.logError("Test: avslutningslogg för kontroll.");
                     output.printExitProgram();
-                    System.exit(0);
+                    return;
+                    //System.exit(0);
                 }
                 default ->{
                     logger.logInfo("Ogiltigt menyval: " + choice);
