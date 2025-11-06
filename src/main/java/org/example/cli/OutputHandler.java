@@ -65,7 +65,7 @@ public class OutputHandler {
         io.printLine("\n\u001B[31m==== Ta bort bokning  ====\u001B[0m");
     }
     public void printBookingWasRemoved() {
-        io.printLine("\u001B[31Bokningen togs bort.\u001B[0m");
+        io.printLine("Bokningen togs bort.");
     }
     public void printNoBookingFoundToRemove() {
         io.printLine("Ingen bokning hittades att ta bort.");
@@ -227,20 +227,9 @@ public class OutputHandler {
         io.printLine("\u001B[33m==========================\u001B[0m");
         io.print("Val: ");
     }
-    public void printUpdateBookingOptions() {
-        io.printLine("\n === Redigera ===");
-        io.printLine("1. Namn");
-        io.printLine("2. Telefonnummer");
-        io.printLine("3. Email");
-        io.printLine("4. Bilmodell");
-        io.printLine("5. Registreringsnummer");
-        io.printLine("6. Bil årsmodell");
-        io.printLine("7. Datum för bokning");
-        io.printLine("8. Status");
-        io.printLine("9. <- Gå tillbaka");
-        io.printLine("10. Avsluta");
-    }
 
+    // ---------------------------- Mail -----------------------------
+    public void printSendMail(String email, String message) {io.printLine("Mejl skickat till kund (" + email + "): " + message);}
 
 
 

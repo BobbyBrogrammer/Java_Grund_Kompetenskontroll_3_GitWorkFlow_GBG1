@@ -21,6 +21,8 @@ import org.example.validator.CustomerValidator;
 import org.example.validator.PriceValidator;
 import org.example.validator.VehicleValidator;
 
+import javax.xml.validation.Validator;
+
 public class AppConfig {
 
     private final IIO IO = new SystemIO();
