@@ -71,7 +71,7 @@ public class UpdateBooking {
 
         );
         Optional.ofNullable(actions.get(choice))
-                .ifPresentOrElse(r -> r.run(), () ->output.printUnkownChoice());
+                .ifPresentOrElse(r -> r.run(), () ->output.printUnknownChoice());
         output.printBookingHaveBeenUpdated(booking);
     }
 

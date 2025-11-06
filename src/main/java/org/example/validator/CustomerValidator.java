@@ -5,9 +5,7 @@ import org.example.exceptions.InvalidCustomerNameException;
 import org.example.exceptions.InvalidEmailAdressException;
 import org.example.exceptions.InvalidPhoneNumberException;
 
-
 public class CustomerValidator {
-
 
     public void validateCustomer(String name) {
         if (name == null || name.trim().isBlank())
@@ -16,6 +14,7 @@ public class CustomerValidator {
 
     public void validatePhoneNumber(String number) {
         if (!number.matches("^\\s*\\+?[0-9\\s]+\\s*$"))
+
             throw new InvalidPhoneNumberException("telefonnummer ogiltigt kontrollera att det är rätt. " + number);
 
     }
