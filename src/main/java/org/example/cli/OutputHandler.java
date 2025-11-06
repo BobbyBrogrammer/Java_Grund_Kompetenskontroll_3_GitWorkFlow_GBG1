@@ -9,7 +9,7 @@ public class OutputHandler {
     }
     //------------------------Skapa bokning--------------------
     public void printStateCreateNewBookingTitle() {
-        io.printLine("\n=== Skapa ny bokning ===");
+        io.printLine("\n\u001B[32m==== Skapa ny bokning ====\u001B[0m");
     }
     public void printStateCustomerName() {
         io.printLine("Ange kundens namn: ");
@@ -42,7 +42,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //-------------Alla bokningar-------------------------------
     public void printShowAllBookingsTitle() {
-        io.printLine("\n=== Alla bokningar ===");
+        io.printLine("\n\u001B[34m====  Alla bokningar  ====\u001B[0m");
     }
     public void printIfNoBookings() {
         io.printLine("Inga bokningar registrerade ännu.");
@@ -50,7 +50,7 @@ public class OutputHandler {
     //--------------------------------------------------------------
     //----------------Sök efter bokning---------------------------
     public void printSearchForBookingTitle() {
-        io.printLine("\n=== Sök bokning ===");
+        io.printLine("\n\u001B[34m====    Sök bokning   ====\u001B[0m");
     }
     public void printBookingFound() {
         io.printLine("Bokning hittad: ");
@@ -61,10 +61,10 @@ public class OutputHandler {
     //-----------------------------------------------------------------------
     //-------------------Ta bort bokning------------------------------------
     public void printRemoveBooking() {
-        io.printLine("\n=== Ta bort bokning ===");
+        io.printLine("\n\u001B[31m==== Ta bort bokning  5====\u001B[0m");
     }
     public void printBookingWasRemoved() {
-        io.printLine("Bokningen togs bort.");
+        io.printLine("\u001B[31Bokningen togs bort.\u001B[0m");
     }
     public void printNoBookingFoundToRemove() {
         io.printLine("Ingen bokning hittades att ta bort.");
@@ -72,7 +72,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
     public void printUpdateBookTitle() {
-        io.printLine("\n=== Redigera bokning ===");
+        io.printLine("\n\u001B[33m==== Redigera bokning ====\u001B[0m");
     }
     public void printStateNewVehicleInfoToUpdate() {
         io.printLine("Ange nytt fordon: ");
@@ -186,12 +186,17 @@ public class OutputHandler {
 
     //bookingMenu
     public void printChooseBookingMenu(){
-        io.printLine("----Välj tjänst----");
+        io.printLine("\u001B[34m==========================\u001B[0m");
+        io.printLine("       Välj tjänst");
+        io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("1. Besiktning. ");
         io.printLine("2. Service. ");
         io.printLine("3. Reparation. ");
         io.printLine("0 Tillbaks. ");
+        io.printLine("\u001B[34m==========================\u001B[0m");
+        io.print("Val: ");
     }
+
     public void askForRegistrationNumber(){io.printLine("Ange registreringsnummer ");}
     public void askForModel(){io.printLine("Ange bilmärke ");}
     public void askForYearModel(){io.printLine("Ange årsmodell ");}
@@ -202,13 +207,18 @@ public class OutputHandler {
     public void askForRepairPrice(){io.printLine("Ange slutpris för reparationen: ");}
 
     public void printCompleteRepairTitle() {
-        io.printLine("\n=== Avsluta reparation ===");
+        io.printLine("\n\"\\u001B[34m=== Avsluta reparation ===\\u001B[0m");
     }
 
     public void printSortOptions() {
+        io.printLine("\u001B[33m==========================\u001B[0m");
+        io.printLine("      Sortera");
+        io.printLine("\u001B[33m==========================\u001B[0m");
         io.printLine("1. Sortera efter ID");
         io.printLine("2. Sortera efter Datum");
         io.printLine("3. Sortera efter Status");
+        io.printLine("\u001B[33m==========================\u001B[0m");
+        io.print("Val: ");
     }
 
 
