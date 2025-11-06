@@ -1,5 +1,6 @@
 package org.example.cli;
 
+import org.example.models.Status;
 import org.example.service.ValidationService;
 import org.example.systemIO.IIO;
 
@@ -118,7 +119,34 @@ public class InputHandler {
     public void printDeleteCancelled() {
         io.printLine("Borttagning avbruten, bokningen ligger kvar.");
     }
+    public int readBookingId() {
+        while (true) {
+            output.askForBookingId();
+            try {
+                int id = Integer.parseInt(io.readLine().trim());
+                if (id > 0) return id;
+                output.printIdMustBeGreaterThanZero();
+            } catch (NumberFormatException ex) {
+                output.printIdMustBeNumbers();
+            }
+        }
+    }
+    public String readUpdateChoice() {
+        output.printUpdateBookingOptions();
+        return io.readLine().trim();
+    }
 
+    public Status readBookingStatus() {
+        while (true) {
+            output.printStateNewStatus();
+            String statusInput = io.readLine().trim().toUpperCase();
+            try {
+                return Status.valueOf(statusInput);
+            } catch (IllegalArgumentException ex) {
+                output.printStatusNotCorrect();
+            }
+        }
+    }
 
 
 

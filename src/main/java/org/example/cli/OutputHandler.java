@@ -1,5 +1,6 @@
 package org.example.cli;
 
+import org.example.models.Booking;
 import org.example.systemIO.IIO;
 
 public class OutputHandler {
@@ -79,8 +80,9 @@ public class OutputHandler {
     public void printStateNewVehicleInfoToUpdate() {
         io.printLine("Ange nytt fordon: ");
     }
-    public void printBookingHaveBeenUpdated() {
+    public void printBookingHaveBeenUpdated(Booking booking) {
         io.printLine("Bokningen har uppdaterats.");
+        io.printLine(booking.toString());
     }
     public void printNoBookingFoundToUpdate() {
         io.printLine("Ingen bokning hittades att uppdatera.");
@@ -183,6 +185,12 @@ public class OutputHandler {
     public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
     public void printWrongDate() {io.printLine("Ogiltigt datumformat, försök igen!");}
     public void printInputDate() {io.printLine("Ange datum för önskad bokning (ÅÅÅÅ-MM-DD): ");}
+    public void printIdMustBeGreaterThanZero(){io.printLine("ID måste vara större än 0.");}
+    public void printIdMustBeNumbers(){io.printLine("Ogiltigt ID, ID måste vara siffror.");}
+    public void printStateNewStatus(){io.printLine("Ange ny status (DONE / NOT_DONE");}
+    public void printStatusNotCorrect(){io.printLine("Ogiltigt val, skriv DONE eller NOT_DONE.");}
+    public void printBackSpaceChoice(){io.printLine("<- Gå tillbaka.");}
+    public void printUnkownChoice(){io.printLine("Ogiltigt val, försök igen.");}
 
 
 
@@ -212,6 +220,20 @@ public class OutputHandler {
         io.printLine("2. Sortera efter Datum");
         io.printLine("3. Sortera efter Status");
     }
+    public void printUpdateBookingOptions() {
+        io.printLine("\n === Redigera ===");
+        io.printLine("1. Namn");
+        io.printLine("2. Telefonnummer");
+        io.printLine("3. Email");
+        io.printLine("4. Bilmodell");
+        io.printLine("5. Registreringsnummer");
+        io.printLine("6. Bil årsmodell");
+        io.printLine("7. Datum för bokning");
+        io.printLine("8. Status");
+        io.printLine("9. <- Gå tillbaka");
+        io.printLine("10. Avsluta");
+    }
+
 
 
 
