@@ -65,7 +65,7 @@ public class OutputHandler {
         io.printLine("\n\u001B[31m==== Ta bort bokning  ====\u001B[0m");
     }
     public void printBookingWasRemoved() {
-        io.printLine("\u001B[31Bokningen togs bort.\u001B[0m");
+        io.printLine("Bokningen togs bort.");
     }
     public void printNoBookingFoundToRemove() {
         io.printLine("Ingen bokning hittades att ta bort.");
@@ -103,7 +103,6 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m=========================\u001B[0m");
         io.print("Val: ");
-
     }
 
     public void printMenyChoices() {
@@ -119,8 +118,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesRepair() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -135,8 +134,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesInspection() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -151,8 +150,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesService() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -167,8 +166,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val:");
-
     }
+
     public void printExitProgram() {
         io.printLine("Avslutar programmet...Hejdå!");
     }
@@ -191,8 +190,6 @@ public class OutputHandler {
     public void printStatusNotCorrect(){io.printLine("Ogiltigt val, skriv DONE eller NOT_DONE.");}
     public void printBackSpaceChoice(){io.printLine("<- Gå tillbaka.");}
     public void printUnkownChoice(){io.printLine("Ogiltigt val, försök igen.");}
-
-
 
     //bookingMenu
     public void printChooseBookingMenu(){
@@ -230,6 +227,10 @@ public class OutputHandler {
         io.printLine("\u001B[33m==========================\u001B[0m");
         io.print("Val: ");
     }
+
+    // ---------------------------- Mail -----------------------------
+    public void printSendMail(String email, String message) {io.printLine("Mejl skickat till kund (" + email + "): " + message);}
+
     public void printUpdateBookingOptions() {
         io.printLine("\n === Redigera ===");
         io.printLine("1. Namn");
@@ -243,9 +244,6 @@ public class OutputHandler {
         io.printLine("9. <- Gå tillbaka");
         io.printLine("10. Avsluta");
     }
-
-
-
 
 
 

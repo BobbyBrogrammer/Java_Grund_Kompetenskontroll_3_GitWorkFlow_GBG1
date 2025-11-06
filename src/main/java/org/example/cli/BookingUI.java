@@ -6,4 +6,5 @@ public interface BookingUI {
     void searchBooking();
     void deleteBooking();
     void updateBooking();
+
 }

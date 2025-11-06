@@ -10,16 +10,13 @@ import org.example.models.Vehicle;
 import org.example.repository.Repository;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
+import org.example.service.InitializationService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsoleUI implements BookingUI{
-    private  LocalDate localDate;
     private final IIO io;
     private final Repository<Vehicle, String> vehicleRepository;
     private final Repository<Customer, String> customerRepository;
@@ -53,7 +50,7 @@ public class ConsoleUI implements BookingUI{
         this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
-        this.vehicleRepository= vehicleRepository;
+        this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
         this.searchForBooking = searchForBooking;
@@ -86,13 +83,10 @@ public class ConsoleUI implements BookingUI{
 
         output.printBookingSuccess();
     }
-
-
     public void showAllBookings(){showAllBookings.showAllBookings();}
     public void searchBooking() {searchForBooking.searchBooking();}
     public void deleteBooking() {deleteBooking.deleteBooking();}
     public void updateBooking() {updateBooking.updateBooking();}
-
 
     public void createInspectionBooking() {
         output.printStateCreateNewBookingTitle();
@@ -111,7 +105,7 @@ public class ConsoleUI implements BookingUI{
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        Booking booking = bookingFactory.bookInspection(vehicle, date, customer);
         bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
@@ -174,6 +168,7 @@ public class ConsoleUI implements BookingUI{
         } else {
             output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
         }
+
     }
 
 }

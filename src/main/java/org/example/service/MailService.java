@@ -1,8 +1,17 @@
 package org.example.service;
 
+import org.example.cli.OutputHandler;
+
 public class MailService {
+
+    private final OutputHandler output;
+
+    public MailService(OutputHandler output) {
+        this.output = output;
+    }
+
     public void sendMail(String email, String message) {
         // Simulerar mejlutskick
-        System.out.println("Mejl skickat till kund (" + email + "): " + message);
+            output.printSendMail(email, message);
     }
 }
