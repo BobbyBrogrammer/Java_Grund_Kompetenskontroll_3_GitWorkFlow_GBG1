@@ -53,6 +53,7 @@ public class Menu {
                 default ->{
                     logger.logInfo("Felaktigt menyval: " + choice);
                     output.printDefaultMenuChoice();
+
                 }
             }
         }
