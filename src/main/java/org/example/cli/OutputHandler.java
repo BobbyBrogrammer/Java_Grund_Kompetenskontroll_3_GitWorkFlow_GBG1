@@ -231,7 +231,19 @@ public class OutputHandler {
     // ---------------------------- Mail -----------------------------
     public void printSendMail(String email, String message) {io.printLine("Mejl skickat till kund (" + email + "): " + message);}
 
-
+    public void printUpdateBookingOptions() {
+        io.printLine("\n === Redigera ===");
+        io.printLine("1. Namn");
+        io.printLine("2. Telefonnummer");
+        io.printLine("3. Email");
+        io.printLine("4. Bilmodell");
+        io.printLine("5. Registreringsnummer");
+        io.printLine("6. Bil årsmodell");
+        io.printLine("7. Datum för bokning");
+        io.printLine("8. Status");
+        io.printLine("9. <- Gå tillbaka");
+        io.printLine("10. Avsluta");
+    }
 
 
 
