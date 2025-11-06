@@ -1,35 +1,57 @@
+<!--
+Den här konfigurationen loggar alla INFO, WARN och ERRORS till både konsolen och till en loggfil.
+
+En ny loggfil skapas automatiskt varje dag och logg filerna sparas i 30 dagar, och när 31:a dagen infaller så tas den
+äldsta filen bort.
+
+-->
+
 <configuration>
 
-    <!-- Logback-status i konsolen vid start -->
+    <!-- Visar Logbacks status vid start (kan tas bort när allt fungerar stabilt) -->
     <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
-    <!-- Konsolloggning med färger -->
+    <!-- Konsolloggning med färger (visas i IntelliJ) -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <withJansi>true</withJansi>
+        <withJansi>true</withJansi> <!-- kräver org.fusesource.jansi för färg -->
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%logger{15}) - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Loggfil för INFO/WARN/ERROR -->
-    <appender name="FILE_ALL" class="ch.qos.logback.core.FileAppender">
+    <!-- RollingFileAppender: ny loggfil varje dag, sparas i 30 dagar -->
+    <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Den aktuella loggfilen (dagens fil) -->
         <file>target/logs/app.log</file>
-        <append>true</append>
-        <immediateFlush>true</immediateFlush>
+
+        <!-- Policy: skapa en ny loggfil varje dag -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Dagens datum används i filnamnet -->
+            <fileNamePattern>target/logs/app-%d{yyyy-MM-dd}.log</fileNamePattern>
+
+
+
+            <!-- Behåll loggar i 30 dagar -->
+            <maxHistory>30</maxHistory>
+
+            <!-- Totalt utrymme för gamla loggar -->
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Asynkron loggning (snabbare, flushar snyggt vid avslut) -->
+    <!-- Asynkron loggning: buffrar loggar i bakgrunden -->
     <appender name="ASYNC_FILE_ALL" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="FILE_ALL" />
-        <queueSize>256</queueSize>
-        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize> <!-- Hur många loggar som får buffras -->
+        <discardingThreshold>0</discardingThreshold> <!-- 0 = kasta aldrig loggar -->
         <includeCallerData>false</includeCallerData>
     </appender>
 
-    <!-- Root logger: konsol + asynkron fil -->
+    <!-- Root logger: skickar till konsolen + asynkron fil -->
     <root level="info">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC_FILE_ALL" />
