@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.models.Booking;
 import org.example.models.BookingType;
 import org.example.models.Vehicle;
 
@@ -35,9 +36,34 @@ public class CompletionService {
         loggingService.logInfo("Pris beräknat: " + price + " kr för " + bookingType);
 
         // 4 Skicka mejl
-        mailService.sendMail(email, "Ditt pris är " + price + " kr för " + bookingType);
-
+        mailService.sendMail(email, regNumber, price, bookingType);
         // 5 Logga avslut
         loggingService.logInfo("Processen slutförd för kund " + email);
     }
+        //När fordonet är klar
+        public void notifyVehicleReady(Booking booking) {
+            String email = booking.getCustomer().getEmail();
+            String regNumber = booking.getVehicle().getRegistrationNumber();
+
+            boolean emailValid = validationService.validateEmail(email);
+            boolean regValid = validationService.validateRegistrationNumber(regNumber);
+
+            if (!emailValid || !regValid) {
+                loggingService.logWarn("Kunde inte skicka klart-mail, ogiltig data för bookingId=" + booking.getId());
+                return;
+            }
+
+            double price = booking.isFlexiblePrice()
+                    ? booking.getFinalPrice()
+                    : booking.getPrice();
+
+            String message = "Hej " + booking.getCustomer().getName() + "!\n\n" +
+                    "Ditt fordon med registreringsnummer " + regNumber + " är nu klart för hämtning.\n" +
+                    "Totalt pris: " + price + " kr för " + booking.getBookingType() + ".\n\n" +
+                    "Vänliga hälsningar,\nBilmeckarna AB";
+
+            // skickas mailet
+            mailService.sendMail(email, regNumber, price, booking.getBookingType());
+
+        }
 }

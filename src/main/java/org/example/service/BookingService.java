@@ -131,12 +131,16 @@ public class BookingService {
         /**
          * Markerar en bokning som färdig (DONE)
          */
-        public void completeBooking ( int bookingId){
+        public void completeBooking(int bookingId) {
             bookingRepository.findById(bookingId).ifPresentOrElse(
                     booking -> {
                         booking.setStatus(Status.DONE);
                         loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
-                    }, () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
+
+                        // 🔹 Skicka mail när fordonet är klart:
+                        completionService.notifyVehicleReady(booking);
+                    },
+                    () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
             );
         }
 

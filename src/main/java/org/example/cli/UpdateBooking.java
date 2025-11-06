@@ -4,8 +4,10 @@ import org.example.models.Booking;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
 import org.example.repository.Repository;
+import org.example.service.CompletionService;
 import org.example.service.LoggingService;
 import org.example.systemIO.IIO;
+import  org.example.models.Status;
 
 import java.util.List;
 import java.util.Map;
@@ -18,13 +20,15 @@ public class UpdateBooking {
     private final Repository<Booking, Integer> bookingRepository;
     private final IIO io;
     private final LoggingService logger;
+    private final CompletionService completionService;
 
-    public UpdateBooking(InputHandler input, OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger) {
+    public UpdateBooking(InputHandler input, OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger, CompletionService completionService) {
         this.input = input;
         this.output = output;
         this.bookingRepository = bookingRepository;
         this.io = io;
         this.logger = logger;
+        this.completionService = completionService;
     }
 
     public void updateBooking() {
@@ -37,7 +41,7 @@ public class UpdateBooking {
         }
         //Visa alla bokningar
         allBookings.stream()
-                .sorted((Booking a, Booking b) -> Integer.compare(a.getId(), b.getId()))
+                .sorted((a, b) -> Integer.compare(a.getId(), b.getId()))
                 .forEach(b -> io.printLine(b.toString()));
         int bookingId = input.readBookingId();
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
@@ -48,7 +52,8 @@ public class UpdateBooking {
         Booking booking = optionalBooking.get();
         Customer customer = booking.getCustomer();
         Vehicle vehicle = booking.getVehicle();
-        //Läs menyval via InputHandler
+
+        //Läs menyval
         String choice = input.readUpdateChoice();
         if (choice.equals("9")) {
             output.printBackSpaceChoice();
@@ -67,15 +72,29 @@ public class UpdateBooking {
                 Map.entry("5", () -> vehicle.setRegistrationNumber(input.readRegistrationNumber())),
                 Map.entry("6", () -> vehicle.setYearModel(input.readYearModel())),
                 Map.entry("7", () -> booking.setDate(input.readDate())),
-                Map.entry("8", () -> booking.setStatus(input.readBookingStatus()))
+                Map.entry("8", () -> {
+                    Status newStatus = input.readBookingStatus();
+                    booking.setStatus(newStatus);
 
+                    if (newStatus == Status.DONE) {
+                        // när fordonet är klart → skicka mejl
+                        completionService.notifyVehicleReady(booking);
+                    }
+                })
         );
-        Optional.ofNullable(actions.get(choice))
-                .ifPresentOrElse(r -> r.run(), () ->output.printUnknownChoice());
+        Runnable action = actions.get(choice);
+
+        if (action == null) {
+            output.printUnkownChoice();
+            return;
+        }
+
+        action.run();
+
         output.printBookingHaveBeenUpdated(booking);
+
+        if ("8".equals(choice) && booking.getStatus() == Status.DONE) {
+            completionService.notifyVehicleReady(booking);
+        }
     }
-
-
-
 }
-
