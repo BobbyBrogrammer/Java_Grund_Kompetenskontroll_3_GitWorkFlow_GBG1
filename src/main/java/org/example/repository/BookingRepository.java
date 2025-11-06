@@ -37,6 +37,17 @@ public class BookingRepository implements Repository<Booking, Integer > {
         bookings.remove(id);
         logger.logInfo("Tog bort bokning med id " + id);
     }
+    @Override
+    public boolean update(Integer id, Booking updated) {
+        if (!bookings.containsKey(id)) {
+            logger.logWarn("Försök att uppdatera icke-existerande booking id " + id);
+            return false;
+        }
+        bookings.put(id, updated);
+        logger.logInfo("Uppdaterade booking id " + id);
+        return true;
+    }
+
 
 }
 
