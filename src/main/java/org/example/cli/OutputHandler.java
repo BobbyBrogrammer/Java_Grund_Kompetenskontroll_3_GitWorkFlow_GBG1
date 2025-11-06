@@ -69,6 +69,8 @@ public class OutputHandler {
     public void printNoBookingFoundToRemove() {
         io.printLine("Ingen bokning hittades att ta bort.");
     }
+    public void printConfirmDeleteQuestion() {io.printLine("Är du säker på att du vill ta bort denna bokning? (Y/N): ");}
+    public void printDeleteCancelled() {io.printLine("Borttagning avbokad, bokningen ligger kvar.");}
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
     public void printUpdateBookTitle() {
@@ -87,7 +89,7 @@ public class OutputHandler {
     public void printBesiktningChoice() {io.printLine("Du har valt: Besiktning");}
     public void printReparationChoice() {io.printLine("Du har valt: Reparation");}
     public void printServiceChoice() {io.printLine("Du har valt: Service");}
-
+    public void printBookingDetails(String bookingText) {io.printLine(bookingText);}
     //---------------------------MenyText------------------------------
     public void printServiceChoices() {
         io.printLine("\u001B[34m=========================\u001B[0m");
@@ -179,8 +181,8 @@ public class OutputHandler {
     public void printModelCantBeEmpty() {io.printLine("Modell får inte vara tom, försök igen!");}
     public void printWrongYearModel() {io.printLine("Ogiltig årsmodell, försök igen!");}
     public void printWrongNumberInput() {io.printLine("Du måste skriva in siffror.");}
-    public void printWrongDate() {io.printLine("Ogiltigt datumformat.");}
-    public void printInputDate() {io.printLine("Ange datum (ÅÅÅÅ-MM-DD): ");}
+    public void printWrongDate() {io.printLine("Ogiltigt datumformat, försök igen!");}
+    public void printInputDate() {io.printLine("Ange datum för önskad bokning (ÅÅÅÅ-MM-DD): ");}
 
 
 
@@ -203,6 +205,12 @@ public class OutputHandler {
 
     public void printCompleteRepairTitle() {
         io.printLine("\n=== Avsluta reparation ===");
+    }
+
+    public void printSortOptions() {
+        io.printLine("1. Sortera efter ID");
+        io.printLine("2. Sortera efter Datum");
+        io.printLine("3. Sortera efter Status");
     }
 
 

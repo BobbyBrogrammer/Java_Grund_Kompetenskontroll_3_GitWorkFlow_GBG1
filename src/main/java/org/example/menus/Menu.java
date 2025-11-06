@@ -58,7 +58,7 @@ public class Menu {
                 case "3" -> bookingUI.searchBooking();
                 case "4" -> bookingUI.updateBooking();
                 case "5" -> bookingUI.deleteBooking();
-                case "6" -> showServiceMenu();
+                case "6" -> showMainMenu();
                 case "0" -> {
                     output.printExitProgram();
                     System.exit(0);

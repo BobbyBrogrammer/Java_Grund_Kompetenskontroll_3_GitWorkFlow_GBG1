@@ -1,30 +1,44 @@
 package org.example.cli;
 
-import java.util.List;
+import org.example.models.Booking;
+import org.example.repository.Repository;
+import org.example.service.LoggingService;
+import org.example.systemIO.IIO;
+
 
 public class UpdateBooking {
     private final InputHandler input;
     private final OutputHandler output;
+    private final Repository<Booking, Integer> bookingRepository;
+    private final IIO io;
+    private final LoggingService logger;
 
-    public UpdateBooking(InputHandler input, OutputHandler output) {
+    public UpdateBooking(InputHandler input, OutputHandler output, Repository<Booking, Integer> bookingRepository, IIO io, LoggingService logger) {
         this.input = input;
         this.output = output;
+        this.bookingRepository = bookingRepository;
+        this.io = io;
+        this.logger = logger;
     }
 
-    public void updateBooking(List<String> bookings) {
+    public void updateBooking() {
         output.printUpdateBookTitle();
-        String search = input.readRegistrationNumber();
+        output.askForBookingId();
+        try {
+            int id = Integer.parseInt(io.readLine());
+            bookingRepository.findAll().stream()
+                    .filter(b -> b.getId() == id)
+                    .findFirst()
+                    .ifPresentOrElse(b -> {
+                        String newModel = input.readVehicleModel();
+                        b.getVehicle().setModel(newModel);
+                        output.printBookingHaveBeenUpdated();
+                        output.printSuccess("Uppdaterad bokning: " + b);
+                    }, () -> output.printNoBookingFoundToUpdate());
 
-        bookings.stream()
-                .filter(b -> b.contains(search))
-                .findFirst()
-                .ifPresentOrElse(foundBooking -> {
-                    output.printStateCarModel();
-                    String newVehicle = input.readVehicleModel();
-                    int index = bookings.indexOf(foundBooking);
-                    bookings.set(index, search + " (" + newVehicle + ")");
-                    output.printBookingHaveBeenUpdated();
-                }, () -> output.printNoBookingFoundToUpdate());
+        } catch (NumberFormatException ex) {
+            output.printError("Ogiltigt ID, endast siffror är tillåtet!");
         }
     }
+}
 
