@@ -105,7 +105,7 @@ public class ConsoleUI implements BookingUI{
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        Booking booking = bookingFactory.bookInspection(vehicle, localDate, customer);
+        Booking booking = bookingFactory.bookInspection(vehicle, date, customer);
         bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
