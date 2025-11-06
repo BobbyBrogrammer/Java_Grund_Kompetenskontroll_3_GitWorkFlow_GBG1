@@ -37,4 +37,6 @@ public class BookingRepository implements Repository<Booking, Integer > {
         bookings.remove(id);
         logger.logInfo("Tog bort bokning med id " + id);
     }
+
 }
+
