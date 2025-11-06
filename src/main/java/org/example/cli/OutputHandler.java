@@ -189,7 +189,7 @@ public class OutputHandler {
     public void printStateNewStatus(){io.printLine("Ange ny status (DONE / NOT_DONE");}
     public void printStatusNotCorrect(){io.printLine("Ogiltigt val, skriv DONE eller NOT_DONE.");}
     public void printBackSpaceChoice(){io.printLine("<- Gå tillbaka.");}
-    public void printUnkownChoice(){io.printLine("Ogiltigt val, försök igen.");}
+    public void printUnknownChoice(){io.printLine("Ogiltigt val, försök igen.");}
 
     //bookingMenu
     public void printChooseBookingMenu(){
