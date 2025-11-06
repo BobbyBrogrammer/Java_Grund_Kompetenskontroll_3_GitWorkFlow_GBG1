@@ -61,7 +61,7 @@ public class UpdateBooking {
             Customer customer = booking.getCustomer();
             Vehicle vehicle = booking.getVehicle();
 
-            // Läs menyval via InputHandler
+
             String choice = input.readUpdateChoice();
             if (choice.equals("9")) {
                 output.printBackSpaceChoice();
@@ -82,7 +82,6 @@ public class UpdateBooking {
                     Map.entry("6", () -> vehicle.setYearModel(input.readYearModel())),
                     Map.entry("7", () -> booking.setDate(input.readDate())),
                     Map.entry("8", () -> {
-                        // 🔹 endast läsa + sätta status här
                         Status newStatus = input.readBookingStatus();
                         booking.setStatus(newStatus);
                     })
