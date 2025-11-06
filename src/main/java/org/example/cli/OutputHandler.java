@@ -207,7 +207,7 @@ public class OutputHandler {
     public void askForRepairPrice(){io.printLine("Ange slutpris för reparationen: ");}
 
     public void printCompleteRepairTitle() {
-        io.printLine("\n\"\\u001B[34m=== Avsluta reparation ===\\u001B[0m");
+        io.printLine("\n\"\\u001B[34m==== Avsluta reparation ====\\u001B[0m");
     }
 
     public void printSortOptions() {
