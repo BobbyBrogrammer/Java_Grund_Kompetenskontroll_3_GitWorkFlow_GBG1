@@ -131,13 +131,37 @@ public class BookingService {
         /**
          * Markerar en bokning som färdig (DONE)
          */
-        public void completeBooking ( int bookingId){
-            bookingRepository.findById(bookingId).ifPresentOrElse(
-                    booking -> {
-                        booking.setStatus(Status.DONE);
-                        loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
-                    }, () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
-            );
+        public String completeBooking(int bookingId, Double finalPriceIfRepair) {
+            Optional<Booking> opt = bookingRepository.findById(bookingId);
+            if (opt.isEmpty()) {
+                String msg = "❌ Bokning med ID: " + bookingId + " hittades inte.";
+                loggingService.logError(msg);
+                return msg;
+            }
+
+            Booking booking = opt.get();
+
+            try {
+                if (booking.getBookingType() == BookingType.REPAIR) {
+                    booking.complete(finalPriceIfRepair); // kräver pris
+                } else {
+                    booking.complete(null);               // sätter finalPrice = price
+                }
+
+                // spara uppdateringen
+                bookingRepository.update(booking.getId(), booking);
+
+                String doneMsg = (booking.getBookingType() == BookingType.REPAIR)
+                        ? "✅ Bokning " + bookingId + " KLAR. Slutpris: " + booking.getFinalPrice() + " kr."
+                        : "✅ Bokning " + bookingId + " KLAR.";
+                loggingService.logInfo(doneMsg);
+                return doneMsg;
+
+            } catch (IllegalArgumentException | IllegalStateException ex) {
+                String err = "❗ Kunde inte avsluta bokning " + bookingId + ": " + ex.getMessage();
+                loggingService.logError(err);
+                return err;
+            }
         }
 
         // --------------------------------------------------
