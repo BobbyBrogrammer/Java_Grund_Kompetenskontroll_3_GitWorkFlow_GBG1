@@ -27,25 +27,6 @@ public class UpdateBooking {
         this.logger = logger;
     }
 
-//    public void updateBooking() {
-//        output.printUpdateBookTitle();
-//        output.askForBookingId();
-//        try {
-//            int id = Integer.parseInt(io.readLine());
-//            bookingRepository.findAll().stream()
-//                    .filter(b -> b.getId() == id)
-//                    .findFirst()
-//                    .ifPresentOrElse(b -> {
-//                        String newModel = input.readVehicleModel();
-//                        b.getVehicle().setModel(newModel);
-//                        output.printBookingHaveBeenUpdated();
-//                        output.printSuccess("Uppdaterad bokning: " + b);
-//                    }, () -> output.printNoBookingFoundToUpdate());
-//
-//        } catch (NumberFormatException ex) {
-//            output.printError("Ogiltigt ID, endast siffror är tillåtet!");
-//        }
-//    }
     public void updateBooking() {
         output.printShowAllBookingsTitle();
         List<Booking> allBookings = bookingRepository.findAll();
