@@ -87,8 +87,6 @@ public class Booking {
                 " | Status: " + status +
                 " | Customer: " + customer;
     }
-
-
 }
 
 

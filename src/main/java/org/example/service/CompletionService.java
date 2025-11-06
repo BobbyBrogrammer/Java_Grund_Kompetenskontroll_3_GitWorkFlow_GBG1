@@ -17,7 +17,7 @@ public class CompletionService {
     }
 
     public void completeProcess(String email, String regNumber, BookingType bookingType, Vehicle vehicle) {
-        loggingService.log("Startar process för " + regNumber);
+        loggingService.logInfo("Startar process för " + regNumber);
 
         // 1 Validera e-post
         boolean emailValid = validationService.validateEmail(email);
@@ -26,18 +26,18 @@ public class CompletionService {
         boolean regValid = validationService.validateRegistrationNumber(regNumber);
 
         if (!emailValid || !regValid) {
-            loggingService.log("Validering misslyckades för " + regNumber);
+            loggingService.logWarn("Validering misslyckades för " + regNumber);
             return;
         }
 
         // 3 Beräkna pris
         double price = priceService.calculatePrice(bookingType, vehicle);
-        loggingService.log("Pris beräknat: " + price + " kr för " + bookingType);
+        loggingService.logInfo("Pris beräknat: " + price + " kr för " + bookingType);
 
         // 4 Skicka mejl
         mailService.sendMail(email, "Ditt pris är " + price + " kr för " + bookingType);
 
         // 5 Logga avslut
-        loggingService.log("Processen slutförd för kund " + email);
+        loggingService.logInfo("Processen slutförd för kund " + email);
     }
 }
