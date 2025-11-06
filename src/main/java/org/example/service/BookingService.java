@@ -138,5 +138,4 @@ public class BookingService {
                         () -> System.out.println("Inga bokningar är tillgängliga."));
     }
 
-
 }
