@@ -10,6 +10,7 @@ import org.example.models.Vehicle;
 import org.example.repository.Repository;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
+import org.example.service.InitializationService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
@@ -49,7 +50,7 @@ public class ConsoleUI implements BookingUI{
         this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
-        this.vehicleRepository= vehicleRepository;
+        this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
         this.searchForBooking = searchForBooking;
@@ -104,7 +105,7 @@ public class ConsoleUI implements BookingUI{
         //Läs in datum
         LocalDate date = input.readDate();
         //Skapa bokning
-        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+        Booking booking = bookingFactory.bookInspection(vehicle, date, customer);
         bookingRepository.add(booking);
         //Visa resultat
         if (booking != null) {
@@ -167,6 +168,7 @@ public class ConsoleUI implements BookingUI{
         } else {
             output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
         }
+
     }
 
 }

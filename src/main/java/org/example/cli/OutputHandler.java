@@ -10,7 +10,7 @@ public class OutputHandler {
     }
     //------------------------Skapa bokning--------------------
     public void printStateCreateNewBookingTitle() {
-        io.printLine("\n=== Skapa ny bokning ===");
+        io.printLine("\n\u001B[32m==== Skapa ny bokning ====\u001B[0m");
     }
     public void printStateCustomerName() {
         io.printLine("Ange kundens namn: ");
@@ -43,7 +43,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //-------------Alla bokningar-------------------------------
     public void printShowAllBookingsTitle() {
-        io.printLine("\n=== Alla bokningar ===");
+        io.printLine("\n\u001B[34m====  Alla bokningar  ====\u001B[0m");
     }
     public void printIfNoBookings() {
         io.printLine("Inga bokningar registrerade ännu.");
@@ -51,7 +51,7 @@ public class OutputHandler {
     //--------------------------------------------------------------
     //----------------Sök efter bokning---------------------------
     public void printSearchForBookingTitle() {
-        io.printLine("\n=== Sök bokning ===");
+        io.printLine("\n\u001B[34m====    Sök bokning   ====\u001B[0m");
     }
     public void printBookingFound() {
         io.printLine("Bokning hittad: ");
@@ -62,7 +62,7 @@ public class OutputHandler {
     //-----------------------------------------------------------------------
     //-------------------Ta bort bokning------------------------------------
     public void printRemoveBooking() {
-        io.printLine("\n=== Ta bort bokning ===");
+        io.printLine("\n\u001B[31m==== Ta bort bokning  ====\u001B[0m");
     }
     public void printBookingWasRemoved() {
         io.printLine("Bokningen togs bort.");
@@ -75,7 +75,7 @@ public class OutputHandler {
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
     public void printUpdateBookTitle() {
-        io.printLine("\n=== Redigera bokning ===");
+        io.printLine("\n\u001B[33m==== Redigera bokning ====\u001B[0m");
     }
     public void printStateNewVehicleInfoToUpdate() {
         io.printLine("Ange nytt fordon: ");
@@ -103,7 +103,6 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m=========================\u001B[0m");
         io.print("Val: ");
-
     }
 
     public void printMenyChoices() {
@@ -119,8 +118,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesRepair() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -135,8 +134,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesInspection() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -151,8 +150,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-
     }
+
     public void printMenyChoicesService() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -167,8 +166,8 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val:");
-
     }
+
     public void printExitProgram() {
         io.printLine("Avslutar programmet...Hejdå!");
     }
@@ -192,16 +191,19 @@ public class OutputHandler {
     public void printBackSpaceChoice(){io.printLine("<- Gå tillbaka.");}
     public void printUnkownChoice(){io.printLine("Ogiltigt val, försök igen.");}
 
-
-
     //bookingMenu
     public void printChooseBookingMenu(){
-        io.printLine("----Välj tjänst----");
+        io.printLine("\u001B[34m==========================\u001B[0m");
+        io.printLine("       Välj tjänst");
+        io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("1. Besiktning. ");
         io.printLine("2. Service. ");
         io.printLine("3. Reparation. ");
         io.printLine("0 Tillbaks. ");
+        io.printLine("\u001B[34m==========================\u001B[0m");
+        io.print("Val: ");
     }
+
     public void askForRegistrationNumber(){io.printLine("Ange registreringsnummer ");}
     public void askForModel(){io.printLine("Ange bilmärke ");}
     public void askForYearModel(){io.printLine("Ange årsmodell ");}
@@ -212,14 +214,23 @@ public class OutputHandler {
     public void askForRepairPrice(){io.printLine("Ange slutpris för reparationen: ");}
 
     public void printCompleteRepairTitle() {
-        io.printLine("\n=== Avsluta reparation ===");
+        io.printLine("\n\"\\u001B[34m==== Avsluta reparation ====\\u001B[0m");
     }
 
     public void printSortOptions() {
+        io.printLine("\u001B[33m==========================\u001B[0m");
+        io.printLine("      Sortera");
+        io.printLine("\u001B[33m==========================\u001B[0m");
         io.printLine("1. Sortera efter ID");
         io.printLine("2. Sortera efter Datum");
         io.printLine("3. Sortera efter Status");
+        io.printLine("\u001B[33m==========================\u001B[0m");
+        io.print("Val: ");
     }
+
+    // ---------------------------- Mail -----------------------------
+    public void printSendMail(String email, String message) {io.printLine("Mejl skickat till kund (" + email + "): " + message);}
+
     public void printUpdateBookingOptions() {
         io.printLine("\n === Redigera ===");
         io.printLine("1. Namn");
@@ -233,9 +244,6 @@ public class OutputHandler {
         io.printLine("9. <- Gå tillbaka");
         io.printLine("10. Avsluta");
     }
-
-
-
 
 
 
