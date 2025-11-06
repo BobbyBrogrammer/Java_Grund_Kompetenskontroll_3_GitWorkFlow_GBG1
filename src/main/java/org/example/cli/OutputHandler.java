@@ -61,7 +61,7 @@ public class OutputHandler {
     //-----------------------------------------------------------------------
     //-------------------Ta bort bokning------------------------------------
     public void printRemoveBooking() {
-        io.printLine("\n\u001B[31m==== Ta bort bokning  5====\u001B[0m");
+        io.printLine("\n\u001B[31m==== Ta bort bokning  ====\u001B[0m");
     }
     public void printBookingWasRemoved() {
         io.printLine("\u001B[31Bokningen togs bort.\u001B[0m");
