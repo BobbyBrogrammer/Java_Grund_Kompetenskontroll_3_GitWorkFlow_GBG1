@@ -13,6 +13,10 @@ public class Booking {
     private Customer customer;        // <--- ändrat från String
     private Status status;
     private BookingType bookingType;
+    private boolean flexiblePrice;
+    private double finalPrice;
+
+
 
     public Booking(Vehicle vehicle, LocalDate date, double price, Customer customer, BookingType bookingType) {
         this.id = counter++;
@@ -22,6 +26,8 @@ public class Booking {
         this.customer = customer;
         this.bookingType = bookingType;
         this.status = Status.NOT_DONE;
+        this.flexiblePrice = (bookingType == BookingType.REPAIR);
+        this.finalPrice = 0.0;
     }
 
     // Getters och setters
@@ -76,16 +82,40 @@ public class Booking {
     public void setBookingType(BookingType bookingType) {
         this.bookingType = bookingType;
     }
+    public boolean isFlexiblePrice() {
+        return flexiblePrice;
+    }
+
+    public void setFlexiblePrice(boolean flexiblePrice) {
+        this.flexiblePrice = flexiblePrice;
+    }
+
+    public double getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
+    }
 
     @Override
     public String toString() {
+        String priceInfo;
+        if (flexiblePrice) {
+            priceInfo = (finalPrice > 0)
+                    ? "Slutpris: " + finalPrice + " kr (flexibelt)"
+                    : "Pris: Ej satt ännu (flexibelt)";
+        } else {
+            priceInfo = "Pris: " + price + " kr";
+        }
+
         return "Booking ID: " + id +
-                " | Type: " + bookingType +
-                " | Vehicle: " + vehicle +
-                " | Date: " + date +
-                " | Price: " + price +
+                " | Typ: " + bookingType +
+                " | Fordon: " + vehicle +
+                " | Datum: " + date +
+                " | " + priceInfo +
                 " | Status: " + status +
-                " | Customer: " + customer;
+                " | Kund: " + customer;
     }
 }
 

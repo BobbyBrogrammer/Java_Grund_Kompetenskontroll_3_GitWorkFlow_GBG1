@@ -44,98 +44,128 @@ public class BookingService {
     // --------------------------------------------------
 
     public Booking createBooking(Vehicle vehicle, LocalDate date, Customer customer, BookingType bookingType) {
-        //Validera datum
+        // Validera datum
         if (!validationService.isValidDate(date)) {
             loggingService.logError("Ogiltigt datum vid bokning: " + date);
+            throw new IllegalArgumentException("Datumet är ogiltigt: " + date);
         }
-        //Beräkna pris
-        double price = priceService.calculatePrice(bookingType, vehicle);
-        //Skapa bokning
+
+        // Beräkna pris
+        double price;
+        if (bookingType == BookingType.REPAIR) {
+            price = 0.0; // slutpris sätts senare
+        } else {
+            price = priceService.calculatePrice(bookingType, vehicle);
+        }
+
+        // Skapa bokning
         Booking booking = new Booking(vehicle, date, price, customer, bookingType);
-        //Spara i repositorys
-        customerRepository.add(customer);
-        vehicleRepository.add(vehicle);
-        bookingRepository.add(booking);
-        //Slutför processen
-        completionService.completeProcess(customer.getEmail(), vehicle.getRegistrationNumber(), bookingType, vehicle);
-        //Loggar skapandet av bokningen
-        loggingService.logInfo("✅ Ny bokning skapad: " + booking);
-        return booking;
+
+        // Flagga flexibelt pris för reparationer
+        if (bookingType == BookingType.REPAIR) {
+            booking.setFlexiblePrice(true);
+            booking.setFinalPrice(0.0);
+        } else {
+            booking.setFlexiblePrice(false);
+            booking.setFinalPrice(price);
+        }
+            //Spara i repositorys
+            customerRepository.add(customer);
+            vehicleRepository.add(vehicle);
+            bookingRepository.add(booking);
+            //Slutför processen
+            completionService.completeProcess(customer.getEmail(), vehicle.getRegistrationNumber(), bookingType, vehicle);
+            //Loggar skapandet av bokningen
+            loggingService.logInfo("✅ Ny bokning skapad: " + booking);
+            return booking;
+        }
+
+        public void createRepairBooking(Vehicle vehicle, LocalDate date, Customer customer) {
+
+            createBooking(vehicle, date, customer, BookingType.REPAIR);
+        }
+
+        // --------------------------------------------------
+
+        /**
+         * Hämtar alla bokningar
+         */
+        public List<Booking> getAllBookings () {
+            return bookingRepository.findAll();
+        }
+
+        // --------------------------------------------------
+
+        /**
+         * Filtrerar bokningar baserat på status (DONE / NOT_DONE)
+         */
+        public List<Booking> getBookingsByStatus (Status status){
+            return bookingRepository.findAll().stream()
+                    .filter(b -> b.getStatus() == status)
+                    .collect(Collectors.toList());
+        }
+
+        // --------------------------------------------------
+
+        /**
+         * Filtrerar bokningar per kund
+         */
+        public List<Booking> getBookingsByCustomer (String customerName){
+            return bookingRepository.findAll().stream()
+                    .filter(b -> b.getCustomer().getName().equalsIgnoreCase(customerName))
+                    .collect(Collectors.toList());
+        }
+
+        // --------------------------------------------------
+        /**
+         * Lista reparationer med flexibelt pris där slutpris inte satts ännu.
+         */
+        public List<Booking> getOpenFlexibleRepairs () {
+            return bookingRepository.findAll().stream()
+                    .filter(b -> b.getBookingType() == BookingType.REPAIR)
+                    .filter(Booking::isFlexiblePrice)
+                    .filter(b -> b.getFinalPrice() <= 0.0)
+                    .collect(Collectors.toList());
+        }
+
+        /**
+         * Markerar en bokning som färdig (DONE)
+         */
+        public void completeBooking ( int bookingId){
+            bookingRepository.findById(bookingId).ifPresentOrElse(
+                    booking -> {
+                        booking.setStatus(Status.DONE);
+                        loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
+                    }, () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
+            );
+        }
+
+        // --------------------------------------------------
+
+        /**
+         * Tar bort en bokning
+         */
+        public void removeBooking ( int bookingId){
+            bookingRepository.findById(bookingId).ifPresentOrElse(
+                    booking -> {
+                        bookingRepository.remove(bookingId);
+                        loggingService.logInfo("Bokning med ID: " + booking + " har tagits bort.");
+                    },
+                    () -> loggingService.logError("Bokning med ID " + bookingId + " hittades inte.")
+            );
+        }
+
+        // --------------------------------------------------
+
+        /**
+         * Skriver ut alla bokningar till konsolen
+         */
+        public void printAllBookings () {
+            List<Booking> bookings = bookingRepository.findAll();
+            Optional.of(bookings).filter(list -> !list.isEmpty())
+                    .ifPresentOrElse(list -> list.forEach(b -> System.out.println(b)),
+                            () -> System.out.println("Inga bokningar är tillgängliga."));
+        }
+
     }
 
-    public void createRepairBooking(Vehicle vehicle, LocalDate date, Customer customer) {
-        createBooking(vehicle, date, customer, BookingType.REPAIR);
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Hämtar alla bokningar
-     */
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Filtrerar bokningar baserat på status (DONE / NOT_DONE)
-     */
-    public List<Booking> getBookingsByStatus(Status status) {
-        return bookingRepository.findAll().stream()
-                .filter(b -> b.getStatus() == status)
-                .collect(Collectors.toList());
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Filtrerar bokningar per kund
-     */
-    public List<Booking> getBookingsByCustomer(String customerName) {
-        return bookingRepository.findAll().stream()
-                .filter(b -> b.getCustomer().getName().equalsIgnoreCase(customerName))
-                .collect(Collectors.toList());
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Markerar en bokning som färdig (DONE)
-     */
-    public void completeBooking(int bookingId) {
-        bookingRepository.findById(bookingId).ifPresentOrElse(
-                booking -> {booking.setStatus(Status.DONE);
-                loggingService.logInfo("Bokning: " + bookingId + " är markerad som klar.");
-                }, () -> loggingService.logError("Bokning med ID: " + bookingId + " hittades inte.")
-        );
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Tar bort en bokning
-     */
-    public void removeBooking(int bookingId) {
-        bookingRepository.findById(bookingId).ifPresentOrElse(
-                booking -> {
-                    bookingRepository.remove(bookingId);
-                    loggingService.logInfo("Bokning med ID: " + booking + " har tagits bort.");
-                },
-                () -> loggingService.logError("Bokning med ID " + bookingId + " hittades inte.")
-        );
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * Skriver ut alla bokningar till konsolen
-     */
-    public void printAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        Optional.of(bookings).filter(list -> !list.isEmpty())
-                .ifPresentOrElse(list -> list.forEach(b -> System.out.println(b)),
-                        () -> System.out.println("Inga bokningar är tillgängliga."));
-    }
-
-}
