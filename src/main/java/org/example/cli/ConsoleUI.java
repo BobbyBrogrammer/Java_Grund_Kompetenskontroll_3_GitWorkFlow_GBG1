@@ -1,5 +1,6 @@
 package org.example.cli;
 
+import org.example.exceptions.BookingCancelledException;
 import org.example.factory.BookingFactory;
 import org.example.factory.CustomerFactory;
 import org.example.factory.VehicleFactory;
@@ -18,8 +19,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleUI implements BookingUI{
-    private  LocalDate localDate;
+public class ConsoleUI implements BookingUI {
+    private LocalDate localDate;
     private final IIO io;
     private final Repository<Vehicle, String> vehicleRepository;
     private final Repository<Customer, String> customerRepository;
@@ -42,8 +43,8 @@ public class ConsoleUI implements BookingUI{
 
     public ConsoleUI(IIO io, InputHandler input, OutputHandler output, CompletionService completionService,
                      VehicleFactory vehicleFactory, BookingFactory bookingFactory, CustomerFactory customerFactory,
-                     Repository<Vehicle, String>vehicleRepository, Repository<Customer, String> customerRepository,
-                     Repository<Booking, Integer>  bookingRepository, SearchForBooking searchForBooking,
+                     Repository<Vehicle, String> vehicleRepository, Repository<Customer, String> customerRepository,
+                     Repository<Booking, Integer> bookingRepository, SearchForBooking searchForBooking,
                      DeleteBooking deleteBooking, UpdateBooking updateBooking, PriceService priceService,
                      BookingService bookingService, ShowAllBookings showAllBookings) {
         this.io = io;
@@ -53,7 +54,7 @@ public class ConsoleUI implements BookingUI{
         this.vehicleFactory = vehicleFactory;
         this.bookingFactory = bookingFactory;
         this.customerFactory = customerFactory;
-        this.vehicleRepository= vehicleRepository;
+        this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
         this.searchForBooking = searchForBooking;
@@ -88,94 +89,124 @@ public class ConsoleUI implements BookingUI{
     }
 
 
-    public void showAllBookings(){showAllBookings.showAllBookings();}
-    public void searchBooking() {searchForBooking.searchBooking();}
-    public void deleteBooking() {deleteBooking.deleteBooking();}
-    public void updateBooking() {updateBooking.updateBooking();}
+    public void showAllBookings() {
+        showAllBookings.showAllBookings();
+    }
+
+    public void searchBooking() {
+        searchForBooking.searchBooking();
+    }
+
+    public void deleteBooking() {
+        deleteBooking.deleteBooking();
+    }
+
+    public void updateBooking() {
+        updateBooking.updateBooking();
+    }
 
 
     public void createInspectionBooking() {
         output.printStateCreateNewBookingTitle();
-        //Skapa fordon
-        Vehicle vehicle = vehicleFactory.createVehicle(
-                input.readRegistrationNumber(),
-                input.readVehicleModel(),
-                input.readYearModel());
-        vehicleRepository.add(vehicle);
-        //Skapa kund
-        Customer customer = customerFactory.createCustomer(
-                input.readCustomerName(),
-                input.readPhoneNumber(),
-                input.readEmail());
-        customerRepository.add(customer);
-        //Läs in datum
-        LocalDate date = input.readDate();
-        //Skapa bokning
-        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
-        bookingRepository.add(booking);
-        //Visa resultat
-        if (booking != null) {
-            output.printSuccess("Bokning skapad!\n" + booking);
-        } else {
-            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
+        output.printBookingCancelInfo();
+
+        try {
+            Vehicle vehicle = vehicleFactory.createVehicle(
+                    input.readRegistrationNumber(),
+                    input.readVehicleModel(),
+                    input.readYearModel());
+            vehicleRepository.add(vehicle);
+
+            Customer customer = customerFactory.createCustomer(
+                    input.readCustomerName(),
+                    input.readPhoneNumber(),
+                    input.readEmail());
+            customerRepository.add(customer);
+
+            LocalDate date = input.readDate();
+            Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.INSPECTION);
+            bookingRepository.add(booking);
+
+            if (booking != null) {
+                output.printSuccess("Bokning skapad!\n" + booking);
+            } else {
+                output.printError("Bokningen kunde inte skapas. Kontrollera inmatningen.");
+            }
+
+        } catch (BookingCancelledException e) {
+            output.printBookingCancel();
         }
     }
 
     public void createServiceBooking() {
         output.printStateCreateNewBookingTitle();
-        //Skapa fordon
-        Vehicle vehicle = vehicleFactory.createVehicle(
-                input.readRegistrationNumber(),
-                input.readVehicleModel(),
-                input.readYearModel());
-        vehicleRepository.add(vehicle);
-        //Skapa kund
-        Customer customer = customerFactory.createCustomer(
-                input.readCustomerName(),
-                input.readPhoneNumber(),
-                input.readEmail());
-        customerRepository.add(customer);
-        //Läs in datum
-        LocalDate date = input.readDate();
-        //Skapa bokning
-        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.SERVICE);
-        bookingRepository.add(booking);
-        //Visa resultat
-        if (booking != null) {
-            output.printSuccess("Service bokning skapad!\n" + booking);
-        } else {
-            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
-        }
+        output.printBookingCancelInfo();
 
+        try {
+            // Bilinfo
+            String reg = input.readRegistrationNumber();
+            String model = input.readVehicleModel();
+            int year = input.readYearModel();
+
+            Vehicle vehicle = vehicleFactory.createVehicle(reg, model, year);
+            vehicleRepository.add(vehicle);
+
+            // Kundinfo
+            String name = input.readCustomerName();
+            String phone = input.readPhoneNumber();
+            String email = input.readEmail();
+
+            Customer customer = customerFactory.createCustomer(name, phone, email);
+            customerRepository.add(customer);
+
+            // Datum
+            LocalDate date = input.readDate();
+
+            // Skapa bokning
+            Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.SERVICE);
+            bookingRepository.add(booking);
+
+            output.printSuccess("Servicebokning skapad!\n" + booking);
+
+        } catch (BookingCancelledException e) {
+            output.printBookingCancel();
+        }
     }
 
     public void createRepairBooking() {
         output.printStateCreateNewBookingTitle();
-        //Skapa fordon
-        Vehicle vehicle = vehicleFactory.createVehicle(
-                input.readRegistrationNumber(),
-                input.readVehicleModel(),
-                input.readYearModel());
-        vehicleRepository.add(vehicle);
-        //Skapa kund
-        Customer customer = customerFactory.createCustomer(
-                input.readCustomerName(),
-                input.readPhoneNumber(),
-                input.readEmail());
-        customerRepository.add(customer);
-        //Läs in datum
-        LocalDate date = input.readDate();
-        //Skapa bokning
-        Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
-        bookingRepository.add(booking);
-        //Visa resultat
-        if(booking != null) {
-            output.printSuccess("Reparation bokning skapad!\n" + booking + "\nPriset sätts när arbetet är klart.");
-        } else {
-            output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
+        output.printBookingCancelInfo();
+
+        try {
+            // Bilinfo
+            String reg = input.readRegistrationNumber();
+            String model = input.readVehicleModel();
+            int year = input.readYearModel();
+
+            Vehicle vehicle = vehicleFactory.createVehicle(reg, model, year);
+            vehicleRepository.add(vehicle);
+
+            // Kundinfo
+            String name = input.readCustomerName();
+            String phone = input.readPhoneNumber();
+            String email = input.readEmail();
+
+            Customer customer = customerFactory.createCustomer(name, phone, email);
+            customerRepository.add(customer);
+
+            // Datum
+            LocalDate date = input.readDate();
+
+            // Skapa bokning
+            Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
+            bookingRepository.add(booking);
+
+            output.printSuccess("Reparationsbokning skapad!\n" + booking);
+
+        } catch (BookingCancelledException e) {
+            output.printBookingCancel();
         }
     }
-
 }
 
 

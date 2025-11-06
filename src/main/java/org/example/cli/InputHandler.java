@@ -1,5 +1,6 @@
 package org.example.cli;
 
+import org.example.exceptions.BookingCancelledException;
 import org.example.models.Status;
 import org.example.service.ValidationService;
 import org.example.systemIO.IIO;
@@ -17,20 +18,32 @@ public class InputHandler {
         this.validationService = validationService;
     }
 
+    private void checkForCancel(String input) {
+        if (input.equalsIgnoreCase("0")) {
+            throw new BookingCancelledException();
+        }
+    }
+
+
     public String readCustomerName() {
         while (true) {
             output.printStateCustomerName();
             String name = io.readLine().trim();
+            checkForCancel(name);
+
             if (!name.isBlank()) {
                 return name;
             }
             output.printEmptyNameNotAllowed();
         }
     }
+
     public String readEmail() {
         while (true) {
             output.printStateCustomerEmail();
             String email = io.readLine().trim();
+            checkForCancel(email);
+
             if (validationService.validateEmail(email)) {
                 return email;
             }
@@ -42,6 +55,8 @@ public class InputHandler {
         while (true) {
             output.printStateCustomerPhoneNumber();
             String phone = io.readLine().trim();
+            checkForCancel(phone);
+
             if (!phone.isBlank() && phone.matches("\\d{6,15}")) {
                 return phone;
             }
@@ -53,6 +68,8 @@ public class InputHandler {
         while (true) {
             output.printStateCarRegNumber();
             String reg = io.readLine().trim().toUpperCase();
+            checkForCancel(reg);
+
             if (validationService.validateRegistrationNumber(reg)) {
                 return reg;
             }
@@ -64,6 +81,8 @@ public class InputHandler {
         while (true) {
             output.printStateCarModel();
             String model = io.readLine().trim();
+            checkForCancel(model);
+
             if (!model.isBlank()) {
                 return model;
             }
@@ -74,8 +93,11 @@ public class InputHandler {
     public int readYearModel() {
         while (true) {
             output.printStateYearModel();
+            String inputYear = io.readLine().trim();
+            checkForCancel(inputYear);
+
             try {
-                int year = Integer.parseInt(io.readLine().trim());
+                int year = Integer.parseInt(inputYear);
                 if (year > 1950 && year <= LocalDate.now().getYear()) {
                     return year;
                 }
@@ -90,6 +112,8 @@ public class InputHandler {
         while (true) {
             output.printInputDate();
             String date = io.readLine().trim();
+            checkForCancel(date);
+
             if (validationService.isValidDate(date)) {
                 return LocalDate.parse(date);
             }
