@@ -13,13 +13,9 @@ import org.example.service.CompletionService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsoleUI implements BookingUI{
-    private  LocalDate localDate;
     private final IIO io;
     private final Repository<Vehicle, String> vehicleRepository;
     private final Repository<Customer, String> customerRepository;
@@ -86,13 +82,10 @@ public class ConsoleUI implements BookingUI{
 
         output.printBookingSuccess();
     }
-
-
     public void showAllBookings(){showAllBookings.showAllBookings();}
     public void searchBooking() {searchForBooking.searchBooking();}
     public void deleteBooking() {deleteBooking.deleteBooking();}
     public void updateBooking() {updateBooking.updateBooking();}
-
 
     public void createInspectionBooking() {
         output.printStateCreateNewBookingTitle();
