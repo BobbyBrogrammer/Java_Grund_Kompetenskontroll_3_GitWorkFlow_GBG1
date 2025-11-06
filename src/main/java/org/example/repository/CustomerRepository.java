@@ -35,4 +35,16 @@ public class CustomerRepository implements Repository <Customer, String>{
         customers.remove(phoneNumber);
         logger.logInfo("Tog bort kund ");
    }
+    @Override
+    public boolean update(String email, Customer updated) {
+        if (!customers.containsKey(email)) {
+            System.out.println("Försök att uppdatera icke-existerande kund: " + email);
+            return false;
+        }
+        customers.put(email, updated);
+        System.out.println("Uppdaterade kund med email: " + email);
+        return true;
+    }
+
+
 }

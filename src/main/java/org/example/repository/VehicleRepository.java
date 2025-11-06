@@ -35,7 +35,25 @@ public class VehicleRepository implements Repository<Vehicle, String> {
         return vehicles.values().stream()
                 .filter(v -> v.getYearModel() == year)
                 .toList();
+
+
     }
+    @Override
+    public boolean update(String regNr, Vehicle updated) {
+        if (!vehicles.containsKey(regNr)) {
+            System.out.println("Försök att uppdatera icke-existerande vehicle: " + regNr);
+            return false;
+        }
+        vehicles.put(regNr, updated);
+        System.out.println("Uppdaterade vehicle med registreringsnummer: " + regNr);
+        return true;
+    }
+
+
+
+
+
+
 
 }
 
