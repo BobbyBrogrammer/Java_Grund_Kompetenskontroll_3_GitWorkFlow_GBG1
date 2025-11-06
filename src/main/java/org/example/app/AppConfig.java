@@ -52,7 +52,7 @@ public class AppConfig {
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
     private final InitializationService initializationService =
             new InitializationService(customerRepository, vehicleRepository, bookingRepository,
-                    customerFactory, vehicleFactory, bookingFactory, priceService);
+                    customerFactory, vehicleFactory, bookingFactory);
 
     public InitializationService getInitializationService() {
         return initializationService;

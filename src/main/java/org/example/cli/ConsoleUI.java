@@ -174,6 +174,7 @@ public class ConsoleUI implements BookingUI{
         } else {
             output.printError("Bokningen kunde inte skapas. Kontrollera att du skrivit rätt vid inmatning.");
         }
+
     }
 
 }
