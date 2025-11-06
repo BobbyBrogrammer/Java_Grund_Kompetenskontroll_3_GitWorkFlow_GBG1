@@ -29,6 +29,34 @@ public class Booking {
         this.flexiblePrice = (bookingType == BookingType.REPAIR);
         this.finalPrice = 0.0;
     }
+    public boolean isDone() {
+        return this.status == Status.DONE;
+    }
+
+    /**
+
+     * @param repairFinalPriceOrNull Slutpris om REPAIR, annars null
+     */
+    public void complete(Double repairFinalPriceOrNull) {
+        if (this.isDone()) {
+            throw new IllegalStateException("Bokningen är redan KLAR.");
+        }
+
+        if (this.bookingType == BookingType.REPAIR) {
+            if (repairFinalPriceOrNull == null) {
+                throw new IllegalArgumentException("Pris krävs för REPAIR.");
+            }
+            if (repairFinalPriceOrNull < 0) {
+                throw new IllegalArgumentException("Pris kan inte vara negativt.");
+            }
+            this.finalPrice = repairFinalPriceOrNull;
+        } else {
+            // SERVICE / BESIKTNING → använd fast pris
+            this.finalPrice = this.price;
+        }
+
+        this.status = Status.DONE;
+    }
 
     // Getters och setters
     public int getId() {
@@ -81,6 +109,7 @@ public class Booking {
 
     public void setBookingType(BookingType bookingType) {
         this.bookingType = bookingType;
+        this.flexiblePrice = (bookingType == BookingType.REPAIR);
     }
     public boolean isFlexiblePrice() {
         return flexiblePrice;
@@ -106,7 +135,9 @@ public class Booking {
                     ? "Slutpris: " + finalPrice + " kr (flexibelt)"
                     : "Pris: Ej satt ännu (flexibelt)";
         } else {
-            priceInfo = "Pris: " + price + " kr";
+            priceInfo = (finalPrice > 0)
+                    ? "Slutpris: " + finalPrice + " kr"
+                    : "Pris: " + price + " kr";
         }
 
         return "Booking ID: " + id +
