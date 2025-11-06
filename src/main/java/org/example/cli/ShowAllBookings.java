@@ -37,6 +37,21 @@ public class ShowAllBookings {
         };
         allBookings.stream()
                 .sorted(comparator)
-                .forEach(b -> output.printSuccess(b.toString()));
+                .forEach(b -> io.printLine(b.toString()));
+    }
+
+    public int readBookingId() {
+        while (true) {
+            output.askForBookingId();
+            try {
+                int id = Integer.parseInt(io.readLine().trim());
+                if (id > 0) {
+                    return id;
+                }
+                output.printWrongNumberInput();
+            } catch (NumberFormatException e) {
+                output.printWrongNumberInput();
+            }
+        }
     }
 }

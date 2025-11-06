@@ -31,9 +31,8 @@ public class SearchForBooking {
             output.printNoBookingFound();
         } else {
             output.printBookingFound();
-            for (Booking booking : bookingFound) {
-                output.printSuccess(booking.toString());
-            }
+            bookingFound.forEach(b -> output.printBookingDetails(b.toString()));
+
         }
     }
 }
