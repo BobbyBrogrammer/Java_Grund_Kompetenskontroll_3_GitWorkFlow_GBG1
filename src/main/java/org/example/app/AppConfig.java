@@ -49,5 +49,12 @@ public class AppConfig {
     private final ConsoleUI ui = new ConsoleUI(IO, input, output, completionService, vehicleFactory, bookingFactory,customerFactory, vehicleRepository , customerRepository, bookingRepository, searchAction, deleteAction, updateAction, priceService, bookingService, );
     private final BookingSelectionMenu bookingSelectionMenu = new BookingSelectionMenu(IO, output, ui, loggingService);
     private final Menu menuRun = new Menu(IO, input, output, ui, bookingSelectionMenu);
+    private final InitializationService initializationService =
+            new InitializationService(customerRepository, vehicleRepository, bookingRepository,
+                    customerFactory, vehicleFactory, bookingFactory);
+
+    public InitializationService getInitializationService() {
+        return initializationService;
+    }
     public final Menu menuRunner(){return menuRun;}
 }
