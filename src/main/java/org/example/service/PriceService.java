@@ -67,10 +67,4 @@ public class PriceService {
         priceValidator.validateBasePrice(price);
         return price;
         }
-
-        public double confirmRepairPrice(double repairPrice) {
-        priceValidator.validateRepairPrice(repairPrice);
-        return repairPrice;
-        }
-
 }

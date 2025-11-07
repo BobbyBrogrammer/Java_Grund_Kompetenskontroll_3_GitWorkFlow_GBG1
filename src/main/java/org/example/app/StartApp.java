@@ -19,7 +19,7 @@ public class StartApp {
         logger.info("Exempeldata laddades in.");
 
         Menu menu = app.menuRunner();
-           menu.showMainMenu();
+        menu.showMainMenu();
         logger.info("Programmet avslutades.");
 
     }

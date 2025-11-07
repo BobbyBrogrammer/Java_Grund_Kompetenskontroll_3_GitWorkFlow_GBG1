@@ -10,7 +10,6 @@ import org.example.models.Vehicle;
 import org.example.repository.Repository;
 import org.example.service.BookingService;
 import org.example.service.CompletionService;
-import org.example.service.InitializationService;
 import org.example.service.PriceService;
 import org.example.systemIO.IIO;
 
@@ -161,6 +160,7 @@ public class ConsoleUI implements BookingUI{
         LocalDate date = input.readDate();
         //Skapa bokning
         Booking booking = bookingService.createBooking(vehicle, date, customer, BookingType.REPAIR);
+
         bookingRepository.add(booking);
         //Visa resultat
         if(booking != null) {
