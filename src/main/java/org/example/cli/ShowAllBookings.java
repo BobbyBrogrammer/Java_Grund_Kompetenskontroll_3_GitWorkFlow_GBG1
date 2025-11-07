@@ -29,12 +29,6 @@ public class ShowAllBookings {
         output.printSortOptions();
         String sortChoice = io.readLine().trim();
 
-        if (sortChoice.equals("0")) {
-            // Visa alla utan sortering
-            allBookings.forEach(b -> io.printLine(b.toString()));
-            return;
-        }
-
         Comparator<Booking> comparator = switch (sortChoice) {
             case "1" -> Comparator.comparing(b -> b.getId());
             case "2" -> Comparator.comparing(b -> b.getDate());
