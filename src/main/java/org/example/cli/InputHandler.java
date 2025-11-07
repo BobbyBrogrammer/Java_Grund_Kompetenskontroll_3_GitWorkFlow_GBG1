@@ -98,20 +98,6 @@ public class InputHandler {
 
     }
 
-    public boolean readYesNo() {
-        while (true) {
-            String answer = io.readLine().trim().toUpperCase();
-
-            if (answer.equals("Y") || answer.equals("J")) {   // Y eller J = ja
-                return true;
-            }
-            if (answer.equals("N")) {
-                return false;
-            }
-
-            output.printError("Skriv Y/J för ja eller N för nej.");
-        }
-    }
 
     public int readBookingId() {
         while (true) {

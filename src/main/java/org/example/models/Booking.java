@@ -83,9 +83,6 @@ public class Booking {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public Customer getCustomer() {
         return customer;
@@ -107,10 +104,6 @@ public class Booking {
         return bookingType;
     }
 
-    public void setBookingType(BookingType bookingType) {
-        this.bookingType = bookingType;
-        this.flexiblePrice = (bookingType == BookingType.REPAIR);
-    }
     public boolean isFlexiblePrice() {
         return flexiblePrice;
     }
