@@ -99,7 +99,13 @@ public class OutputHandler {
 
     //------------------------------------------------------------------
     //------------------Redigera bokning------------------------------
+    public void printUpdateBookTitle() {
+        io.printLine("\n\u001B[33m==== Redigera bokning ====\u001B[0m");
+    }
 
+    public void printStateNewVehicleInfoToUpdate() {
+        io.printLine("Ange nytt fordon: ");
+    }
 
     public void printBookingHaveBeenUpdated(Booking booking) {
         io.printLine("Bokningen har uppdaterats.");
@@ -285,6 +291,29 @@ public class OutputHandler {
         io.print("Val: ");
     }
 
+    public void askForRegistrationNumber() {
+        io.printLine("Ange registreringsnummer ");
+    }
+
+    public void askForModel() {
+        io.printLine("Ange bilmärke ");
+    }
+
+    public void askForYearModel() {
+        io.printLine("Ange årsmodell ");
+    }
+
+    public void askForName() {
+        io.printLine("Ange kundens namn ");
+    }
+
+    public void askForPhoneNumber() {
+        io.printLine("Ange kundens telefonnummer. ");
+    }
+
+    public void askForEmail() {
+        io.printLine("Ange kundens email ");
+    }
 
     public void askForBookingId() {
         io.printLine("Ange boknings-ID:");
