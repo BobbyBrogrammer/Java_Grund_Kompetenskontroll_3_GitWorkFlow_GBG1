@@ -141,29 +141,25 @@ public class InputHandler {
             }
         }
     }
+    public double readRepairPrice() {
+        while (true) {
+            output.askForRepairPrice();
+            String input = io.readLine().trim().replace(",", ".");
 
+            try {
+                double price = Double.parseDouble(input);
 
+                if (price <= 0) {
+                    output.printError("Priset måste vara större än 0 kr.");
+                    continue;
+                }
 
-
-
-
-
-//    public int getIntInput() {
-//        while (true) {
-//            try {
-//                int input = scanner.nextInt();
-//                scanner.nextLine(); // Rensa newline
-//                return input;
-//            } catch (InputMismatchException e) {
-//                System.out.print("Ogiltig inmatning. Ange en siffra: ");
-//                scanner.nextLine(); // Rensa felaktig input
-//            }
-//        }
-//    }
-//    public String getStringInput(String prompt) {
-//        System.out.print(prompt);
-//        return scanner.nextLine().trim();
-//    }
+                return price;
+            } catch (NumberFormatException ex) {
+                output.printWrongNumberInput();
+            }
+        }
+    }
 
 
 }

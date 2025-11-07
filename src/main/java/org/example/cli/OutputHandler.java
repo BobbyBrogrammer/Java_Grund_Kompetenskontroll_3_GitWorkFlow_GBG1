@@ -324,7 +324,9 @@ public class OutputHandler {
     }
 
     public void printCompleteRepairTitle() {
-        io.printLine("\n\"\\u001B[34m==== Avsluta reparation ====\\u001B[0m");
+        io.printLine("\u001B[33m==============================\u001B[0m");
+        io.printLine("Avsluta Reparation & Sätt pris");
+        io.printLine("\u001B[33m==============================\u001B[0m");
     }
 
     public void printSortOptions() {

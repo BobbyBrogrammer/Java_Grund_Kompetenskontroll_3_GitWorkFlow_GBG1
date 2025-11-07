@@ -83,8 +83,20 @@ public class UpdateBooking {
                     Map.entry("7", () -> booking.setDate(input.readDate())),
                     Map.entry("8", () -> {
                         Status newStatus = input.readBookingStatus();
-                        booking.setStatus(newStatus);
+
+                        // Om mekanikern markerar en reparation som klar (flexibelt pris)
+                        if (newStatus == Status.DONE && booking.isFlexiblePrice()) {
+                            output.printCompleteRepairTitle();
+                            double repairPrice = input.readRepairPrice();
+
+                            // Använd domänlogiken i Booking för att sätta slutpris + status DONE
+                            booking.complete(repairPrice);
+                        } else {
+                            // Alla andra fall (t.ex. SERVICE/BESIKTNING eller NOT_DONE)
+                            booking.setStatus(newStatus);
+                        }
                     })
+
             );
 
             Runnable action = actions.get(choice);
