@@ -7,9 +7,9 @@ import org.example.systemIO.IIO;
 import java.time.LocalDate;
 
 public class InputHandler {
-    private final OutputHandler output;
-    private final IIO io;
-    private final ValidationService validationService;
+    private final OutputHandler output; // Hanterar utskrifter till användaren
+    private final IIO io; // Hanterar läsning av inmatning från användaren
+    private final ValidationService validationService; // Validerar inmatning
 
     public InputHandler(OutputHandler output, IIO io, ValidationService validationService) {
         this.output = output;
@@ -17,6 +17,7 @@ public class InputHandler {
         this.validationService = validationService;
     }
 
+    // Läser och validerar kundnamn
     public String readCustomerName() {
         while (true) {
             output.printStateCustomerName();
@@ -27,6 +28,8 @@ public class InputHandler {
             output.printEmptyNameNotAllowed();
         }
     }
+
+    // Läser och validerar email
     public String readEmail() {
         while (true) {
             output.printStateCustomerEmail();
@@ -38,6 +41,7 @@ public class InputHandler {
         }
     }
 
+    // Läser och validerar telefonnummer
     public String readPhoneNumber() {
         while (true) {
             output.printStateCustomerPhoneNumber();
@@ -49,6 +53,7 @@ public class InputHandler {
         }
     }
 
+    // Läser och validerar registreringsnummer för fordon
     public String readRegistrationNumber() {
         while (true) {
             output.printStateCarRegNumber();
@@ -60,6 +65,7 @@ public class InputHandler {
         }
     }
 
+    // Läser och validerar bilmodell
     public String readVehicleModel() {
         while (true) {
             output.printStateCarModel();
@@ -71,6 +77,7 @@ public class InputHandler {
         }
     }
 
+    // Läser och validerar årsmodell
     public int readYearModel() {
         while (true) {
             output.printStateYearModel();
@@ -86,6 +93,7 @@ public class InputHandler {
         }
     }
 
+    // Läser och validerar datum
     public LocalDate readDate() {
         while (true) {
             output.printInputDate();
@@ -95,10 +103,9 @@ public class InputHandler {
             }
             output.printWrongDate();
         }
-
     }
 
-
+    // Läser och validerar boknings-ID
     public int readBookingId() {
         while (true) {
             output.askForBookingId();
@@ -111,11 +118,14 @@ public class InputHandler {
             }
         }
     }
+
+    // Läser användarens val för uppdatering
     public String readUpdateChoice() {
         output.printUpdateBookingOptions();
         return io.readLine().trim();
     }
 
+    // Läser och validerar bokningsstatus
     public Status readBookingStatus() {
         while (true) {
             output.printStateNewStatus();
@@ -127,6 +137,8 @@ public class InputHandler {
             }
         }
     }
+
+    // Läser och validerar pris för reparation
     public double readRepairPrice() {
         while (true) {
             output.askForRepairPrice();
@@ -146,6 +158,4 @@ public class InputHandler {
             }
         }
     }
-
-
 }
