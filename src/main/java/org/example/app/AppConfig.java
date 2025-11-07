@@ -28,7 +28,7 @@ public class AppConfig {
     private final IIO IO = new SystemIO();
 
     private final LoggingService loggingService = new LoggingService();
-    private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository();
+    private final Repository<Vehicle, String> vehicleRepository = new VehicleRepository(loggingService);
     private final Repository<Booking, Integer> bookingRepository = new BookingRepository(loggingService);
     private final Repository<Customer, String> customerRepository = new CustomerRepository(loggingService);
 
