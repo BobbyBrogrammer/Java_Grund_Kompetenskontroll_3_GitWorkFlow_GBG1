@@ -13,7 +13,9 @@ public class OutputHandler {
     //------------------------ Skapa bokning --------------------
     // Visar titel vid skapande av ny bokning
     public void printStateCreateNewBookingTitle() {
-        io.printLine("\n\u001B[32m==== Skapa ny bokning ====\u001B[0m");
+        io.printLine("\u001B[32m==========================\u001B[0m");
+        io.printLine("    Skapa ny bokning       ");
+        io.printLine("\u001B[32m==========================\u001B[0m");
     }
 
     // Prompts för kundens namn, email och telefonnummer
@@ -38,7 +40,9 @@ public class OutputHandler {
 
     //------------------------------------------------------------------
     //---------------------- Sök efter bokning -------------------------
-    public void printSearchForBookingTitle() { io.printLine("\n\u001B[34m====    Sök bokning   ====\u001B[0m"); }
+    public void printSearchForBookingTitle() { io.printLine("\u001B[34m==========================\u001B[0m");
+        io.printLine("      Sök bokning");
+        io.printLine("\u001B[34m==========================\u001B[0m"); }
     public void printBookingFound() { io.printLine("Bokning hittad: "); }
     public void printNoBookingFound() { io.printLine("Ingen bokning hittades med det registreringsnumret"); }
 
@@ -68,18 +72,6 @@ public class OutputHandler {
 
     //------------------------------------------------------------------
     //---------------------- MenyText ---------------------------------
-    // Standardmenyer för olika delar av programmet
-    public void printServiceChoices() {
-        io.printLine("\u001B[34m=========================\u001B[0m");
-        io.printLine("       Välj tjänst       ");
-        io.printLine("\u001B[34m=========================\u001B[0m");
-        io.printLine("1. Besiktning");
-        io.printLine("2. Reparation");
-        io.printLine("3. Service");
-        io.printLine("0. Avsluta");
-        io.print("Val: ");
-    }
-
     public void printMenyChoices() {
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.printLine("      Bilmeckarna AB");
@@ -93,54 +85,6 @@ public class OutputHandler {
         io.printLine("0. Avsluta");
         io.printLine("\u001B[34m==========================\u001B[0m");
         io.print("Val: ");
-    }
-
-    // Specifika menyer för olika tjänster
-    public void printMenyChoicesRepair() {
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("      Bilmeckarna AB");
-        io.printLine("       [Reparation]");
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("1. Skapa bokning");
-        io.printLine("2. Visa alla bokningar");
-        io.printLine("3. Sök bokning");
-        io.printLine("4. Uppdatera bokning");
-        io.printLine("5. Ta bort bokning");
-        io.printLine("6. <- Gå tillbaka");
-        io.printLine("0. Avsluta");
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.print("Val: ");
-    }
-
-    public void printMenyChoicesInspection() {
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("      Bilmeckarna AB");
-        io.printLine("       [Besiktning]");
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("1. Skapa bokning");
-        io.printLine("2. Visa alla bokningar");
-        io.printLine("3. Sök bokning");
-        io.printLine("4. Uppdatera bokning");
-        io.printLine("5. Ta bort bokning");
-        io.printLine("6. <- Gå tillbaka");
-        io.printLine("0. Avsluta");
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.print("Val: ");
-    }
-
-    public void printMenyChoicesService() {
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("      Bilmeckarna AB");
-        io.printLine("        [Service]");
-        io.printLine("\u001B[34m==========================\u001B[0m");
-        io.printLine("1. Skapa bokning");
-        io.printLine("2. Visa alla bokningar");
-        io.printLine("3. Sök bokning");
-        io.printLine("4. Uppdatera bokning");
-        io.printLine("5. Ta bort bokning");
-        io.printLine("6. <- Gå tillbaka");
-        io.printLine("0. Avsluta");
-        io.print("Val:");
     }
 
     // Standardmeddelanden för exit och fel
@@ -189,7 +133,7 @@ public class OutputHandler {
 
     public void printSortOptions() {
         io.printLine("\u001B[33m==========================\u001B[0m");
-        io.printLine("      Sortera");
+        io.printLine("        Sortera");
         io.printLine("\u001B[33m==========================\u001B[0m");
         io.printLine("1. Sortera efter ID");
         io.printLine("2. Sortera efter Datum");
@@ -199,7 +143,9 @@ public class OutputHandler {
     }
 
     public void printUpdateBookingOptions() {
-        io.printLine("\n === Redigera ===");
+        io.printLine("\u001B[33m==========================\u001B[0m");
+        io.printLine("        Redigera");
+        io.printLine("\u001B[33m==========================\u001B[0m");
         io.printLine("1. Namn");
         io.printLine("2. Telefonnummer");
         io.printLine("3. Email");
@@ -210,6 +156,7 @@ public class OutputHandler {
         io.printLine("8. Status");
         io.printLine("9. <- Gå tillbaka");
         io.printLine("10. Avsluta");
+        io.printLine("\u001B[33m==========================\u001B[0m");
     }
 
     public void printSendMail(String email, String message) {
