@@ -38,10 +38,12 @@ public class CustomerRepository implements Repository <Customer, String>{
     @Override
     public boolean update(String email, Customer updated) {
         if (!customers.containsKey(email)) {
+            logger.logDebug("försökte uppdatera kund som vi inte har i systemet: " + email);
             System.out.println("Försök att uppdatera icke-existerande kund: " + email);
             return false;
         }
         customers.put(email, updated);
+        logger.logInfo("Kund uppdaterad: " + email + " " + updated);
         System.out.println("Uppdaterade kund med email: " + email);
         return true;
     }
