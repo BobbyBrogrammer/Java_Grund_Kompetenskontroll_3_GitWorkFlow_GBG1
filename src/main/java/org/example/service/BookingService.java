@@ -4,14 +4,9 @@ import org.example.models.Booking;
 import org.example.models.BookingType;
 import org.example.models.Customer;
 import org.example.models.Vehicle;
-import org.example.models.Status;
-import org.example.repository.BookingRepository;
 import org.example.repository.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * BookingService hanterar logiken för att skapa, visa och ta bort bokningar.
