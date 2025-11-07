@@ -8,19 +8,30 @@ import org.slf4j.LoggerFactory;
 import org.example.service.InitializationService;
 
 
+/**
+ * StartApp är huvudklassen som startar programmet.
+ */
 public class StartApp {
+    // Logger för att skriva ut information i loggen
     private static final Logger logger = LoggerFactory.getLogger(StartApp.class);
 
     public static void main(String[] args) {
-        logger.info("Programmet startar. ");
+        // Startmeddelande
+        logger.info("Programmet startar.");
+
+        // Skapa applikationskonfiguration
         AppConfig app = new AppConfig();
+
+        // Ladda in exempeldata
         InitializationService initService = app.getInitializationService();
         initService.loadInitialData();
         logger.info("Exempeldata laddades in.");
 
+        // Starta huvudmenyn
         Menu menu = app.menuRunner();
-           menu.showMainMenu();
-        logger.info("Programmet avslutades.");
+        menu.showMainMenu();
 
+        // Programmet avslutas
+        logger.info("Programmet avslutades.");
     }
 }
