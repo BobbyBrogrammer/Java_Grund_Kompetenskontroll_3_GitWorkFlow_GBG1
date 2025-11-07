@@ -333,6 +333,7 @@ public class OutputHandler {
         io.printLine("\u001B[33m==============================\u001B[0m");
         io.printLine("           Sortera");
         io.printLine("\u001B[33m==============================\u001B[0m");
+        io.printLine("0. Visa alla (ingen sortering)");
         io.printLine("1. Sortera efter ID");
         io.printLine("2. Sortera efter Datum");
         io.printLine("3. Sortera efter Status");
