@@ -291,6 +291,30 @@ public class OutputHandler {
         io.print("Val: ");
     }
 
+    public void askForRegistrationNumber() {
+        io.printLine("Ange registreringsnummer ");
+    }
+
+    public void askForModel() {
+        io.printLine("Ange bilmärke ");
+    }
+
+    public void askForYearModel() {
+        io.printLine("Ange årsmodell ");
+    }
+
+    public void askForName() {
+        io.printLine("Ange kundens namn ");
+    }
+
+    public void askForPhoneNumber() {
+        io.printLine("Ange kundens telefonnummer. ");
+    }
+
+    public void askForEmail() {
+        io.printLine("Ange kundens email ");
+    }
+
     public void askForBookingId() {
         io.printLine("Ange boknings-ID:");
     }
@@ -315,7 +339,9 @@ public class OutputHandler {
         io.printLine("\u001B[33m==========================\u001B[0m");
         io.print("Val: ");
     }
-    
+
+
+
     public void printUpdateBookingOptions() {
         io.printLine("\n === Redigera ===");
         io.printLine("1. Namn");
